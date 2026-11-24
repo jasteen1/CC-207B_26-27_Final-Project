@@ -164,3 +164,72 @@ describe("processes and campus paths live queries", () => {
     await expect(listProcesses("")).rejects.toThrow(/404/);
   });
 });
+
+describe("building card data (map polygon → verified place)", () => {
+  const env = () => { vi.stubEnv("VITE_SUPABASE_URL", "https://x.supabase.co"); vi.stubEnv("VITE_SUPABASE_ANON_KEY", "anon-key"); };
+  const ok = (body: unknown) => ({ ok: true, status: 200, json: async () => body });
+
+  it("live: looks up the verified link by every polygon ID, then the verified building, rooms, offices and plans", async () => {
+    env();
+    const fetchMock = vi.fn(async (url: string) => {
+      if (url.includes("building_features?select=place_id")) return ok([{ place_id: "bldg-lib" }]);
+      if (url.includes("building_features?select=feature_id")) return ok([{ feature_id: 21 }]);
+      if (url.includes("places?select=*&id=eq.bldg-lib")) return ok([{ id: "bldg-lib", kind: "building", name: "Library", status: "verified", description: "Main library", photo_url: null }]);
+      if (url.includes("parent_id=eq.bldg-lib")) return ok([
+        { id: "r2", kind: "room", name: "Room L2", room_code: "L2", floor: 2, status: "verified" },
+        { id: "o1", kind: "office", name: "Circulation", floor: 1, status: "verified" },
+      ]);
+      if (url.includes("floor_plans")) return ok([{ id: "fp", building_id: "bldg-lib", floor: 3, label: null, image_url: "https://x/plan.png" }]);
+      throw new Error(`unexpected ${url}`);
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    const { getBuilding } = await load();
+    const r = await getBuilding({ featureIds: [33, 21] });
+    const urls = fetchMock.mock.calls.map((c) => c[0] as string);
+    expect(urls[0]).toContain("building_features?select=place_id&feature_id=in.(33,21)&status=eq.verified");
+    for (const u of urls) expect(u).toContain("status=eq.verified");
+    expect(r.data?.description).toBe("Main library");
+    expect(r.data?.photoUrl).toBeUndefined();
+    expect(r.data?.offices.map((o) => o.name)).toEqual(["Circulation"]);
+    expect(r.data?.rooms.map((o) => o.roomCode)).toEqual(["L2"]);
+    expect(r.data?.floors).toEqual([1, 2, 3]);
+    expect(r.data?.featureIds).toEqual([21]);
+  });
+
+  it("live: no verified link → null (the card still opens with the map name)", async () => {
+    env();
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(ok([])));
+    const { getBuilding } = await load();
+    expect((await getBuilding({ featureIds: [20] })).data).toBeNull();
+  });
+
+  it("live: table not created yet (404) → null, but a server error still rejects so the card shows Retry", async () => {
+    env();
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, status: 404 }));
+    let m = await load();
+    expect((await m.getBuilding({ featureIds: [20] })).data).toBeNull();
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, status: 500 }));
+    m = await load();
+    await expect(m.getBuilding({ featureIds: [20] })).rejects.toThrow();
+  });
+
+  it("demo: the Library polygon links to the DEMO library record; Rizal Hall has none", async () => {
+    vi.stubEnv("VITE_SUPABASE_URL", "");
+    const { getBuilding } = await load();
+    const lib = await getBuilding({ featureIds: [21] });
+    expect(lib.mode).toBe("demo");
+    expect(lib.data?.place.id).toBe("bldg-demo-library");
+    expect(lib.data?.floorPlans.map((f) => f.id)).toEqual(["fp-demo-lib-1"]);
+    expect((await getBuilding({ featureIds: [20] })).data).toBeNull();
+    expect((await getBuilding({ placeId: "bldg-demo-library" })).data?.featureIds).toEqual([21]);
+  });
+});
+
+describe("floor plan image URLs", () => {
+  it("full URLs and /demo/ paths are kept; a Storage path resolves against the project's public Storage URL", async () => {
+    const { storageUrl } = await import("./live");
+    expect(storageUrl("https://cdn.example.org/a.png")).toBe("https://cdn.example.org/a.png");
+    expect(storageUrl("/demo/floorplan-cict-2.svg")).toBe("/demo/floorplan-cict-2.svg");
+    expect(storageUrl("floor-plans/quezon-hall-floor-1.png")).toMatch(/\/storage\/v1\/object\/public\/floor-plans\/quezon-hall-floor-1\.png$/);
+  });
+});

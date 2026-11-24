@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../core/search.dart';
 import '../core/theme.dart';
 import '../data/models.dart';
 
@@ -85,7 +86,7 @@ class PlaceFacts extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = view.place;
     final rows = <(String, String)>[
-      if (p.roomCode != null) ('Room', p.roomCode!),
+      if (p.roomCode != null) ('Room', roomDisplay(roomLabel: p.roomLabel, roomCode: p.roomCode, name: p.name)),
       if (view.parent != null) ('Building', view.parent!.name) else if (p.kind == 'building') ('Building', p.name),
       if (p.floor != null) ('Floor', '${p.floor}'),
     ];

@@ -1,25 +1,37 @@
 {
-  "_notice": "DEMO FIXTURES. Invented entrances, walkways and floor plan placed near the approximate WVSU Main Campus centre. Not surveyed, not official.",
+  "_notice": "DEMO FIXTURES. Invented entrances, walkways, floor plans and room positions. Not surveyed, not official.",
   "entrances": [
-    { "id": "ent-demo-cb-main", "buildingId": "bldg-demo-cb", "name": "Demo CB main entrance", "lng": 122.56175, "lat": 10.71585, "nodeId": "n-cb" },
-    { "id": "ent-demo-admin-main", "buildingId": "bldg-demo-admin", "name": "Demo Admin main entrance", "lng": 122.56092, "lat": 10.71638, "nodeId": "n-admin" },
-    { "id": "ent-demo-lib-main", "buildingId": "bldg-demo-library", "name": "Demo Library entrance", "lng": 122.56220, "lat": 10.71655, "nodeId": "n-lib" }
+    {"id": "ent-demo-cb-main", "buildingId": "bldg-demo-cb", "name": "Demo CB main entrance", "lng": 122.56175, "lat": 10.71585, "nodeId": "n-cb"},
+    {"id": "ent-demo-admin-main", "buildingId": "bldg-demo-admin", "name": "Demo Admin main entrance", "lng": 122.56092, "lat": 10.71638, "nodeId": "n-admin"},
+    {"id": "ent-demo-lib-main", "buildingId": "bldg-demo-library", "name": "Demo Library entrance", "lng": 122.5622, "lat": 10.71655, "nodeId": "n-lib"},
+    {"id": "ent-demo-cict-east", "buildingId": "bldg-demo-cict", "name": "Demo CICT east entrance", "lng": 122.56175, "lat": 10.71318, "nodeId": "n-cict"}
   ],
   "nodes": [
-    { "id": "n-cb", "lng": 122.56175, "lat": 10.71585 },
-    { "id": "n-admin", "lng": 122.56092, "lat": 10.71638 },
-    { "id": "n-lib", "lng": 122.56220, "lat": 10.71655 },
-    { "id": "j-west", "lng": 122.56130, "lat": 10.71615 },
-    { "id": "j-east", "lng": 122.56185, "lat": 10.71630 }
+    {"id": "n-cb", "lng": 122.56175, "lat": 10.71585},
+    {"id": "n-admin", "lng": 122.56092, "lat": 10.71638},
+    {"id": "n-lib", "lng": 122.5622, "lat": 10.71655},
+    {"id": "j-west", "lng": 122.5613, "lat": 10.71615},
+    {"id": "j-east", "lng": 122.56185, "lat": 10.7163},
+    {"id": "n-cict", "lng": 122.56175, "lat": 10.71318},
+    {"id": "j-cict-n", "lng": 122.5619, "lat": 10.7137},
+    {"id": "j-cict-mid", "lng": 122.5617, "lat": 10.7149}
   ],
   "edges": [
-    { "id": "w1", "from": "n-admin", "to": "j-west" },
-    { "id": "w2", "from": "j-west", "to": "n-cb" },
-    { "id": "w3", "from": "j-west", "to": "j-east" },
-    { "id": "w4", "from": "j-east", "to": "n-lib" },
-    { "id": "w5", "from": "j-east", "to": "n-cb" }
+    {"id": "w1", "from": "n-admin", "to": "j-west"},
+    {"id": "w2", "from": "j-west", "to": "n-cb"},
+    {"id": "w3", "from": "j-west", "to": "j-east"},
+    {"id": "w4", "from": "j-east", "to": "n-lib"},
+    {"id": "w5", "from": "j-east", "to": "n-cb"},
+    {"id": "w6", "from": "n-cict", "to": "j-cict-n"},
+    {"id": "w7", "from": "j-cict-n", "to": "j-cict-mid"},
+    {"id": "w8", "from": "j-cict-mid", "to": "j-west"}
   ],
   "floorPlans": [
-    { "id": "fp-demo-cb-2", "buildingId": "bldg-demo-cb", "floor": 2, "label": "Demo CB floor 2", "imageUrl": "/demo/floorplan-cb-2.svg" }
+    {"id": "fp-demo-cb-2", "buildingId": "bldg-demo-cb", "floor": 2, "label": "Demo CB floor 2", "imageUrl": "/demo/floorplan-cb-2.svg"},
+    {"id": "fp-demo-lib-1", "buildingId": "bldg-demo-library", "floor": 1, "label": "Demo Library floor 1 blueprint", "imageUrl": "/demo/floorplan-lib-1.svg"},
+    {"id": "fp-demo-cict-2", "buildingId": "bldg-demo-cict", "floor": 2, "label": "Demo CICT floor 2", "imageUrl": "/demo/floorplan-cict-2.svg", "width": 1200, "height": 800}
+  ],
+  "roomSpots": [
+    {"id": "spot-demo-ict-201", "floorPlanId": "fp-demo-cict-2", "placeId": "room-demo-ict-201", "label": "ICT 201", "shape": "rect", "x": 0.05, "y": 0.1, "w": 0.183333, "h": 0.25}
   ]
 }

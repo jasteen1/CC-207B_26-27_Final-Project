@@ -26,7 +26,8 @@
       "shortName": "LIB",
       "lng": 122.5623,
       "lat": 10.7167,
-      "status": "demo"
+      "status": "demo",
+      "description": "DEMO: placeholder description used to test the building card. Not official WVSU information."
     },
     {
       "id": "room-demo-cb-203",
@@ -98,6 +99,36 @@
       "name": "Demo Office of Student Affairs",
       "parentId": "bldg-demo-library",
       "floor": 1,
+      "status": "demo"
+    },
+    {
+      "id": "bldg-demo-cict",
+      "kind": "building",
+      "name": "Demo CICT Building",
+      "shortName": "CICT",
+      "lng": 122.561602,
+      "lat": 10.713152,
+      "status": "demo",
+      "description": "DEMO: placeholder record linked to the CICT Building polygon to test room search and the floor plan highlight. Not official WVSU information."
+    },
+    {
+      "id": "room-demo-ict-201",
+      "kind": "room",
+      "name": "Demo Room ICT 201",
+      "roomCode": "ICT201",
+      "roomLabel": "ICT 201",
+      "floor": 2,
+      "parentId": "bldg-demo-cict",
+      "status": "demo"
+    },
+    {
+      "id": "room-demo-ict-101",
+      "kind": "room",
+      "name": "Demo Room ICT 101",
+      "roomCode": "ICT101",
+      "roomLabel": "ICT 101",
+      "floor": 1,
+      "parentId": "bldg-demo-cict",
       "status": "demo"
     }
   ]

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" font-family="Arial, Helvetica, sans-serif">
+  <title>DEMO floor plan: Demo CICT Building, floor 2 (not an official blueprint)</title>
+  <rect width="1200" height="800" fill="#f7f9fc"/>
+  <rect x="40" y="60" width="1120" height="680" fill="#ffffff" stroke="#1d3f8c" stroke-width="6"/>
+  <!-- corridor -->
+  <rect x="46" y="300" width="1108" height="80" fill="#e9eef7"/>
+  <text x="600" y="348" font-size="22" fill="#5b6b8c" text-anchor="middle">CORRIDOR</text>
+  <!-- north rooms: ICT 201 is x 60-280, y 80-280 (fractions .05, .1, .1833, .25) -->
+  <g fill="#ffffff" stroke="#1d3f8c" stroke-width="3">
+    <rect x="60" y="80" width="220" height="200"/>
+    <rect x="300" y="80" width="220" height="200"/>
+    <rect x="540" y="80" width="220" height="200"/>
+    <rect x="780" y="80" width="220" height="200"/>
+    <rect x="60" y="400" width="300" height="320"/>
+    <rect x="380" y="400" width="300" height="320"/>
+    <rect x="700" y="400" width="200" height="320"/>
+    <rect x="1020" y="80" width="120" height="200"/>
+  </g>
+  <g font-size="30" font-weight="700" fill="#1d3f8c" text-anchor="middle">
+    <text x="170" y="190">ICT 201</text>
+    <text x="410" y="190">ICT 202</text>
+    <text x="650" y="190">ICT 203</text>
+    <text x="890" y="190">ICT 204</text>
+    <text x="210" y="570">ICT 205</text>
+    <text x="530" y="570">ICT 206</text>
+    <text x="800" y="570">CR</text>
+    <text x="1080" y="190" font-size="22">STAIRS</text>
+  </g>
+  <text x="1060" y="560" font-size="26" fill="#c0392b" font-weight="700" text-anchor="middle" transform="rotate(-90 1060 560)">DEMO ONLY</text>
+  <text x="600" y="780" font-size="20" fill="#8a5a00" text-anchor="middle">DEMO blueprint for testing the room highlight. Not an official WVSU floor plan.</text>
+</svg>

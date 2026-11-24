@@ -32,7 +32,10 @@ class _GuideScreenState extends State<GuideScreen> {
   Future<List<_Hit>> _search(String q) async {
     final scope = AppScope.of(context);
     final code = RegExp(r'[A-Za-z]{1,5}[\s-]?\d{1,4}[A-Za-z]?').firstMatch(q)?.group(0);
-    final terms = [?code, ...keywords(q)].take(4);
+    // With a room code in the question, its pieces ("qh", "99") are not separate search terms: they would
+    // offer QH 1 for "Where is QH 99?".
+    final codeKey = code?.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '') ?? '';
+    final terms = [?code, ...keywords(q).where((k) => codeKey.isEmpty || !codeKey.contains(k))].take(4);
     final hits = <String, _Hit>{};
     for (final t in terms) {
       try { for (final v in await scope.places.search(t)) { hits['p:${v.place.id}'] = _Hit('place', v.place.id, v.place.name, v.parent?.name, scope.places.isDemo); } } catch (_) {}
@@ -126,7 +129,7 @@ class _GuideScreenState extends State<GuideScreen> {
                   Text(s.fallback),
                   if (loading) const Padding(padding: EdgeInsets.all(8), child: LinearProgressIndicator()),
                   if (!loading && hits.isEmpty) Text(s.none, style: const TextStyle(color: muted)),
-                  for (final h in hits) cite(h.label, h.type == 'place' ? '/place/${Uri.encodeComponent(h.id)}' : _link(h.type, h.id), detail: h.detail, demo: h.demo),
+                  for (final h in hits) cite(h.label, _link(h.type, h.id), detail: h.detail, demo: h.demo),
                 ])),
             },
           if (_msgs.isEmpty) ...[

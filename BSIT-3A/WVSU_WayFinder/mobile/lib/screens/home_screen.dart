@@ -59,40 +59,49 @@ class HomeScreen extends StatelessWidget {
       ('Find a Teacher', Icons.apartment_outlined, '/directory'),
       ('Ask WayFinder', Icons.chat_bubble_outline, '/guide'),
     ];
-    return ListView(padding: const EdgeInsets.all(16), children: [
+    return ListView(padding: const EdgeInsets.fromLTRB(16, 12, 16, 16), children: [
       const Text('WVSU WAYFINDER', style: TextStyle(fontSize: 12, letterSpacing: 1.4, color: wayBlue, fontWeight: FontWeight.w700)),
-      const SizedBox(height: 6),
-      const Text('Hi! Where do you need to go?', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800, height: 1.15)),
-      const SizedBox(height: 14),
-      const SearchField(),
-      const SizedBox(height: 8),
+      const SizedBox(height: 4),
+      Text('Hi! Where do you need to go?', style: TextStyle(fontSize: MediaQuery.sizeOf(context).width < 360 ? 20 : 26, fontWeight: FontWeight.w800, height: 1.15)),
+      const SizedBox(height: 12),
+      // The student's next step comes first: Add my schedule, or the next class with Find room.
       const NextClassCard(),
       const SizedBox(height: 8),
-      GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        mainAxisSpacing: 12,
-        crossAxisSpacing: 12,
-        childAspectRatio: 1.6,
-        children: [
-          for (final (label, icon, route) in quick)
-            Card(
-              margin: EdgeInsets.zero,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(16),
-                onTap: () => context.go(route),
-                child: Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    Container(width: 36, height: 36, decoration: BoxDecoration(color: wayBlue, borderRadius: BorderRadius.circular(10)), child: Icon(icon, color: Colors.white, size: 20)),
-                    Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
-                  ]),
+      const SearchField(),
+      const SizedBox(height: 8),
+      const SizedBox(height: 10),
+      const Text('QUICK ACTIONS', style: TextStyle(fontSize: 11, letterSpacing: 1.2, color: muted, fontWeight: FontWeight.w700)),
+      const SizedBox(height: 8),
+      // Two per row, sized by their content (prototype: icon above a short label). No fixed aspect
+      // ratio, so larger text grows the card instead of overflowing it, and wide phones get no dead space.
+      for (var r = 0; r < quick.length; r += 2)
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: IntrinsicHeight(
+            child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+              for (final (k, (label, icon, route)) in quick.sublist(r, r + 2).indexed) ...[
+                if (k > 0) const SizedBox(width: 10),
+                Expanded(
+                  child: Card(
+                    margin: EdgeInsets.zero,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(16),
+                      onTap: () => context.go(route),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+                          Container(width: 34, height: 34, decoration: BoxDecoration(color: wayBlue, borderRadius: BorderRadius.circular(10)), child: Icon(icon, color: Colors.white, size: 19)),
+                          const SizedBox(height: 8),
+                          Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
+                        ]),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-        ],
-      ),
+              ],
+            ]),
+          ),
+        ),
     ]);
   }
 }
@@ -135,12 +144,11 @@ class _NextClassCardState extends State<NextClassCard> {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                const _Label(Icons.calendar_today_outlined, 'MY SCHEDULE'),
-                const SizedBox(height: 6),
-                const Text('See your next class here', style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800)),
-                const SizedBox(height: 4),
-                const Text('Add your weekly classes once. WayFinder shows the next one, its room, and directions.', style: TextStyle(color: muted)),
-                const SizedBox(height: 12),
+                // Compact so the main action fits on a small phone's first screen.
+                const Text('See your next class here', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
+                const SizedBox(height: 2),
+                const Text('Add your classes once to get the next room and directions.', style: TextStyle(color: muted)),
+                const SizedBox(height: 10),
                 SizedBox(width: double.infinity, child: FilledButton(onPressed: () => context.go('/schedule/new'), child: const Text('Add my schedule'))),
               ]),
             ),
@@ -150,15 +158,24 @@ class _NextClassCardState extends State<NextClassCard> {
         return Card(
           key: const ValueKey('next-class'),
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.fromLTRB(14, 8, 14, 14),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Row(children: [
-                Expanded(child: _Label(Icons.calendar_today_outlined, 'NEXT CLASS · ${weekdays[s.weekday - 1].toUpperCase()}')),
-                TextButton(onPressed: () => context.go('/schedule'), child: const Text('My Schedule')),
-              ]),
-              Text(s.subject, style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w800)),
+              // Compact: subject, day, time, professor, room and Find room fit a small phone's first screen.
+              Builder(builder: (context) {
+                final label = _Label(Icons.calendar_today_outlined, 'NEXT CLASS · ${weekdays[s.weekday - 1].toUpperCase()}');
+                final link = TextButton(
+                  style: TextButton.styleFrom(visualDensity: VisualDensity.compact, padding: const EdgeInsets.symmetric(horizontal: 8)),
+                  onPressed: () => context.go('/schedule'),
+                  child: const Text('My Schedule'),
+                );
+                // Very large text: the label gets its own line instead of being squeezed by the link.
+                return MediaQuery.textScalerOf(context).scale(10) > 15
+                    ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [label, link])
+                    : Row(children: [Expanded(child: label), link]);
+              }),
+              Text(s.subject, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w800, height: 1.2)),
               const SizedBox(height: 6),
-              Wrap(crossAxisAlignment: WrapCrossAlignment.center, spacing: 8, children: [
+              Wrap(crossAxisAlignment: WrapCrossAlignment.center, spacing: 8, runSpacing: 4, children: [
                 const Icon(Icons.schedule, size: 16, color: muted),
                 Text('${formatClock(s.start)}–${formatClock(s.end)}', style: const TextStyle(fontWeight: FontWeight.w700)),
                 Container(
@@ -167,30 +184,38 @@ class _NextClassCardState extends State<NextClassCard> {
                   child: Text(relativeStart(next.start, next.end, now), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
                 ),
               ]),
-              const SizedBox(height: 10),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                decoration: BoxDecoration(color: blueSoft, borderRadius: BorderRadius.circular(12)),
-                child: Row(crossAxisAlignment: CrossAxisAlignment.baseline, textBaseline: TextBaseline.alphabetic, children: [
-                  const Text('ROOM  ', style: TextStyle(fontSize: 11, letterSpacing: 1.2, color: muted, fontWeight: FontWeight.w700)),
-                  Flexible(child: Text(s.roomCodeRaw, style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w800, color: navy))),
-                ]),
-              ),
-              if (s.roomPlaceId == null) ...[const SizedBox(height: 8), const Unconfirmed('Room location unconfirmed')],
               if (s.professor != null) ...[
-                const SizedBox(height: 10),
-                Row(children: [const Icon(Icons.person_outline, size: 18, color: muted), const SizedBox(width: 6), Expanded(child: Text(s.professor!))]),
+                const SizedBox(height: 4),
+                Row(children: [const Icon(Icons.person_outline, size: 16, color: muted), const SizedBox(width: 6), Expanded(child: Text(s.professor!, maxLines: 1, overflow: TextOverflow.ellipsis))]),
               ],
-              const SizedBox(height: 12),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton.icon(
+              const SizedBox(height: 8),
+              // The room and the action that finds it: side by side, or stacked when the text is very large.
+              Builder(builder: (context) {
+                final stacked = MediaQuery.textScalerOf(context).scale(10) > 15;
+                return Flex(
+                  direction: stacked ? Axis.vertical : Axis.horizontal,
+                  crossAxisAlignment: stacked ? CrossAxisAlignment.stretch : CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                Flexible(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(color: blueSoft, borderRadius: BorderRadius.circular(12)),
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+                      const Text('ROOM', style: TextStyle(fontSize: 10, letterSpacing: 1.2, color: muted, fontWeight: FontWeight.w700)),
+                      Text(s.roomCodeRaw, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: navy)),
+                    ]),
+                  ),
+                ),
+                const SizedBox(width: 8, height: 8),
+                FilledButton.icon(
                   onPressed: () => context.go(s.roomPlaceId != null ? '/map?to=${Uri.encodeQueryComponent(s.roomPlaceId!)}' : '/search?q=${Uri.encodeQueryComponent(s.roomCodeRaw)}'),
                   icon: const Icon(Icons.place_outlined, size: 18),
                   label: const Text('Find room'),
                 ),
-              ),
+                ]);
+              }),
+              if (s.roomPlaceId == null) ...[const SizedBox(height: 8), const Unconfirmed('Room location unconfirmed')],
             ]),
           ),
         );

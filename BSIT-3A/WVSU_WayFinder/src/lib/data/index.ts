@@ -1,4 +1,4 @@
-import type { CampusPaths, DataResult, Faculty, PlaceView, ProcessGuide } from "../types";
+import type { BuildingDetails, BuildingRef, CampusPaths, DataResult, Faculty, PlaceView, ProcessGuide } from "../types";
 import * as demo from "./demo";
 import * as live from "./live";
 
@@ -26,3 +26,4 @@ export const listProcesses = (q: string): Promise<DataResult<ProcessGuide[]>> =>
 export const getProcess = (id: string): Promise<DataResult<ProcessGuide | null>> => resolve(() => live.liveProcess(id), () => demo.demoProcess(id));
 
 export const getCampusPaths = (): Promise<DataResult<CampusPaths>> => resolve(live.liveCampus, demo.demoCampus);
+export const getBuilding = (ref: BuildingRef): Promise<DataResult<BuildingDetails | null>> => resolve(() => live.liveBuilding(ref), () => demo.demoBuilding(ref));

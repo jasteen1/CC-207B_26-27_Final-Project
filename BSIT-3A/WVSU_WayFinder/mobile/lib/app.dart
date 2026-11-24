@@ -7,7 +7,9 @@ import 'core/app_scope.dart';
 import 'core/config.dart';
 import 'core/theme.dart';
 import 'core/time.dart';
+import 'data/building_repository.dart';
 import 'data/campus.dart';
+import 'data/campus_outlines.dart';
 import 'data/faculty_repository.dart';
 import 'data/guide_client.dart';
 import 'data/location_service.dart';
@@ -39,6 +41,7 @@ GoRouter buildRouter(String initial) => GoRouter(initialLocation: initial, route
             builder: (_, s) => MapScreen(
               to: s.uri.queryParameters['to'] ?? s.uri.queryParameters['place'] ?? '',
               from: s.uri.queryParameters['from'] ?? '',
+              code: s.uri.queryParameters['code'] ?? '',
             ),
           ),
           GoRoute(path: '/processes', builder: (_, s) => ProcessListScreen(query: s.uri.queryParameters['q'] ?? '')),
@@ -59,6 +62,8 @@ class WayFinderApp extends StatefulWidget {
     this.processes,
     this.campus,
     this.guide,
+    this.buildings,
+    this.campusShapes,
     ScheduleStore? schedule,
     LocationService? location,
     this.initialLocation = '/',
@@ -73,6 +78,8 @@ class WayFinderApp extends StatefulWidget {
   final ProcessesRepository? processes;
   final CampusRepository? campus;
   final GuideClient? guide;
+  final BuildingRepository? buildings;
+  final Future<List<CampusBuilding>> Function()? campusShapes;
   final ScheduleStore schedule;
   final LocationService location;
   final String initialLocation;
@@ -89,6 +96,8 @@ class _WayFinderAppState extends State<WayFinderApp> {
   late final _processes = widget.processes ?? createProcessesRepository(widget.config);
   late final _campus = widget.campus ?? createCampusRepository(widget.config);
   late final _guide = widget.guide ?? GuideClient(widget.config);
+  late final _buildings = widget.buildings ?? createBuildingRepository(widget.config);
+  late final _campusShapes = widget.campusShapes ?? () => loadCampusBuildings(widget.config.mapTilerKey);
   final _messenger = GlobalKey<ScaffoldMessengerState>();
   late final ReminderScheduler _reminders = ReminderScheduler(
     now: widget.now ?? appClock,
@@ -126,6 +135,8 @@ class _WayFinderAppState extends State<WayFinderApp> {
         schedule: widget.schedule,
         progress: ProgressStore(),
         location: widget.location,
+        buildings: _buildings,
+        campusShapes: _campusShapes,
         child: MaterialApp.router(
           title: 'WVSU WayFinder',
           theme: buildTheme(),

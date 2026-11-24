@@ -5,7 +5,9 @@
 import { PGlite } from "@electric-sql/pglite";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
+// Builds a fresh Postgres with all migrations; under a full parallel run that can exceed the defaults.
+vi.setConfig({ testTimeout: 30_000, hookTimeout: 30_000 });
 
 const sql = (f: string) => readFileSync(join(process.cwd(), "supabase/migrations", f), "utf8");
 let db: PGlite;

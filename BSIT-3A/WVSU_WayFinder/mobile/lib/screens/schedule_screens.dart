@@ -190,6 +190,7 @@ class _ClassFormScreenState extends State<ClassFormScreen> {
       const SizedBox(height: 10),
       DropdownButtonFormField<int>(
         key: const Key('day'),
+        isExpanded: true, // fit narrow phones and large text instead of overflowing
         initialValue: _weekday,
         decoration: _dec('Day'),
         items: [for (var i = 1; i <= 7; i++) DropdownMenuItem(value: i, child: Text(weekdays[i - 1]))],
@@ -208,6 +209,7 @@ class _ClassFormScreenState extends State<ClassFormScreen> {
       const SizedBox(height: 10),
       DropdownButtonFormField<int?>(
         key: const Key('remind'),
+        isExpanded: true,
         initialValue: _remind,
         decoration: _dec('Reminder'),
         items: const [

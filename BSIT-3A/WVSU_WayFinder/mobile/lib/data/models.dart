@@ -14,6 +14,7 @@ class Place {
     required this.name,
     this.shortName,
     this.roomCode,
+    this.roomLabel,
     this.floor,
     this.parentId,
     this.lng,
@@ -26,6 +27,9 @@ class Place {
   final String name;
   final String? shortName;
   final String? roomCode;
+
+  /// The label exactly as printed on the classroom door ("ICT 201"); [roomCode] is the search key.
+  final String? roomLabel;
   final int? floor;
   final String? parentId;
   final double? lng;
@@ -41,6 +45,7 @@ class Place {
         name: r['name'] as String,
         shortName: r['short_name'] as String?,
         roomCode: r['room_code'] as String?,
+        roomLabel: r['room_label'] as String?,
         floor: (r['floor'] as num?)?.toInt(),
         parentId: r['parent_id'] as String?,
         lng: (r['lng'] as num?)?.toDouble(),
@@ -55,6 +60,7 @@ class Place {
         name: r['name'] as String,
         shortName: r['shortName'] as String?,
         roomCode: r['roomCode'] as String?,
+        roomLabel: r['roomLabel'] as String?,
         floor: (r['floor'] as num?)?.toInt(),
         parentId: r['parentId'] as String?,
         lng: (r['lng'] as num?)?.toDouble(),

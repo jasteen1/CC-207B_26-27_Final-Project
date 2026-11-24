@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" font-family="sans-serif">
+  <rect width="400" height="260" fill="#f3f7fc"/>
+  <text x="200" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#8a5a00">DEMO blueprint — not an official drawing</text>
+  <rect x="20" y="40" width="360" height="200" fill="#fff" stroke="#1d3f8c" stroke-width="3"/>
+  <rect x="20" y="40" width="220" height="120" fill="#e4edf9" stroke="#1d3f8c"/><text x="130" y="105" text-anchor="middle" font-size="16" font-weight="700">LIB 1 Reading Room</text>
+  <rect x="240" y="40" width="140" height="120" fill="#fdf3dc" stroke="#f2b134" stroke-width="3"/><text x="310" y="98" text-anchor="middle" font-size="13" font-weight="700">Student Affairs</text><text x="310" y="116" text-anchor="middle" font-size="12">(demo office)</text>
+  <rect x="20" y="160" width="360" height="80" fill="#fff" stroke="#1d3f8c"/><text x="200" y="205" text-anchor="middle" font-size="13" fill="#5d6b85">Lobby and stairs</text>
+  <rect x="180" y="232" width="40" height="8" fill="#f2b134"/><text x="200" y="256" text-anchor="middle" font-size="11" fill="#5d6b85">Entrance</text>
+</svg>

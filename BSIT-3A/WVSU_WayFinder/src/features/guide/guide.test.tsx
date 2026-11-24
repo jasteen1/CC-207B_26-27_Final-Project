@@ -58,6 +58,18 @@ describe("AI Guide", () => {
     expect(screen.getAllByText("Demo").length).toBeGreaterThan(0);
   });
 
+  it("fallback: a known room opens on the map; an unknown room in the same building offers no other room", async () => {
+    await renderGuide(false);
+    const box = screen.getByRole("textbox");
+    await userEvent.type(box, "Where is ICT 201?{enter}");
+    expect(await screen.findByRole("link", { name: /Demo Room ICT 201/ })).toHaveAttribute("href", "/map?to=room-demo-ict-201");
+    await userEvent.clear(box);
+    await userEvent.type(box, "Where is ICT 999?{enter}");
+    expect(await screen.findAllByText(/No matching/i)).not.toHaveLength(0);
+    // Only the first question's result: "ICT 999" did not pull in ICT 201 or ICT 101 by the fragment "ict".
+    expect(screen.getAllByRole("link", { name: /Demo Room ICT/ })).toHaveLength(1);
+  });
+
   it("Hiligaynon suggestions", async () => {
     await renderGuide(false);
     await userEvent.click(screen.getByRole("radio", { name: "Hiligaynon" }));

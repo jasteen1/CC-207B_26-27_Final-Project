@@ -32,3 +32,7 @@ flutter:
     - assets/demo/campus.json
     - assets/demo/faculty.json
     - assets/demo/floorplan-cb-2.png
+    - assets/demo/floorplan-lib-1.png
+    - assets/demo/building_links.json
+    - assets/demo/floorplan-cict-2.png
+    - assets/room_prefixes.json

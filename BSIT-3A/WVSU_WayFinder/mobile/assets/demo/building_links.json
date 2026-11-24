@@ -1,0 +1,7 @@
+{
+  "_notice": "DEMO FIXTURES. Links map polygons (MapTiler dataset `place_id`) to DEMO place records. Only used when Supabase is not configured. Not official WVSU information.",
+  "links": [
+    {"featureId": 21, "placeId": "bldg-demo-library"},
+    {"featureId": 19, "placeId": "bldg-demo-cict"}
+  ]
+}

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:wvsu_wayfinder/core/config.dart';
 import 'package:wvsu_wayfinder/core/time.dart';
 import 'package:wvsu_wayfinder/data/campus.dart';
 import 'package:wvsu_wayfinder/data/schedule.dart';
@@ -96,8 +97,14 @@ void main() {
   });
 
   test('mobile demo fixtures are exact copies of the web fixtures (shared IDs)', () {
-    for (final f in ['places.json', 'processes.json', 'campus.json', 'faculty.json']) {
+    for (final f in ['places.json', 'processes.json', 'campus.json', 'faculty.json', 'building_links.json']) {
       expect(jsonDecode(fixture(f)), equals(jsonDecode(File('../src/data/demo/$f').readAsStringSync())), reason: f);
     }
+  });
+  test('floor plan image URL: full URL and /demo/ kept; Storage path resolves against the project', () {
+    const c = AppConfig(supabaseUrl: 'https://proj.example.co/', supabasePublishableKey: 'k');
+    expect(c.storageUrl('https://cdn.example.org/a.png'), 'https://cdn.example.org/a.png');
+    expect(c.storageUrl('/demo/floorplan-cict-2.svg'), '/demo/floorplan-cict-2.svg');
+    expect(c.storageUrl('floor-plans/quezon-hall-floor-1.png'), 'https://proj.example.co/storage/v1/object/public/floor-plans/quezon-hall-floor-1.png');
   });
 }

@@ -24,4 +24,10 @@ class AppConfig {
   bool get hasMapTiler => mapTilerKey.isNotEmpty;
 
   String get restBase => '${supabaseUrl.replaceAll(RegExp(r'/+$'), '')}/rest/v1';
+
+  /// floor_plans.image_url may be a full URL, an app path (/demo/...), or a Storage path
+  /// ("floor-plans/quezon-hall-floor-1.png") resolved against this project's public Storage URL.
+  String storageUrl(String u) => RegExp(r'^(https?:)?//').hasMatch(u) || u.startsWith('/')
+      ? u
+      : '${supabaseUrl.replaceAll(RegExp(r'/+$'), '')}/storage/v1/object/public/${u.replaceAll(RegExp(r'^/+'), '')}';
 }

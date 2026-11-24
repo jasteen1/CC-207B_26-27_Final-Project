@@ -158,6 +158,30 @@ void main() {
     expect(find.textContaining('Demo Clearance'), findsOneWidget);
   });
 
+  testWidgets('Map has its own search box: searching there opens the results (no detour via Home)', (t) async {
+    await pumpApp(t, initial: '/map', size: const Size(390, 1400));
+    await t.enterText(find.byType(TextField).first, 'ICT 201');
+    await t.testTextInput.receiveAction(TextInputAction.search);
+    await t.pumpAndSettle();
+    expect(find.text('Search'), findsWidgets);
+    expect(find.text('Demo Room ICT 201'), findsOneWidget);
+  });
+
+  testWidgets('AI Guide fallback: known room is offered; an unknown room in the same building offers no other room', (t) async {
+    await pumpApp(t, initial: '/guide', size: const Size(390, 1400));
+    Future<void> ask(String q) async {
+      await t.enterText(find.byType(TextField), q);
+      await t.testTextInput.receiveAction(TextInputAction.send);
+      await t.pumpAndSettle();
+    }
+    await ask('Where is ICT 201?');
+    expect(find.textContaining('Demo Room ICT 201'), findsOneWidget);
+    await ask('Where is ICT 999?');
+    // Still only the one result from the first question: "ICT 999" did not pull in ICT rooms by "ict".
+    expect(find.textContaining('Demo Room ICT'), findsOneWidget);
+    expect(find.textContaining('Demo Room ICT 101'), findsNothing);
+  });
+
   testWidgets('AI Guide: grounded Hiligaynon answer with a link to the cited place', (t) async {
     late http.Request seen;
     final guide = GuideClient(live, client: MockClient((req) async {
@@ -195,6 +219,33 @@ void main() {
       expect(find.text('Choose starting point'), findsOneWidget);
     });
 
+    testWidgets('My Location flow: destination → deny permission → choose room manually → destination kept', (t) async {
+      await pumpApp(t, size: tall, initial: '/map?to=room-demo-cb-203', location: FakeLocation(const LocationOutcome.failed(LocationFailure.denied)));
+      await tapText(t, 'Use my location');
+      expect(find.textContaining('permission was not granted'), findsOneWidget);
+      expect(find.text('Not set'), findsOneWidget);
+      await tapText(t, 'Choose starting point');
+      await tapText(t, 'LIB1', last: true);
+      expect(find.text('LIB1 · Demo Library'), findsOneWidget);
+      expect(find.textContaining('permission was not granted'), findsNothing);
+      expect(find.descendant(of: find.byKey(const Key('dest-card')), matching: find.text('Demo College Building')), findsOneWidget);
+      expect(find.descendant(of: find.byKey(const Key('inside-card')), matching: find.text('Room CB203')), findsOneWidget);
+    });
+
+    testWidgets('GPS result arriving after a manual pick does not replace the manual start', (t) async {
+      final gps = PendingLocation();
+      await pumpApp(t, size: tall, initial: '/map?to=room-demo-cb-203', location: gps);
+      await tapText(t, 'Use my location');
+      expect(find.text('Locating…'), findsOneWidget);
+      await tapText(t, 'Choose starting point');
+      await tapText(t, 'LIB1', last: true);
+      gps.complete(const LocationOutcome.fix(LocationFix(lat: 10.71614, lng: 122.5613, accuracyMeters: 8)));
+      await t.pumpAndSettle();
+      expect(find.text('LIB1 · Demo Library'), findsOneWidget);
+      expect(find.textContaining('accuracy ±'), findsNothing);
+      expect(find.text('Use my location'), findsOneWidget);
+    });
+
     testWidgets('poor GPS accuracy → warns and asks for a manual start', (t) async {
       await pumpApp(t, size: tall, initial: '/map?to=room-demo-cb-203',
           location: FakeLocation(const LocationOutcome.fix(LocationFix(lat: 10.71614, lng: 122.5613, accuracyMeters: 120))));
@@ -209,6 +260,17 @@ void main() {
       await tapText(t, 'Use my location');
       expect(find.textContaining('(Good)'), findsOneWidget);
       expect(find.textContaining(' min'), findsWidgets);
+      expect(find.textContaining('You are here · accuracy'), findsOneWidget);
+    });
+
+    testWidgets('opening the Map never asks for location; Use my location shows You are here', (t) async {
+      final gps = FakeLocation(const LocationOutcome.fix(LocationFix(lat: 10.71614, lng: 122.5613, accuracyMeters: 8)));
+      await pumpApp(t, size: tall, initial: '/map', location: gps);
+      expect(gps.calls, 0);
+      await tapText(t, 'Use my location');
+      expect(gps.calls, 1);
+      expect(find.textContaining('You are here · accuracy ±8 m'), findsOneWidget);
+      expect(find.text('You are here'), findsOneWidget);
     });
   });
 }

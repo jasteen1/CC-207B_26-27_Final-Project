@@ -3,8 +3,10 @@ import fixtures from "../../data/demo/places.json";
 import facultyFixtures from "../../data/demo/faculty.json";
 import processFixtures from "../../data/demo/processes.json";
 import campusFixtures from "../../data/demo/campus.json";
+import linkFixtures from "../../data/demo/building_links.json";
 import { looksLikeRoomCode, normalizeRoomCode } from "../search";
-import type { CampusPaths, Faculty, Place, PlaceView, ProcessGuide } from "../types";
+import type { BuildingDetails, BuildingRef, CampusPaths, Faculty, FloorPlan, Place, PlaceView, ProcessGuide } from "../types";
+import { assembleBuilding } from "./building";
 
 const places = fixtures.places as Place[];
 const byId = new Map(places.map((p) => [p.id, p]));
@@ -83,4 +85,21 @@ export async function demoProcess(id: string): Promise<ProcessGuide | null> {
 // ---- Campus paths ------------------------------------------------------------------------
 export async function demoCampus(): Promise<CampusPaths> {
   return campusFixtures as unknown as CampusPaths;
+}
+
+// ---- Building card (map polygon → place) -------------------------------------------------
+const links = linkFixtures.links as { featureId: number; placeId: string }[];
+const rawPlaces = fixtures.places as (Place & { description?: string; photoUrl?: string })[];
+
+export async function demoBuilding(ref: BuildingRef): Promise<BuildingDetails | null> {
+  const placeId = "placeId" in ref ? ref.placeId : links.find((l) => ref.featureIds.includes(l.featureId))?.placeId;
+  const raw = placeId ? rawPlaces.find((p) => p.id === placeId && p.kind === "building") : undefined;
+  if (!raw) return null;
+  const { description, photoUrl, ...place } = raw;
+  return assembleBuilding({
+    place, description, photoUrl,
+    children: places.filter((p) => p.parentId === place.id),
+    floorPlans: (campusFixtures.floorPlans as FloorPlan[]).filter((f) => f.buildingId === place.id),
+    featureIds: links.filter((l) => l.placeId === place.id).map((l) => l.featureId),
+  });
 }

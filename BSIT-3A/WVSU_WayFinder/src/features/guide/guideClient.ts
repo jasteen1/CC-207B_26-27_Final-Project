@@ -28,7 +28,11 @@ export interface FallbackHit { type: "place" | "process" | "faculty"; id: string
 
 /** Labeled fallback: plain search over the directory and processes using the question's keywords. */
 export async function fallbackSearch(q: string): Promise<FallbackHit[]> {
-  const terms = [q.match(/[A-Za-z]{1,5}[\s-]?\d{1,4}[A-Za-z]?/)?.[0], ...keywords(q)].filter(Boolean) as string[];
+  const code = q.match(/[A-Za-z]{1,5}[\s-]?\d{1,4}[A-Za-z]?/)?.[0];
+  // With a room code in the question, its pieces ("qh", "99") are not separate search terms: they would
+  // offer QH 1 for "Where is QH 99?".
+  const codeKey = code?.toLowerCase().replace(/[^a-z0-9]/g, "") ?? "";
+  const terms = [code, ...keywords(q).filter((k) => !codeKey || !codeKey.includes(k))].filter(Boolean) as string[];
   const hits = new Map<string, FallbackHit>();
   for (const term of terms.slice(0, 4)) {
     const [places, procs, fac] = await Promise.allSettled([searchPlaces(term), listProcesses(term), searchFaculty(term)]);
@@ -42,5 +46,6 @@ export async function fallbackSearch(q: string): Promise<FallbackHit[]> {
   return [...hits.values()].slice(0, 8);
 }
 
+/** A place opens on the map (building, floor plan and highlighted room), same as a cited place. */
 export const linkFor = (type: FallbackHit["type"], id: string) =>
-  type === "place" ? `/directory/${encodeURIComponent(id)}` : type === "process" ? `/processes/${encodeURIComponent(id)}` : `/directory/faculty/${encodeURIComponent(id)}`;
+  type === "place" ? `/map?to=${encodeURIComponent(id)}` : type === "process" ? `/processes/${encodeURIComponent(id)}` : `/directory/faculty/${encodeURIComponent(id)}`;

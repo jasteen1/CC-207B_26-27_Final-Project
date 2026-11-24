@@ -1,0 +1,18 @@
+{
+  "_notice": "Room-code prefixes supplied by the WayFinder team (not yet verified on site). mapName is the exact MapTiler dataset name each prefix was matched to; the app resolves it to the polygon at runtime. A prefix only says which building a code points to: it never confirms a room, and the floor is never inferred from the room number.",
+  "prefixes": [
+    { "prefix": "ICT", "suppliedName": "CICT Building", "mapName": "CICT Building", "status": "matched" },
+    { "prefix": "RB", "suppliedName": "College of Business and Management", "mapName": "College of Business and Management", "status": "matched" },
+    { "prefix": "EB", "suppliedName": "College of PESCAR", "mapName": null, "status": "unmatched",
+      "note": "No polygon named PESCAR in the dataset. Possible candidates the team must confirm: COM Gymnasium, Grand Stand. Searches for EB codes say the building isn't mapped yet." },
+    { "prefix": "NAB", "suppliedName": "New Academic Building (College of Education)", "mapName": "New Academic Building", "status": "matched",
+      "note": "The dataset also has separate polygons named \"College of Education\" and \"CTE\". NAB codes point to New Academic Building only." },
+    { "prefix": "MC", "suppliedName": "College of Communication", "mapName": "College of Communication", "status": "matched",
+      "note": "Polygon 33 is now \"Audio Visual Hall\"; an earlier dataset snapshot named it College of Communication. Confirm whether any MC rooms are in it." },
+    { "prefix": "QH", "suppliedName": "Quezon Hall", "mapName": "Quezon Hall", "status": "matched" },
+    { "prefix": "NB", "suppliedName": "College of Nursing", "mapName": "College of Nursing", "status": "matched" },
+    { "prefix": "AB", "suppliedName": "College of Dentistry", "mapName": "College of Dentistry", "status": "matched" },
+    { "prefix": "RH", "suppliedName": "College of Medicine / Roxas Hall", "mapName": "College of Medicine (Roxas Hall)", "status": "matched",
+      "note": "Matched to Roxas Hall. The College of Medicine also has \"PSFW Building / College of Medicine (Annex 1)\" and \"College of Medicine - Annex 3\"; confirm RH rooms are only in Roxas Hall." }
+  ]
+}

@@ -43,16 +43,46 @@ class LiveFacultyRepository implements FacultyRepository {
   @override
   bool get isDemo => false;
 
-  Future<List<Faculty>> _get(String filter) async {
-    final uri = Uri.parse('${config.restBase}/faculty_directory?select=$columns&$published$filter&order=full_name.asc&limit=100');
-    final http.Response res;
+  /// public.faculty (0002): the columns that migration grants to students. RLS returns verified rows only.
+  static const columns0002 = 'id,full_name,department,college_id,office_id,official_email,office_hours,verified_at';
+
+  Future<http.Response> _fetch(String pathAndQuery) async {
     try {
-      res = await _client.get(uri, headers: {'apikey': config.supabasePublishableKey, 'Accept': 'application/json'});
+      return await _client.get(Uri.parse('${config.restBase}/$pathAndQuery'), headers: {'apikey': config.supabasePublishableKey, 'Accept': 'application/json'});
     } catch (_) {
       throw PlacesException('network error');
     }
-    if (res.statusCode != 200) throw PlacesException('HTTP ${res.statusCode}');
-    return (jsonDecode(res.body) as List).cast<Map<String, dynamic>>().map(Faculty.fromRow).toList();
+  }
+
+  List<Map<String, dynamic>> _rows(http.Response r) {
+    if (r.statusCode != 200) throw PlacesException('HTTP ${r.statusCode}');
+    return (jsonDecode(r.body) as List).cast<Map<String, dynamic>>();
+  }
+
+  /// faculty_directory when it exists; on 404 (table not in the schema, as in the live project) the
+  /// migrations' public.faculty. "Show office on map" only from a VERIFIED office place; never from a college.
+  Future<List<Faculty>> _get(String filter, {String? idFilter0002}) async {
+    final dir = await _fetch('faculty_directory?select=$columns&$published$filter&order=full_name.asc&limit=100');
+    if (dir.statusCode != 404) return _rows(dir).map(Faculty.fromRow).toList();
+    final rows = _rows(await _fetch('faculty?select=$columns0002${idFilter0002 ?? filter}&order=full_name.asc&limit=100'));
+    final ids = {for (final r in rows) ...[r['office_id'], r['college_id']]}.whereType<String>().toList();
+    final visible = <String, Map<String, dynamic>>{};
+    if (ids.isNotEmpty) {
+      final list = ids.map((i) => '"${i.replaceAll(RegExp(r'[",()\\]'), '')}"').join(',');
+      for (final p in _rows(await _fetch('places?select=id,kind,name,status&id=in.(${Uri.encodeQueryComponent(list)})&status=eq.verified'))) {
+        visible[p['id'] as String] = p;
+      }
+    }
+    return [
+      for (final r in rows)
+        Faculty(
+          recordId: r['id'] as String,
+          fullName: r['full_name'] as String,
+          department: r['department'] as String?,
+          collegeUnit: visible[r['college_id']]?['name'] as String?,
+          officePlaceId: visible.containsKey(r['office_id']) ? r['office_id'] as String : null,
+        ),
+    ];
   }
 
   @override
@@ -62,7 +92,8 @@ class LiveFacultyRepository implements FacultyRepository {
   }
 
   @override
-  Future<Faculty?> get(String recordId) async => (await _get('&record_id=eq.${Uri.encodeQueryComponent(recordId)}')).firstOrNull;
+  Future<Faculty?> get(String recordId) async => (await _get('&record_id=eq.${Uri.encodeQueryComponent(recordId)}',
+      idFilter0002: '&id=eq.${Uri.encodeQueryComponent(recordId)}')).firstOrNull;
 }
 
 /// DEMO teachers (copy of the web fixture), same publication rule. Only when Supabase is not configured.
