@@ -36,8 +36,10 @@ function toPlace(r: Row): Place {
   };
 }
 
-const toView = (r: Row): PlaceView => ({ place: toPlace(r), parent: r.parent ? toPlace(r.parent) : undefined });
-const SELECT = "select=*,parent:places!parent_id(*)";
+const toView = (r: Row): PlaceView => ({ place: toPlace(r), parent: r.parent && !Array.isArray(r.parent) ? toPlace(r.parent) : undefined });
+// `parent:parent_id(*)` embeds the row parent_id points to (one object); `parent:places!parent_id(*)`
+// would make PostgREST return the row's children as a list instead.
+const SELECT = "select=*,parent:parent_id(*)";
 const places = (query: string) => get<Row[]>(`places?${SELECT}&status=eq.verified&${query}`);
 
 export async function liveSearch(q: string): Promise<PlaceView[]> {

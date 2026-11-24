@@ -31,7 +31,7 @@ async function rest(path: string): Promise<Record<string, unknown>[]> {
 
 async function loadSources(): Promise<SourceRecord[]> {
   const [places, processes, faculty] = await Promise.all([
-    rest("places?select=id,kind,name,room_code,floor,parent:places!parent_id(name)&status=eq.verified&limit=500"),
+    rest("places?select=id,kind,name,room_code,floor,parent:parent_id(name)&status=eq.verified&limit=500"),
     rest("processes?select=id,name,summary,process_steps(position,title,action)&limit=100"),
     rest("faculty_directory?select=record_id,full_name,college_unit,department,position_title&is_published=eq.true&review_status=eq.verified&limit=500"),
   ]);

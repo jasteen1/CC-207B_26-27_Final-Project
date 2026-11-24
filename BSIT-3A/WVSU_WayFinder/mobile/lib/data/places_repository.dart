@@ -32,7 +32,9 @@ class LivePlacesRepository implements PlacesRepository {
   bool get isDemo => false;
 
   // Same query shape as the web app: verified only, parent building embedded.
-  static const _select = 'select=*,parent:places!parent_id(*)';
+  // `parent:parent_id(*)` embeds the row that parent_id points to (one object). The older
+  // `parent:places!parent_id(*)` form makes PostgREST return the row's CHILDREN as a list instead.
+  static const _select = 'select=*,parent:parent_id(*)';
 
   Future<List<PlaceView>> _fetch(String filter) async {
     final uri = Uri.parse('${config.restBase}/places?$_select&status=eq.verified&$filter');
@@ -50,7 +52,7 @@ class LivePlacesRepository implements PlacesRepository {
     return rows
         .map((r) => PlaceView(
               Place.fromRow(r),
-              r['parent'] == null ? null : Place.fromRow(r['parent'] as Map<String, dynamic>),
+              r['parent'] is Map<String, dynamic> ? Place.fromRow(r['parent'] as Map<String, dynamic>) : null,
             ))
         .toList();
   }
