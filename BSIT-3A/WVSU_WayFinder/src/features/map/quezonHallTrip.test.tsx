@@ -6,6 +6,7 @@
 import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import local from "../../../mobile/test/fixtures/local-quezon-hall.json";
+import park from "../../../mobile/test/fixtures/outline-wellness-park.json";
 import { distanceToBuildingM, parseBuildings, type Building } from "./buildings";
 import { distanceM } from "../../lib/routing/graph";
 import type { LocationOutcome } from "../../lib/location";
@@ -18,7 +19,9 @@ vi.mock("../../lib/location", async (orig) => ({ ...(await orig<typeof import(".
 vi.mock("./buildings", async (orig) => {
   const real = await orig<typeof import("./buildings")>();
   const fx = (await import("../../../mobile/test/fixtures/local-quezon-hall.json")).default;
-  return { ...real, campusBuildingsOnce: async () => real.parseBuildings(fx.features as Parameters<typeof real.parseBuildings>[0]) };
+  // Tests that need the integrated outlines around Quezon Hall add them here (see withPark).
+  const extra = () => ((globalThis as { __extraOutlines?: unknown[] }).__extraOutlines ?? []);
+  return { ...real, campusBuildingsOnce: async () => real.parseBuildings({ features: [...fx.features.features, ...extra()] } as Parameters<typeof real.parseBuildings>[0]) };
 });
 
 const shapes: Building[] = parseBuildings(local.features as Parameters<typeof parseBuildings>[0]);
@@ -92,7 +95,9 @@ beforeEach(async () => {
   vi.resetModules(); // fresh live config and request cache for each data set
   ({ renderApp } = await import("../../test-utils"));
 });
-afterEach(() => { vi.unstubAllEnvs(); vi.unstubAllGlobals(); });
+afterEach(() => { vi.unstubAllEnvs(); vi.unstubAllGlobals(); delete (globalThis as { __extraOutlines?: unknown[] }).__extraOutlines; });
+/** The integrated outlines: the fixture's plus Wellness Park (an open park with no place record yet). */
+const withPark = () => { (globalThis as { __extraOutlines?: unknown[] }).__extraOutlines = park.features; };
 
 const QH1 = "/map?to=room-quezon-hall-f1-qh1";
 const AT_QH = "You’re at Quezon Hall. Go straight to the floor plan.";
@@ -204,6 +209,53 @@ describe("Main Gate chosen by hand", () => {
     await pickStart(/^Entrance \(Main Gate\)/);
     expect(await within(directions()).findByText(/min$/)).toBeInTheDocument();
     expect(within(directions()).queryByText(/You didn’t allow location access/)).not.toBeInTheDocument();
+    await expectQh1Selected();
+  });
+});
+
+describe("integrated outlines: Wellness Park (open park, no record) sits between Quezon Hall and Hometel", () => {
+  const parkShape = parseBuildings(park as Parameters<typeof parseBuildings>[0])[0];
+  const confirmButtons = () => within(screen.getByRole("group", { name: "Confirm where you are" })).getAllByRole("button").map((b) => b.textContent);
+
+  it("geometry: a ±30 m circle at Quezon Hall reaches Wellness Park (~24 m) and Hometel (~28 m)", () => {
+    const qh = centroid("Quezon Hall");
+    expect(distanceToBuildingM(parkShape, qh.lng, qh.lat)).toBeLessThan(distanceToBuildingM(shape("Hometel"), qh.lng, qh.lat));
+    expect(distanceToBuildingM(parkShape, qh.lng, qh.lat)).toBeLessThan(30);
+  });
+
+  it("±30 m: the question names only places with a button; Hometel stays selectable; QH 1 stays highlighted", async () => {
+    withPark();
+    const loc = await open(QH1, undefined, fixAt("Quezon Hall", 30));
+    await userEvent.click(screen.getByRole("button", { name: "Use my location" }));
+    expect(await within(directions()).findByText(ASK)).toBeInTheDocument();
+    expect(within(directions()).queryByText(/Wellness Park/)).not.toBeInTheDocument();
+    expect(confirmButtons()).toEqual(["I’m at Quezon Hall", "I’m at Hometel", "Somewhere else"]);
+    await userEvent.click(within(directions()).getByRole("button", { name: "I’m at Hometel" }));
+    expect(loc.current).toBe(`${QH1}&from=bldg-hometel`);
+    expect(startLine()).toBe("Hometel");
+    await expectQh1Selected();
+  });
+
+  it("“Somewhere else” still offers Wellness Park as a campus-map place; choosing it keeps QH 1", async () => {
+    withPark();
+    const loc = await open(QH1, undefined, fixAt("Quezon Hall", 30));
+    await userEvent.click(screen.getByRole("button", { name: "Use my location" }));
+    await userEvent.click(await within(directions()).findByRole("button", { name: "Somewhere else" }));
+    const mapList = within(screen.getByRole("dialog")).getByRole("list", { name: "Buildings on the campus map" });
+    await userEvent.click(within(mapList).getByRole("button", { name: /^Wellness Park/ }));
+    expect(loc.current).toBe(`${QH1}&from=map%3A8`);
+    expect(await within(directions()).findByText(/\(map only\)/)).toBeInTheDocument();
+    expect(startLine()).toContain("Wellness Park");
+    await expectQh1Selected();
+  });
+
+  it("±25 m: only Quezon Hall and the park are reached, so the question names no other place and asks", async () => {
+    withPark();
+    await open(QH1, undefined, fixAt("Quezon Hall", 25));
+    await userEvent.click(screen.getByRole("button", { name: "Use my location" }));
+    expect(await within(directions()).findByText("Your location (±25 m) could be Quezon Hall or somewhere nearby. Are you at Quezon Hall?")).toBeInTheDocument();
+    expect(screen.queryByText(AT_QH)).not.toBeInTheDocument();
+    expect(confirmButtons()).toEqual(["I’m at Quezon Hall", "Somewhere else"]);
     await expectQh1Selected();
   });
 });

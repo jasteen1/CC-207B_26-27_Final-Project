@@ -296,8 +296,8 @@ export default function MapPage() {
               {trip?.status === "gps-confirm" && destBuilding && (
                 <div className="actions" role="group" aria-label="Confirm where you are">
                   <button className="btn primary" onClick={() => startAt(destBuilding.id)}>I’m at {destBuilding.name}</button>
-                  {[...new Map(fixAt.nearby.filter((b) => b.placeId && b.placeId !== destBuilding.id).map((b) => [b.placeId!, b.name]))].map(([id, name]) => (
-                    <button key={id} className="btn ghost" onClick={() => startAt(id)}>I’m at {name}</button>
+                  {(trip.confirmChoices ?? []).map((c) => (
+                    <button key={c.placeId} className="btn ghost" onClick={() => startAt(c.placeId)}>I’m at {c.name}</button>
                   ))}
                   <button className="btn ghost" onClick={() => setPicker(true)}>Somewhere else</button>
                 </div>

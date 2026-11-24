@@ -59,12 +59,24 @@ class MappedDest extends TripDest {
 
 enum TripStatus { route, sameBuilding, needsStart, noBuilding, noEntrance, noPath, startNoEntrance, gpsLocating, gpsFailed, gpsPoor, gpsOffCampus, gpsOffWalkway, gpsConfirm }
 
-/// The other outlines a GPS fix could be in when it also reaches [destId] (empty = not ambiguous).
-List<String> gpsAlternatives(GpsStart s, String destId) {
+/// A place the student can say they're at instead of the destination (it has a record to start from).
+typedef ArrivalChoice = ({String placeId, String name});
+
+/// Whether a usable GPS fix that reaches [destId] also reaches any other outline (null = not ambiguous).
+/// `choices`: the other places with a record, which the student can pick (and the question names).
+/// An outline with no record (e.g. Wellness Park, an open park) still makes it ambiguous but is not
+/// named: the student reaches it through "Somewhere else", where every campus-map place is listed.
+({List<ArrivalChoice> choices})? gpsAlternatives(GpsStart s, String destId) {
   final f = s.fix;
-  if (s.failure != null || f == null || f.accuracyMeters > poorAccuracyM) return const [];
-  if (s.insideBuildingId != destId && !s.nearby.any((b) => b.placeId == destId)) return const [];
-  return {for (final b in s.nearby) if (b.placeId != destId) b.name}.toList();
+  if (s.failure != null || f == null || f.accuracyMeters > poorAccuracyM) return null;
+  if (s.insideBuildingId != destId && !s.nearby.any((b) => b.placeId == destId)) return null;
+  final others = s.nearby.where((b) => b.placeId != destId).toList();
+  if (others.isEmpty) return null;
+  final choices = <String, ArrivalChoice>{};
+  for (final b in others) {
+    if (b.placeId != null) choices.putIfAbsent(b.placeId!, () => (placeId: b.placeId!, name: b.name));
+  }
+  return (choices: choices.values.toList());
 }
 
 /// The fixture/web spelling of each status ("same-building", "gps-poor", ...).
@@ -87,7 +99,7 @@ class Indoor {
 }
 
 class Trip {
-  const Trip(this.status, {this.message, this.route, this.entrance, this.destBuilding, this.startBuilding, this.indoor});
+  const Trip(this.status, {this.message, this.route, this.entrance, this.destBuilding, this.startBuilding, this.indoor, this.confirmChoices = const []});
   final TripStatus status;
 
   /// Shown under "Walking route". Null when a location notice already explains it.
@@ -96,6 +108,9 @@ class Trip {
   final Entrance? entrance;
   final Place? destBuilding, startBuilding;
   final Indoor? indoor;
+
+  /// gpsConfirm only: the places other than the destination the student can pick (the question names exactly these).
+  final List<ArrivalChoice> confirmChoices;
 }
 
 /// Where a place is reached from outside: a building (or a landmark such as a gate) itself, else its parent.
@@ -133,10 +148,11 @@ Trip planTrip(TripDest dest, TripStart start, CampusPaths? campus) {
   }
   // The accuracy circle reaches the destination AND another outline: ask before skipping the walk.
   if (start is GpsStart) {
-    final others = gpsAlternatives(start, destB.id);
-    if (others.isNotEmpty) {
-      return t(TripStatus.gpsConfirm,
-          message: 'Your location (±${start.fix!.accuracyMeters.round()} m) could be ${destB.name} or ${others.join(' or ')}. Are you at ${destB.name}?');
+    final alt = gpsAlternatives(start, destB.id);
+    if (alt != null) {
+      final or = alt.choices.isEmpty ? 'somewhere nearby' : alt.choices.map((c) => c.name).join(' or ');
+      return Trip(TripStatus.gpsConfirm, destBuilding: destB, indoor: indoor, confirmChoices: alt.choices,
+          message: 'Your location (±${start.fix!.accuracyMeters.round()} m) could be ${destB.name} or $or. Are you at ${destB.name}?');
     }
   }
   // A usable GPS fix inside the destination building's outline: same as starting there.

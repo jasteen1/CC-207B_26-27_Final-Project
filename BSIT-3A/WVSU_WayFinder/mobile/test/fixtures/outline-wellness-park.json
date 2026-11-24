@@ -1,0 +1,45 @@
+{
+ "_notice": "TEST FIXTURE: the Wellness Park outline (feature 8, an open park / green space) copied unchanged from the team's MapTiler 'Wayfinder' dataset on 2026-11-25. Not linked to a place record (landmark-wellness-park is planned). Merge with local-quezon-hall.json features to reproduce the integrated outlines around Quezon Hall.",
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "id": "97c94e4f-5fad-4c1a-b02f-63e661df5476",
+   "type": "Feature",
+   "properties": {
+    "name": "Wellness Park",
+    "place_id": 8
+   },
+   "geometry": {
+    "coordinates": [
+     [
+      [
+       122.56202228946279,
+       10.713819009083679
+      ],
+      [
+       122.56238155560118,
+       10.713215422918992
+      ],
+      [
+       122.5628520352073,
+       10.71349299313026
+      ],
+      [
+       122.56250810065654,
+       10.714050043700126
+      ],
+      [
+       122.56248725257444,
+       10.714079836029512
+      ],
+      [
+       122.56202228946279,
+       10.713819009083679
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   }
+  }
+ ]
+}

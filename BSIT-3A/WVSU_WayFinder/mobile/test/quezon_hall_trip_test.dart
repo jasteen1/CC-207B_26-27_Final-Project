@@ -83,7 +83,7 @@ LocationFix fixInside(String name, {double accuracy = 8}) {
   return LocationFix(lat: lat, lng: lng, accuracyMeters: accuracy);
 }
 
-Future<void> pumpLocal(WidgetTester t, String initial, {LocationService? location, Map<String, dynamic>? data}) async {
+Future<void> pumpLocal(WidgetTester t, String initial, {LocationService? location, Map<String, dynamic>? data, List<CampusBuilding>? shapes}) async {
   final client = fakeRest(data);
   await t.pumpWidget(const SizedBox()); // a fresh app each time (otherwise the router keeps its old location)
   await pumpApp(t,
@@ -93,7 +93,7 @@ Future<void> pumpLocal(WidgetTester t, String initial, {LocationService? locatio
       places: LivePlacesRepository(cfg, client: client),
       campus: LiveCampusRepository(cfg, client: client),
       buildings: LiveBuildingRepository(cfg, client: client),
-      campusShapes: outlines(),
+      campusShapes: shapes ?? outlines(),
       location: location);
 }
 

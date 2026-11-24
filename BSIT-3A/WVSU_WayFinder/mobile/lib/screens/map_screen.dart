@@ -559,7 +559,7 @@ class _MapScreenState extends State<MapScreen> {
                 ]))
               else if (problem != null)
                 Text(problem, style: const TextStyle(color: muted)),
-              if (trip?.status == TripStatus.gpsConfirm && destB != null) _confirmArrival(destB),
+              if (trip?.status == TripStatus.gpsConfirm && destB != null) _confirmArrival(destB, trip!.confirmChoices),
               if (legs.isNotEmpty) Padding(padding: const EdgeInsets.only(top: 8), child: _TripLegs(legs)),
               const SizedBox(height: 10),
               const Text('STARTING FROM', style: TextStyle(fontSize: 11, letterSpacing: .8, color: muted, fontWeight: FontWeight.w700)),
@@ -590,14 +590,13 @@ class _MapScreenState extends State<MapScreen> {
 extension on _MapScreenState {
   /// The GPS circle reaches the destination and a neighbour: the student says where they are.
   /// "I’m at" the destination skips the walk; a linked neighbour becomes the start; anything else opens the picker.
-  Widget _confirmArrival(Place destB) {
-    final others = {for (final b in _fixNear) if (b.placeId != null && b.placeId != destB.id) b.placeId!: b.name};
+  Widget _confirmArrival(Place destB, List<ArrivalChoice> choices) {
     return Padding(
       key: const Key('confirm-arrival'),
       padding: const EdgeInsets.only(top: 8),
       child: Wrap(spacing: 8, runSpacing: 8, children: [
         FilledButton(key: const Key('confirm-at-dest'), onPressed: () => _startAt(destB.id), child: Text('I’m at ${destB.name}')),
-        for (final e in others.entries) OutlinedButton(onPressed: () => _startAt(e.key), child: Text('I’m at ${e.value}')),
+        for (final c in choices) OutlinedButton(onPressed: () => _startAt(c.placeId), child: Text('I’m at ${c.name}')),
         TextButton(onPressed: _chooseStart, child: const Text('Somewhere else')),
       ]),
     );

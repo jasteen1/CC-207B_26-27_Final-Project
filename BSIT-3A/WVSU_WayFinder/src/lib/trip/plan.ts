@@ -31,12 +31,24 @@ export type TripStatus =
   | "route" | "same-building" | "needs-start" | "no-building" | "no-entrance" | "no-path" | "start-no-entrance"
   | "gps-locating" | "gps-failed" | "gps-poor" | "gps-off-campus" | "gps-off-walkway" | "gps-confirm";
 
-/** The other outlines a usable GPS fix could be in when it also reaches `destId` (empty = not ambiguous). */
-export function gpsAlternatives(start: TripStart, destId: string): string[] {
-  if (start.kind !== "gps" || start.failure || !start.fix || start.fix.accuracy > POOR_ACCURACY_M) return [];
+/** A place the student can say they're at instead of the destination (it has a record to start from). */
+export interface ArrivalChoice { placeId: string; name: string }
+
+/**
+ * Whether a usable GPS fix that reaches `destId` also reaches any other outline (null = not ambiguous).
+ * `choices`: the other places with a record, which the student can pick (and the question names).
+ * An outline with no record (e.g. Wellness Park, an open park) still makes it ambiguous but is not
+ * named: the student reaches it through "Somewhere else", where every campus-map place is listed.
+ */
+export function gpsAlternatives(start: TripStart, destId: string): { choices: ArrivalChoice[] } | null {
+  if (start.kind !== "gps" || start.failure || !start.fix || start.fix.accuracy > POOR_ACCURACY_M) return null;
   const near = start.nearby ?? [];
-  if (start.insideBuildingId !== destId && !near.some((b) => b.placeId === destId)) return [];
-  return [...new Set(near.filter((b) => b.placeId !== destId).map((b) => b.name))];
+  if (start.insideBuildingId !== destId && !near.some((b) => b.placeId === destId)) return null;
+  const others = near.filter((b) => b.placeId !== destId);
+  if (!others.length) return null;
+  const choices = new Map<string, ArrivalChoice>();
+  for (const b of others) if (b.placeId && !choices.has(b.placeId)) choices.set(b.placeId, { placeId: b.placeId, name: b.name });
+  return { choices: [...choices.values()] };
 }
 
 export interface Indoor {
@@ -62,6 +74,8 @@ export interface Trip {
   startBuilding?: Place;
   /** Rooms and offices only. */
   indoor?: Indoor;
+  /** "gps-confirm" only: the places other than the destination the student can pick (the question names exactly these). */
+  confirmChoices?: ArrivalChoice[];
 }
 
 /** Where a place is reached from outside: a building (or a landmark such as a gate) itself, else its parent building. */
@@ -95,9 +109,10 @@ export function planTrip(dest: TripDest, start: TripStart, campus: CampusPaths |
     return { ...base, status: "same-building", startBuilding: destBuilding, message: "You’re already in this building. Go straight to the floor plan." };
   }
   // The accuracy circle reaches the destination AND another outline: ask before skipping the walk.
-  const others = gpsAlternatives(start, destBuilding.id);
-  if (start.kind === "gps" && start.fix && others.length) {
-    return { ...base, status: "gps-confirm", message: `Your location (±${Math.round(start.fix.accuracy)} m) could be ${destBuilding.name} or ${others.join(" or ")}. Are you at ${destBuilding.name}?` };
+  const alt = gpsAlternatives(start, destBuilding.id);
+  if (start.kind === "gps" && start.fix && alt) {
+    const or = alt.choices.length ? alt.choices.map((c) => c.name).join(" or ") : "somewhere nearby";
+    return { ...base, status: "gps-confirm", confirmChoices: alt.choices, message: `Your location (±${Math.round(start.fix.accuracy)} m) could be ${destBuilding.name} or ${or}. Are you at ${destBuilding.name}?` };
   }
   // A usable GPS fix inside the destination building's outline: same as starting there.
   if (start.kind === "gps" && !start.failure && start.fix && start.fix.accuracy <= POOR_ACCURACY_M && start.insideBuildingId === destBuilding.id) {

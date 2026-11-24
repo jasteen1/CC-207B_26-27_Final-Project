@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 // Main Gate → Quezon Hall → QH 1 on the LOCAL rehearsal records (see quezon_hall_trip_test.dart):
 // 1. arriving: a GPS circle that covers Quezon Hall AND Hometel must not silently skip the walk;
 // 2. once the route survey is imported, choosing "Entrance (Main Gate)" must give the walking route.
@@ -61,6 +64,7 @@ Map<String, dynamic> surveyed() {
 }
 
 void main() {
+  group('integrated outlines with Wellness Park', wellnessParkTests);
   test('accuracy circle: which outlines a fix reaches (Hometel is ~12 m from Quezon Hall)', () {
     final all = outlines();
     final qh = centroid('Quezon Hall');
@@ -179,4 +183,53 @@ extension PlaceDestFor on PlaceDest {
     final hall = rows.singleWhere((p) => p['id'] == 'bldg-quezon-hall');
     return PlaceDest(PlaceView(Place.fromRow(room), Place.fromRow(hall)));
   }
+}
+
+/// The integrated outlines around Quezon Hall: the fixture's plus Wellness Park (an open park, no record yet).
+List<CampusBuilding> withPark() => [
+      ...outlines(),
+      ...parseCampusBuildings(jsonDecode(File('test/fixtures/outline-wellness-park.json').readAsStringSync()) as Map<String, dynamic>),
+    ];
+
+void wellnessParkTests() {
+  List<String?> confirmButtons(WidgetTester t) => [
+        for (final w in t.widgetList<ButtonStyleButton>(find.descendant(of: find.byKey(const Key('confirm-arrival')), matching: find.byWidgetPredicate((w) => w is ButtonStyleButton))))
+          ((w.child is Text) ? (w.child as Text).data : null),
+      ];
+
+  test('integrated geometry: ±30 m at Quezon Hall reaches Wellness Park (~24 m) before Hometel (~28 m)', () {
+    final qh = centroid('Quezon Hall');
+    expect([for (final b in buildingsWithin(withPark(), qh, 30)) b.name], ['Quezon Hall', 'Wellness Park', 'Hometel']);
+  });
+
+  testWidgets('integrated ±30 m: the question names only places with a button; Hometel selectable; QH 1 kept', (t) async {
+    await pumpLocal(t, qh1, shapes: withPark(), location: FakeLocation(LocationOutcome.fix(fixInside('Quezon Hall', accuracy: 30))));
+    await tapText(t, 'Use my location');
+    expect(find.text('Your location (±30 m) could be Quezon Hall or Hometel. Are you at Quezon Hall?'), findsOneWidget);
+    expect(find.textContaining('Wellness Park'), findsNothing);
+    expect(confirmButtons(t), ['I’m at Quezon Hall', 'I’m at Hometel', 'Somewhere else']);
+    await tapText(t, 'I’m at Hometel');
+    expect(startLine(t), 'Hometel');
+    expectQh1Selected(t);
+  });
+
+  testWidgets('integrated: “Somewhere else” still offers Wellness Park as a campus-map place; QH 1 kept', (t) async {
+    await pumpLocal(t, qh1, shapes: withPark(), location: FakeLocation(LocationOutcome.fix(fixInside('Quezon Hall', accuracy: 30))));
+    await tapText(t, 'Use my location');
+    await tapText(t, 'Somewhere else');
+    await t.enterText(find.byKey(const Key('start-filter')), 'wellness');
+    await t.pumpAndSettle();
+    await tapText(t, 'Wellness Park', last: true);
+    expect(startLine(t), 'Wellness Park (map only)');
+    expectQh1Selected(t);
+  });
+
+  testWidgets('integrated ±25 m: only Quezon Hall and the park are reached, so it asks without naming another place', (t) async {
+    await pumpLocal(t, qh1, shapes: withPark(), location: FakeLocation(LocationOutcome.fix(fixInside('Quezon Hall', accuracy: 25))));
+    await tapText(t, 'Use my location');
+    expect(find.text('Your location (±25 m) could be Quezon Hall or somewhere nearby. Are you at Quezon Hall?'), findsOneWidget);
+    expect(find.text(atQh), findsNothing);
+    expect(confirmButtons(t), ['I’m at Quezon Hall', 'Somewhere else']);
+    expectQh1Selected(t);
+  });
 }
