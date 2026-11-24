@@ -14,8 +14,14 @@ export type TripStart =
   | { kind: "place"; view: PlaceView }
   /** A building drawn on the map that has no linked record (so no entrance can be known). */
   | { kind: "mapped"; name: string }
-  /** "Use my location": the fix, or why there isn't one (null + no failure = still locating). */
-  | { kind: "gps"; fix: Fix | null; failure?: LocationFailure };
+  /**
+   * "Use my location": the fix, or why there isn't one (null + no failure = still locating).
+   * insideBuildingId: the building record whose map outline contains the fix (a polygon test, not a walkway).
+   * nearby: every drawn outline the accuracy circle reaches, with its linked record id if any.
+   */
+  | { kind: "gps"; fix: Fix | null; failure?: LocationFailure; insideBuildingId?: string; nearby?: NearBuilding[] };
+
+export interface NearBuilding { name: string; placeId?: string }
 
 export type TripDest =
   | { kind: "place"; view: PlaceView }
@@ -23,7 +29,15 @@ export type TripDest =
 
 export type TripStatus =
   | "route" | "same-building" | "needs-start" | "no-building" | "no-entrance" | "no-path" | "start-no-entrance"
-  | "gps-locating" | "gps-failed" | "gps-poor" | "gps-off-campus" | "gps-off-walkway";
+  | "gps-locating" | "gps-failed" | "gps-poor" | "gps-off-campus" | "gps-off-walkway" | "gps-confirm";
+
+/** The other outlines a usable GPS fix could be in when it also reaches `destId` (empty = not ambiguous). */
+export function gpsAlternatives(start: TripStart, destId: string): string[] {
+  if (start.kind !== "gps" || start.failure || !start.fix || start.fix.accuracy > POOR_ACCURACY_M) return [];
+  const near = start.nearby ?? [];
+  if (start.insideBuildingId !== destId && !near.some((b) => b.placeId === destId)) return [];
+  return [...new Set(near.filter((b) => b.placeId !== destId).map((b) => b.name))];
+}
 
 export interface Indoor {
   /** Door label (or name for an office). */
@@ -79,6 +93,15 @@ export function planTrip(dest: TripDest, start: TripStart, campus: CampusPaths |
   // Same building: skip walking and go straight to the indoor step.
   if (start.kind === "place" && buildingOf(start.view)?.id === destBuilding.id) {
     return { ...base, status: "same-building", startBuilding: destBuilding, message: "You’re already in this building. Go straight to the floor plan." };
+  }
+  // The accuracy circle reaches the destination AND another outline: ask before skipping the walk.
+  const others = gpsAlternatives(start, destBuilding.id);
+  if (start.kind === "gps" && start.fix && others.length) {
+    return { ...base, status: "gps-confirm", message: `Your location (±${Math.round(start.fix.accuracy)} m) could be ${destBuilding.name} or ${others.join(" or ")}. Are you at ${destBuilding.name}?` };
+  }
+  // A usable GPS fix inside the destination building's outline: same as starting there.
+  if (start.kind === "gps" && !start.failure && start.fix && start.fix.accuracy <= POOR_ACCURACY_M && start.insideBuildingId === destBuilding.id) {
+    return { ...base, status: "same-building", startBuilding: destBuilding, message: `You’re at ${destBuilding.name}. Go straight to the floor plan.` };
   }
   if (!campus) return { ...base, status: "needs-start" };
   if (!entrancesOf(campus, destBuilding.id).length) return { ...base, status: "no-entrance", message: `No verified entrance is recorded for ${destBuilding.name} yet, so walking directions are unavailable.` };

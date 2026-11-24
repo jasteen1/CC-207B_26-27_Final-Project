@@ -11,11 +11,11 @@ import { accuracyLabel, CAMPUS_CENTER, CAMPUS_RADIUS_M, failureText, getLocation
 import { distanceM, entrancesOf } from "../../lib/routing/graph";
 import { prefixPointer } from "../../lib/campus/resolve";
 import { roomDisplay } from "../../lib/search";
-import { planTrip, POOR_ACCURACY_M, type TripDest, type TripStart } from "../../lib/trip/plan";
+import { planTrip, POOR_ACCURACY_M, type NearBuilding, type TripDest, type TripStart } from "../../lib/trip/plan";
 import type { BuildingRef, PlaceView } from "../../lib/types";
 import { useAsync } from "../../lib/usePlaces";
 import BuildingCard from "./BuildingCard";
-import { campusBuildingsOnce, findBuilding, type Building } from "./buildings";
+import { buildingAt, buildingsWithin, campusBuildingsOnce, findBuilding, type Building } from "./buildings";
 import FloorPlanViewer from "./FloorPlanViewer";
 import PlanImage from "./PlanImage";
 import StartPicker from "./StartPicker";
@@ -58,6 +58,8 @@ export default function MapPage() {
   const [locFail, setLocFail] = useState<LocationFailure | null>(null);
   const [locating, setLocating] = useState(false);
   const [picker, setPicker] = useState(false);
+  // Where the fix lies on the map: the outline containing it, and every outline its accuracy circle reaches.
+  const [fixAt, setFixAt] = useState<{ inside?: string; nearby: NearBuilding[] }>({ nearby: [] });
 
   // Destination is kept in the URL; changing the start only rewrites `from`.
   const setFrom = (f: string) => {
@@ -91,9 +93,31 @@ export default function MapPage() {
     setLocating(true);
     const out = await getLocation();
     if (id !== locRequest.current) return;
+    // Locates the student only; never used as a walkway point. A poor fix isn't trusted, so only its centre counts.
+    const at: { inside?: string; nearby: NearBuilding[] } = { nearby: [] };
+    if (out.ok) {
+      const { lng, lat, accuracy } = out.fix;
+      const hit = buildingAt(shapeList, lng, lat);
+      const reached = accuracy <= POOR_ACCURACY_M ? buildingsWithin(shapeList, lng, lat, accuracy) : hit ? [hit] : [];
+      for (const b of reached) {
+        let placeId: string | undefined;
+        try { placeId = (await getBuilding({ featureIds: b.featureIds })).data?.place.id; } catch { /* unlinked: name only */ }
+        if (id !== locRequest.current) return;
+        at.nearby.push({ name: b.name, placeId });
+        if (b === hit) at.inside ??= placeId;
+      }
+    }
     setLocating(false);
+    setFixAt(at);
     if (out.ok) { setFix(out.fix); setLocFail(null); setFrom("gps"); }
     else { setFix(null); setLocFail(out.reason); }
+  }
+
+  /** A start the student chose (picker or "I’m at …"): any pending or earlier GPS fix is dropped. */
+  function startAt(id: string) {
+    locRequest.current++;
+    setPicker(false); setLocating(false); setFix(null); setLocFail(null); setFixAt({ nearby: [] });
+    setFrom(id);
   }
 
   const linkedDest = destLink.state === "done" ? destLink.result.data : null;
@@ -112,13 +136,13 @@ export default function MapPage() {
   const offCampus = fix ? distanceM(fix, CAMPUS_CENTER) > CAMPUS_RADIUS_M : false;
 
   const tripDest: TripDest | null = destView ? { kind: "place", view: destView } : destMappedOnly ? { kind: "mapped", name: destMappedOnly.name } : null;
-  const tripStart: TripStart = from === "gps" ? { kind: "gps", fix, failure: locFail ?? undefined }
+  const tripStart: TripStart = from === "gps" ? { kind: "gps", fix, failure: locFail ?? undefined, insideBuildingId: fixAt.inside, nearby: fixAt.nearby }
     : startView ? { kind: "place", view: startView }
     : startMappedOnly ? { kind: "mapped", name: startMappedOnly.name }
     : { kind: "none" };
   const trip = useMemo(() => (tripDest ? planTrip(tripDest, tripStart, campus) : null),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [tripDest?.kind === "place" ? tripDest.view.place.id : tripDest?.name, from, fix, locFail, startView?.place.id, startMappedOnly?.key, campus]);
+    [tripDest?.kind === "place" ? tripDest.view.place.id : tripDest?.name, from, fix, locFail, fixAt, startView?.place.id, startMappedOnly?.key, campus]);
   const destBuilding = trip?.destBuilding;
   const plan = trip?.route && trip.entrance ? { route: trip.route, entrance: trip.entrance } : null;
   const routeProblem = trip && !plan ? trip.message ?? null : null;
@@ -269,6 +293,15 @@ export default function MapPage() {
               {plan ? (
                 <p className="route-summary"><strong>{plan.route.minutes} min</strong> walk · {Math.round(plan.route.meters)} m <span className="muted small">(≈ estimate at 1.2 m/s, verified walkways only)</span></p>
               ) : routeProblem ? <p className="muted">{routeProblem}</p> : paths.state === "loading" ? <p className="muted">Loading walkways…</p> : null}
+              {trip?.status === "gps-confirm" && destBuilding && (
+                <div className="actions" role="group" aria-label="Confirm where you are">
+                  <button className="btn primary" onClick={() => startAt(destBuilding.id)}>I’m at {destBuilding.name}</button>
+                  {[...new Map(fixAt.nearby.filter((b) => b.placeId && b.placeId !== destBuilding.id).map((b) => [b.placeId!, b.name]))].map(([id, name]) => (
+                    <button key={id} className="btn ghost" onClick={() => startAt(id)}>I’m at {name}</button>
+                  ))}
+                  <button className="btn ghost" onClick={() => setPicker(true)}>Somewhere else</button>
+                </div>
+              )}
 
               <h3 className="sub-label">Starting from</h3>
               <p className="start-line">
@@ -296,7 +329,7 @@ export default function MapPage() {
       {planOpen && indoor?.plan && destBuilding && (
         <FloorPlanViewer plans={indoor.plans} building={destBuilding.name} highlight={indoor.spot} onClose={() => setPlanOpen(false)} />
       )}
-      {picker && <StartPicker places={places} mapBuildings={shapeList} onClose={() => setPicker(false)} onPick={(id) => { locRequest.current++; setPicker(false); setLocating(false); setFix(null); setLocFail(null); setFrom(id); }} />}
+      {picker && <StartPicker places={places} mapBuildings={shapeList} onClose={() => setPicker(false)} onPick={startAt} />}
     </section>
   );
 }

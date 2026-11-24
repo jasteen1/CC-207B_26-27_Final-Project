@@ -93,7 +93,7 @@ const rawPlaces = fixtures.places as (Place & { description?: string; photoUrl?:
 
 export async function demoBuilding(ref: BuildingRef): Promise<BuildingDetails | null> {
   const placeId = "placeId" in ref ? ref.placeId : links.find((l) => ref.featureIds.includes(l.featureId))?.placeId;
-  const raw = placeId ? rawPlaces.find((p) => p.id === placeId && p.kind === "building") : undefined;
+  const raw = placeId ? rawPlaces.find((p) => p.id === placeId && (p.kind === "building" || p.kind === "landmark")) : undefined;
   if (!raw) return null;
   const { description, photoUrl, ...place } = raw;
   return assembleBuilding({

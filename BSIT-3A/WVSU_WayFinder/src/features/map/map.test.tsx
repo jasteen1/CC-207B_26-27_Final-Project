@@ -100,7 +100,7 @@ describe("Campus Map (demo places + demo walkways)", () => {
     await screen.findByRole("article", { name: "Destination" });
     await userEvent.click(screen.getByRole("button", { name: "Use my location" }));
     expect(await screen.findByText(/GPS accuracy is poor/)).toBeInTheDocument();
-    expect(screen.getByText("Poor")).toBeInTheDocument();
+    expect(await screen.findByText("Poor")).toBeInTheDocument(); // the label can render one update after the warning
     expect(loc.current).toContain("to=room-demo-cb-203");
   });
 

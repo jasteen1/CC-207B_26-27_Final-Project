@@ -140,6 +140,28 @@ export function buildingAt(buildings: Building[], lng: number, lat: number): Bui
   return buildings.find((b) => b.polygons.some(([outer, ...holes]) => outer && inRing(lng, lat, outer) && !holes.some((h) => inRing(lng, lat, h))));
 }
 
+/** Metres from a point to the nearest edge of a building's outline; 0 when the point is inside it. */
+export function distanceToBuildingM(b: Building, lng: number, lat: number): number {
+  if (buildingAt([b], lng, lat)) return 0;
+  // Local flat projection around the point: fine at campus scale (a few hundred metres).
+  const mPerDeg = (6371000 * Math.PI) / 180, kx = mPerDeg * Math.cos((lat * Math.PI) / 180);
+  let best = Infinity;
+  for (const poly of b.polygons) for (const ring of poly) {
+    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      const ax = (ring[j][0] - lng) * kx, ay = (ring[j][1] - lat) * mPerDeg, bx = (ring[i][0] - lng) * kx, by = (ring[i][1] - lat) * mPerDeg;
+      const dx = bx - ax, dy = by - ay, len2 = dx * dx + dy * dy;
+      const t = len2 === 0 ? 0 : Math.min(1, Math.max(0, -(ax * dx + ay * dy) / len2));
+      best = Math.min(best, Math.hypot(ax + t * dx, ay + t * dy));
+    }
+  }
+  return best;
+}
+
+/** Every outline a GPS accuracy circle (centre lng/lat, radius in metres) reaches, nearest first. */
+export function buildingsWithin(buildings: Building[], lng: number, lat: number, radiusM: number): Building[] {
+  return buildings.map((b) => ({ b, d: distanceToBuildingM(b, lng, lat) })).filter((h) => h.d <= radiusM).sort((x, y) => x.d - y.d).map((h) => h.b);
+}
+
 export const findBuilding = (buildings: Building[], key: string | null | undefined) =>
   key ? buildings.find((b) => b.key === key) : undefined;
 

@@ -222,7 +222,8 @@ export async function liveBuilding(ref: BuildingRef): Promise<BuildingDetails | 
     if (!placeId) return null;
     const id = encodeURIComponent(placeId);
     const [rows, children, floorPlans, featureLinks] = await Promise.all([
-      get<(Row & { description?: string | null; photo_url?: string | null })[]>(`places?select=*&id=eq.${id}&kind=eq.building&${v}&limit=1`),
+      // A gate is a landmark record linked to its polygon the same way (route survey).
+      get<(Row & { description?: string | null; photo_url?: string | null })[]>(`places?select=*&id=eq.${id}&kind=in.(building,landmark)&${v}&limit=1`),
       get<Row[]>(`places?select=*&parent_id=eq.${id}&${v}&order=name.asc&limit=500`),
       get<PlanRow[]>(`floor_plans?select=*&building_id=eq.${id}&${v}&order=floor.asc`),
       get<{ feature_id: number }[]>(`building_features?select=feature_id&place_id=eq.${id}&${v}`),
