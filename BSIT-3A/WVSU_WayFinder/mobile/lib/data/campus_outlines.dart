@@ -41,6 +41,32 @@ class CampusBuilding {
   }
 
   bool contains(LatLng p) => polygons.any((ring) => _inRing(p.longitude, p.latitude, ring));
+
+  /// Metres from [p] to the nearest edge of the outline; 0 when [p] is inside it.
+  double distanceToM(LatLng p) {
+    if (contains(p)) return 0;
+    // Local flat projection around p: fine at campus scale (a few hundred metres).
+    const mPerDeg = 6371000.0 * math.pi / 180;
+    final kx = mPerDeg * math.cos(p.latitude * math.pi / 180);
+    var best = double.infinity;
+    for (final ring in polygons) {
+      for (var i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        final ax = (ring[j].longitude - p.longitude) * kx, ay = (ring[j].latitude - p.latitude) * mPerDeg;
+        final bx = (ring[i].longitude - p.longitude) * kx, by = (ring[i].latitude - p.latitude) * mPerDeg;
+        final dx = bx - ax, dy = by - ay, len2 = dx * dx + dy * dy;
+        final t = len2 == 0 ? 0.0 : (-(ax * dx + ay * dy) / len2).clamp(0.0, 1.0);
+        final ex = ax + t * dx, ey = ay + t * dy;
+        best = math.min(best, math.sqrt(ex * ex + ey * ey));
+      }
+    }
+    return best;
+  }
+}
+
+/// Every outline a GPS accuracy circle (centre [p], radius [radiusM]) reaches, nearest first.
+List<CampusBuilding> buildingsWithin(List<CampusBuilding> list, LatLng p, double radiusM) {
+  final hits = [for (final b in list) (b, b.distanceToM(p))].where((h) => h.$2 <= radiusM).toList()..sort((a, b) => a.$2.compareTo(b.$2));
+  return [for (final h in hits) h.$1];
 }
 
 bool _inRing(double x, double y, List<LatLng> ring) {

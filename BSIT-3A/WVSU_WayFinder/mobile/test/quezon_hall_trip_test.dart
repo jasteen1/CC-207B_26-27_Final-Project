@@ -25,10 +25,11 @@ const cfg = AppConfig(supabaseUrl: 'https://local.test', supabasePublishableKey:
 const tall = Size(390, 2600);
 
 /// Just enough PostgREST for the app's queries: eq / in / ilike / or filters and the parent embed.
-MockClient fakeRest() => MockClient((req) async {
+MockClient fakeRest([Map<String, dynamic>? data]) => MockClient((req) async {
+      final rowsFrom = data ?? local;
       final seg = req.url.pathSegments;
       if (seg.length < 3 || seg[0] != 'rest') return http.Response('{}', 404);
-      final rows = ((local[seg[2]] as List?) ?? (throw StateError('table ${seg[2]}'))).cast<Map<String, dynamic>>();
+      final rows = ((rowsFrom[seg[2]] as List?) ?? (throw StateError('table ${seg[2]}'))).cast<Map<String, dynamic>>();
       bool test(Map<String, dynamic> r, String col, String opv) {
         final i = opv.indexOf('.');
         final op = opv.substring(0, i), v = opv.substring(i + 1), x = r[col]?.toString();
@@ -56,7 +57,7 @@ MockClient fakeRest() => MockClient((req) async {
       // As real PostgREST does for this self-reference: `parent:parent_id(*)` = the row parent_id points to;
       // `parent:places!parent_id(*)` = the row's children, as a list (the live bug found when QH 1 was published).
       final sel = req.url.queryParameters['select'] ?? '';
-      final places = (local['places'] as List).cast<Map<String, dynamic>>();
+      final places = (rowsFrom['places'] as List).cast<Map<String, dynamic>>();
       if (sel.contains('parent:parent_id(')) {
         for (final r in out) {
           r['parent'] = places.where((p) => p['id'] == r['parent_id']).firstOrNull;
@@ -82,8 +83,8 @@ LocationFix fixInside(String name, {double accuracy = 8}) {
   return LocationFix(lat: lat, lng: lng, accuracyMeters: accuracy);
 }
 
-Future<void> pumpLocal(WidgetTester t, String initial, {LocationService? location}) async {
-  final client = fakeRest();
+Future<void> pumpLocal(WidgetTester t, String initial, {LocationService? location, Map<String, dynamic>? data}) async {
+  final client = fakeRest(data);
   await t.pumpWidget(const SizedBox()); // a fresh app each time (otherwise the router keeps its old location)
   await pumpApp(t,
       size: tall,

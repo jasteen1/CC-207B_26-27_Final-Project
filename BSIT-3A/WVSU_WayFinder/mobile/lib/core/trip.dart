@@ -31,12 +31,16 @@ class MappedStart extends TripStart {
 
 /// "Use my location": the fix, or why there isn't one (no fix + no failure = still locating).
 class GpsStart extends TripStart {
-  const GpsStart(this.fix, [this.failure, this.insideBuildingId]);
+  const GpsStart(this.fix, [this.failure, this.insideBuildingId, this.nearby = const []]);
   final LocationFix? fix;
   final LocationFailure? failure;
 
   /// The building record whose map outline contains the fix (polygon test, not a walking route).
   final String? insideBuildingId;
+
+  /// Every drawn outline the accuracy circle reaches (its linked record id, if any). Two or more
+  /// with the destination among them = the fix can't tell which one the student is in.
+  final List<({String name, String? placeId})> nearby;
 }
 
 sealed class TripDest {
@@ -53,7 +57,15 @@ class MappedDest extends TripDest {
   final String name;
 }
 
-enum TripStatus { route, sameBuilding, needsStart, noBuilding, noEntrance, noPath, startNoEntrance, gpsLocating, gpsFailed, gpsPoor, gpsOffCampus, gpsOffWalkway }
+enum TripStatus { route, sameBuilding, needsStart, noBuilding, noEntrance, noPath, startNoEntrance, gpsLocating, gpsFailed, gpsPoor, gpsOffCampus, gpsOffWalkway, gpsConfirm }
+
+/// The other outlines a GPS fix could be in when it also reaches [destId] (empty = not ambiguous).
+List<String> gpsAlternatives(GpsStart s, String destId) {
+  final f = s.fix;
+  if (s.failure != null || f == null || f.accuracyMeters > poorAccuracyM) return const [];
+  if (s.insideBuildingId != destId && !s.nearby.any((b) => b.placeId == destId)) return const [];
+  return {for (final b in s.nearby) if (b.placeId != destId) b.name}.toList();
+}
 
 /// The fixture/web spelling of each status ("same-building", "gps-poor", ...).
 String tripStatusName(TripStatus s) => s.name.replaceAllMapped(RegExp(r'[A-Z]'), (m) => '-${m[0]!.toLowerCase()}');
@@ -119,6 +131,14 @@ Trip planTrip(TripDest dest, TripStart start, CampusPaths? campus) {
   if (start is PlaceStart && tripBuildingOf(start.view)?.id == destB.id) {
     return t(TripStatus.sameBuilding, startB: destB, message: 'You’re already in this building. Go straight to the floor plan.');
   }
+  // The accuracy circle reaches the destination AND another outline: ask before skipping the walk.
+  if (start is GpsStart) {
+    final others = gpsAlternatives(start, destB.id);
+    if (others.isNotEmpty) {
+      return t(TripStatus.gpsConfirm,
+          message: 'Your location (±${start.fix!.accuracyMeters.round()} m) could be ${destB.name} or ${others.join(' or ')}. Are you at ${destB.name}?');
+    }
+  }
   // A usable GPS fix inside the destination building's outline: same as starting there.
   if (start is GpsStart && start.failure == null && start.fix != null && start.fix!.accuracyMeters <= poorAccuracyM && start.insideBuildingId == destB.id) {
     return t(TripStatus.sameBuilding, startB: destB, message: 'You’re at ${destB.name}. Go straight to the floor plan.');
@@ -179,6 +199,8 @@ List<TripLeg> tripLegs(Trip trip, TripStart start, CampusPaths? campus, {String?
       GpsStart(:final failure) when failure != null => (LegState.choose, 'Your location isn’t available. Choose a starting point.'),
       GpsStart(:final fix) when fix == null => (LegState.choose, 'Finding your location…'),
       GpsStart(:final fix) when fix!.accuracyMeters > poorAccuracyM => (LegState.choose, 'GPS too imprecise (±${fix.accuracyMeters.round()} m). Choose a starting point.'),
+      GpsStart(:final fix) when trip.status == TripStatus.gpsConfirm =>
+        (LegState.choose, 'Your location (±${fix!.accuracyMeters.round()} m) reaches more than one building. Confirm where you are.'),
       GpsStart() when trip.status == TripStatus.gpsOffCampus => (LegState.unavailable, 'You appear to be outside the campus.'),
       GpsStart() when trip.status == TripStatus.gpsOffWalkway || noNetwork => (LegState.unavailable, 'Your location (no surveyed walkway near you yet).'),
       GpsStart(:final fix) => (LegState.ok, 'Your location (±${fix!.accuracyMeters.round()} m).'),
@@ -195,7 +217,9 @@ List<TripLeg> tripLegs(Trip trip, TripStart start, CampusPaths? campus, {String?
     final route = trip.route;
     legs.add(route != null
         ? TripLeg('walkway', 'Walkway', LegState.ok, '${route.meters.round()} m on verified walkways.')
-        : TripLeg('walkway', 'Walkway', LegState.unavailable,
+        : trip.status == TripStatus.gpsConfirm
+            ? TripLeg('walkway', 'Walkway', LegState.choose, 'Not needed if you’re already in $destName.')
+            : TripLeg('walkway', 'Walkway', LegState.unavailable,
             noNetwork ? 'Not surveyed yet: no verified walkway leads to $destName.' : trip.status == TripStatus.noPath ? 'No verified walkway connects your start to $destName yet.' : 'Not available until the start and the entrance are both on a surveyed walkway.'));
   }
   if (b != null && trip.status != TripStatus.sameBuilding) {

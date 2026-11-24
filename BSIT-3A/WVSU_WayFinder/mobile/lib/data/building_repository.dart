@@ -79,7 +79,8 @@ class LiveBuildingRepository implements BuildingRepository {
     }
     final e = Uri.encodeQueryComponent(id);
     final r = await Future.wait([
-      _get('places?select=*&id=eq.$e&kind=eq.building&$v&limit=1'),
+      // A gate is a landmark record linked to its polygon the same way (route survey).
+      _get('places?select=*&id=eq.$e&kind=in.(building,landmark)&$v&limit=1'),
       _get('places?select=*&parent_id=eq.$e&$v&order=name.asc&limit=500'),
       _get('floor_plans?select=id,building_id,floor,label,image_url&building_id=eq.$e&$v&order=floor.asc'),
       _get('building_features?select=feature_id&place_id=eq.$e&$v'),
@@ -115,7 +116,7 @@ class DemoBuildingRepository implements BuildingRepository {
     final id = placeId ?? links.where((l) => featureIds.contains(l['featureId'])).firstOrNull?['placeId'] as String?;
     if (id == null) return null;
     final raw = ((jsonDecode(await _places()) as Map)['places'] as List).cast<Map<String, dynamic>>();
-    final row = raw.where((p) => p['id'] == id && p['kind'] == 'building').firstOrNull;
+    final row = raw.where((p) => p['id'] == id && (p['kind'] == 'building' || p['kind'] == 'landmark')).firstOrNull;
     if (row == null) return null;
     final plans = ((jsonDecode(await _campus()) as Map)['floorPlans'] as List).cast<Map<String, dynamic>>();
     return BuildingDetails(

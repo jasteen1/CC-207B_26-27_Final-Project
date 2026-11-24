@@ -56,6 +56,8 @@ class _MapScreenState extends State<MapScreen> {
   LocationFix? _fix;
   /// The building record whose outline contains the GPS fix (null if none, or not linked).
   String? _fixInside;
+  /// Every outline the fix's accuracy circle reaches (with its linked record id, if any).
+  List<({String name, String? placeId})> _fixNear = const [];
   String? _locProblem;
   /// The trip status the inside card was last scrolled into view for (same building → floor plan first).
   TripStatus? _revealedFor;
@@ -227,17 +229,26 @@ class _MapScreenState extends State<MapScreen> {
     final scope = AppScope.of(context);
     final out = await scope.location.current();
     if (!mounted || id != _locRequest) return;
-    // Which building outline the fix falls in (locates the student; never used as a walkway point).
+    // Which building outline the fix falls in, and every outline its accuracy circle reaches
+    // (locates the student; never used as a walkway point). A poor fix isn't trusted, so only its centre counts.
     String? inside;
+    final near = <({String name, String? placeId})>[];
     final f = out.fix;
-    final shape = f == null ? null : buildingAt(_buildings, LatLng(f.lat, f.lng));
-    if (shape != null) {
-      try { inside = (await scope.buildings.lookup(featureIds: shape.featureIds))?.place.id; } catch (_) {}
+    final at = f == null ? null : LatLng(f.lat, f.lng);
+    final shapes = at == null
+        ? const <CampusBuilding>[]
+        : f!.accuracyMeters <= poorAccuracyM ? buildingsWithin(_buildings, at, f.accuracyMeters) : [?buildingAt(_buildings, at)];
+    for (final shape in shapes) {
+      String? placeId;
+      try { placeId = (await scope.buildings.lookup(featureIds: shape.featureIds))?.place.id; } catch (_) {}
       if (!mounted || id != _locRequest) return;
+      near.add((name: shape.name, placeId: placeId));
+      if (shape.contains(at!)) inside ??= placeId;
     }
     setState(() {
       _locating = false;
       _fixInside = inside;
+      _fixNear = near;
       _fix = out.fix;
       _locFailure = out.failure;
       _locProblem = out.failure == null ? null : describeFailure(out.failure!);
@@ -316,11 +327,14 @@ class _MapScreenState extends State<MapScreen> {
         });
       },
     );
-    if (picked != null && mounted) {
-      _locRequest++;
-      setState(() { _fix = null; _fixInside = null; _locProblem = null; _locFailure = null; _locating = false; });
-      _setFrom(picked);
-    }
+    if (picked != null && mounted) _startAt(picked);
+  }
+
+  /// A start chosen by the student (picker or "I'm at …"): any pending or earlier GPS fix is dropped.
+  void _startAt(String from) {
+    _locRequest++;
+    setState(() { _fix = null; _fixInside = null; _fixNear = const []; _locProblem = null; _locFailure = null; _locating = false; });
+    _setFrom(from);
   }
 
   @override
@@ -336,7 +350,7 @@ class _MapScreenState extends State<MapScreen> {
     final startMapped = _start == null && !_loading ? _startShape : null;
     final TripDest? tripDest = dest != null ? PlaceDest(dest) : destMapped != null ? MappedDest(destMapped.name) : null;
     final TripStart tripStart = widget.from == 'gps'
-        ? GpsStart(fix, _locFailure, _fixInside)
+        ? GpsStart(fix, _locFailure, _fixInside, _fixNear)
         : _start != null ? PlaceStart(_start!) : startMapped != null ? MappedStart(startMapped.name) : const NoStart();
     final trip = tripDest == null || _loading ? null : planTrip(tripDest, tripStart, paths);
     // Already in the destination building: bring the floor plan into view (once per arrival).
@@ -545,6 +559,7 @@ class _MapScreenState extends State<MapScreen> {
                 ]))
               else if (problem != null)
                 Text(problem, style: const TextStyle(color: muted)),
+              if (trip?.status == TripStatus.gpsConfirm && destB != null) _confirmArrival(destB),
               if (legs.isNotEmpty) Padding(padding: const EdgeInsets.only(top: 8), child: _TripLegs(legs)),
               const SizedBox(height: 10),
               const Text('STARTING FROM', style: TextStyle(fontSize: 11, letterSpacing: .8, color: muted, fontWeight: FontWeight.w700)),
@@ -573,6 +588,21 @@ class _MapScreenState extends State<MapScreen> {
 }
 
 extension on _MapScreenState {
+  /// The GPS circle reaches the destination and a neighbour: the student says where they are.
+  /// "I’m at" the destination skips the walk; a linked neighbour becomes the start; anything else opens the picker.
+  Widget _confirmArrival(Place destB) {
+    final others = {for (final b in _fixNear) if (b.placeId != null && b.placeId != destB.id) b.placeId!: b.name};
+    return Padding(
+      key: const Key('confirm-arrival'),
+      padding: const EdgeInsets.only(top: 8),
+      child: Wrap(spacing: 8, runSpacing: 8, children: [
+        FilledButton(key: const Key('confirm-at-dest'), onPressed: () => _startAt(destB.id), child: Text('I’m at ${destB.name}')),
+        for (final e in others.entries) OutlinedButton(onPressed: () => _startAt(e.key), child: Text('I’m at ${e.value}')),
+        TextButton(onPressed: _chooseStart, child: const Text('Somewhere else')),
+      ]),
+    );
+  }
+
   /// Room/office: floor from the record (never guessed), the blueprint for that floor, the room highlighted.
   Widget _insideCard(PlaceView dest, Trip trip, Place? destB, CampusPaths? paths) {
     final indoor = trip.indoor!;
