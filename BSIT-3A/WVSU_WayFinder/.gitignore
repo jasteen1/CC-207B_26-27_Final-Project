@@ -5,3 +5,6 @@ dist
 .DS_Store
 test-results
 playwright-report
+# Local building-photo originals (published copies go to the Supabase building-photos bucket)
+data-intake/building-photos/
+__pycache__/
