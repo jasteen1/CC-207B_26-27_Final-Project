@@ -1,0 +1,39 @@
+destination,entrance_id,latitude,longitude,source,notes
+Quezon Hall,qh-entrance-main,10.713271,122.562621,Map estimate,
+Hometel,hometel-entrance-main,10.713019,122.562845,Map estimate,
+COP Building,cop-entrance-main,10.713154,122.563236,Map estimate,
+Supply Office,supply-office-entrance-main,10.712661,122.563161,Map estimate,
+College of Dentistry,cod-entrance-main,10.712400,122.563674,Map estimate,
+College of Business and Management,cbm-entrance-main,10.712132,122.563824,Map estimate,
+Alumni Office,alumni-entrance-main,10.712197,122.564166,Map estimate,
+CTE,cte-entrance-main,10.712341,122.564139,Map estimate,
+College of Education,coe-entrance-main,10.713420,122.563586,Map estimate,Shared front access point
+New Academic Building,nab-entrance-main,10.713420,122.563586,Map estimate,Shared front access point
+College of Medicine (Annex 1),com-annex1-entrance-main,10.712958,122.561944,Map estimate,Shared front access point
+College of Medicine (Roxas Hall),com-annex2-entrance-main,10.712958,122.561944,Map estimate,Also known as Annex 2. Shared front access point with Annexes 1 and 3.
+College of Medicine (Annex 3),com-annex3-entrance-main,10.712958,122.561944,Map estimate,Shared front access point
+COM Gymnasium,com-gymn-entrance-main,10.713636,122.561542,Map estimate,Shared front access point
+Mini Forest,minifo-entrance-main,10.713636,122.561542,Map estimate,Suggested access point for open area; shared with COM Gymnasium
+Wellness Park,wellness-park-entrance-main,10.713431,122.562696,Map estimate,Suggested access point for open park
+Parking Lot 2,parking-lot-2-entrance-main,10.714130,122.562255,Map estimate,
+Parking Lot 1,parking-lot-1-entrance-main,10.713980,122.562720,Map estimate,Shared front access point
+Football Field,football-field-entrance-main,10.713980,122.562720,Map estimate,Shared front access point
+Grand Stand,grand-stand-entrance-main,10.713980,122.562720,Map estimate,Shared front access point
+Cultural Center,cultural-center-entrance-main,10.714522,122.562803,Map estimate,
+Audio Visual Hall,audio-visual-hall-entrance-main,10.714629,122.562407,Map estimate,Shared front access point
+College of Communication,coc-entrance-main,10.714629,122.562407,Map estimate,Shared front access point
+Administration,admin-entrance-main,10.714074,122.562113,Map estimate,
+Library,library-entrance-main,10.713965,122.561692,Map estimate,
+Rizal Hall,rizal-hall-entrance-main,10.713610,122.561421,Map estimate,
+College of Nursing,con-entrance-main,10.713137,122.561013,Map estimate,
+Motorpool,motorpool-entrance-main,10.713430,122.560472,Map estimate,
+Recovery Facility,recovery-facility-entrance-main,10.713429,122.560386,Map estimate,Shared front access point
+Manufacturing Office,manufacturing-office-entrance-main,10.713429,122.560386,Map estimate,Shared front access point
+GSO Office,gso-office-entrance-main,10.713475,122.560270,Map estimate,
+Women's Dormitory,womens-dorm-entrance-main,10.713512,122.560240,Map estimate,
+Research Building 2,research-building-2-entrance-main,10.712804,122.560701,Map estimate,
+Research Building 1,research-building-1-entrance-main,10.712651,122.560572,Map estimate,
+BINHI,binhi-entrance-main,10.712291,122.560227,Map estimate,
+Commercial Building / URGP / Printing Press,commercial-building-entrance-main,10.712415,122.560557,Map estimate,
+Coop Building,coop-entrance-main,10.712986,122.561067,Map estimate,
+CICT Building,cict-entrance-main,10.713289,122.561433,Map estimate,
