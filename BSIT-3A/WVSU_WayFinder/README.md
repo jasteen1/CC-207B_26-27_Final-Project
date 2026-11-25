@@ -38,16 +38,33 @@ Leave `.env.local` empty to run on the labeled demo data. Never commit `.env.loc
 
 ### Supabase
 
-1. Apply `supabase/migrations/0001`–`0005` in order:
+1. Apply `supabase/migrations/0001`–`0006` in order, then `0007` once it has been reviewed:
    - `0001` places
    - `0002` faculty
    - `0003` private schedules
    - `0004` processes
    - `0005` entrances, walkways and floor plans
+   - `0006` building cards: links map polygons to places, plus `description` and `photo_url`
+   - `0007` room labels and room positions on blueprints (**not applied yet**: review it first)
 2. Deploy the AI Guide:
    - `supabase functions deploy ai-guide`
    - `supabase secrets set ANTHROPIC_API_KEY=...`
    The provider key stays server-side.
+
+### Tappable buildings (Campus Map)
+
+Tapping a building drawn in our MapTiler "Wayfinder" dataset opens its place card. The card always
+shows the dataset name (`name:en`, else `name`). Extra details appear only from a **verified** record:
+
+- **Link a polygon to a place:** insert into `building_features (feature_id, place_id, status)`. Use the
+  polygon's `place_id` property from the dataset as `feature_id` and the shared place ID as `place_id`,
+  with `status = 'verified'`. A building drawn as two polygons gets two rows pointing at one place.
+- **Description and photo:** set `places.description` and `places.photo_url` (a public image URL).
+  Without a photo, the card shows "Building photo coming soon". To collect and add photos, see
+  [`BUILDING_PHOTOS_GUIDE.md`](BUILDING_PHOTOS_GUIDE.md).
+- **Offices, rooms, floors:** come from verified `places` rows whose `parent_id` is the building.
+- **Floor plan:** export the approved Canva blueprint as PNG, upload it to a public bucket, and add a
+  verified `floor_plans` row for the building and floor. The card then shows *View floor plan*.
 
 ## How to test
 
@@ -62,7 +79,8 @@ npm run build     # type-check + production build
 
 ## Still needed for a live demo
 
-- Apply migrations 0003–0005.
+- Apply migrations 0003–0006.
+- Link building polygons to verified places (`building_features`).
 - Publish verified places with coordinates, entrances, walkways and floor plans.
 - Add an office-link column to `faculty_directory` if teachers should get *Show on map*.
 - Add a MapTiler key.
