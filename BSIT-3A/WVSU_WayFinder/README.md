@@ -38,14 +38,14 @@ Leave `.env.local` empty to run on the labeled demo data. Never commit `.env.loc
 
 ### Supabase
 
-1. Apply `supabase/migrations/0001`–`0006` in order, then `0007` once it has been reviewed:
+1. Apply `supabase/migrations/0001`–`0007` in order:
    - `0001` places
    - `0002` faculty
    - `0003` private schedules
    - `0004` processes
    - `0005` entrances, walkways and floor plans
    - `0006` building cards: links map polygons to places, plus `description` and `photo_url`
-   - `0007` room labels and room positions on blueprints (**not applied yet**: review it first)
+   - `0007` room labels and room positions on blueprints
 2. Deploy the AI Guide:
    - `supabase functions deploy ai-guide`
    - `supabase secrets set ANTHROPIC_API_KEY=...`
