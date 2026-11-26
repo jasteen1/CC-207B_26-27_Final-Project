@@ -1,0 +1,23 @@
+export const WVSU_BUILDINGS = [
+  { id: 'bldg_quezon_hall', name: 'Quezon Hall', photo: require('../assets/buildings/bldg_quezon_hall.jpg') },
+  { id: 'bldg_nursing', name: 'College of Nursing', photo: require('../assets/buildings/bldg_nursing.jpg') },
+  { id: 'bldg_education', name: 'College of Education', photo: require('../assets/buildings/bldg_education.jpg') },
+  { id: 'bldg_dentistry', name: 'College of Dentistry', photo: require('../assets/buildings/bldg_dentistry.jpg') },
+  { id: 'bldg_cbm', name: 'College of Business and Management', photo: require('../assets/buildings/bldg_cbm.jpg') },
+  { id: 'bldg_pescar', name: 'College of PESCAR', photo: require('../assets/buildings/bldg_pescar.jpg') },
+  { id: 'bldg_communications', name: 'College of Communications', photo: require('../assets/buildings/bldg_communications.jpg') },
+  { id: 'bldg_cfl', name: 'Center for Foreign Languages', photo: require('../assets/buildings/bldg_cfl.jpg') },
+  { id: 'bldg_medicine', name: 'College of Medicine', photo: require('../assets/buildings/bldg_medicine.jpg') },
+  { id: 'bldg_cict', name: 'College of ICT', photo: require('../assets/buildings/bldg_cict.jpg') },
+  { id: 'bldg_law', name: 'College of Law', photo: require('../assets/buildings/bldg_law.jpg') },
+  { id: 'bldg_nab', name: 'New Academic Building (NAB)', photo: require('../assets/buildings/bldg_nab.jpg') },
+  { id: 'bldg_rizal_hall', name: 'Rizal Hall', photo: require('../assets/buildings/bldg_rizal_hall.jpg') },
+  { id: 'bldg_admin', name: 'Admin Office', photo: require('../assets/buildings/bldg_admin.jpg') },
+  { id: 'bldg_library', name: 'School Library', photo: require('../assets/buildings/bldg_library.jpg') },
+  { id: 'bldg_canteen', name: 'School Canteen (COOP)', photo: require('../assets/buildings/bldg_canteen.jpg') },
+  { id: 'bldg_research_1', name: 'Research Building 1', photo: require('../assets/buildings/bldg_research_1.jpg') },
+  { id: 'bldg_research_2', name: 'Research Building 2', photo: require('../assets/buildings/bldg_research_2.jpg') },
+  { id: 'bldg_binhi', name: 'Binhi Building', photo: require('../assets/buildings/bldg_binhi.jpg') },
+  { id: 'bldg_hometel', name: 'Hometel Building', photo: require('../assets/buildings/bldg_hometel.jpg') },
+  { id: 'bldg_av', name: 'Audio Visual Building', photo: require('../assets/buildings/bldg_av.jpg') }
+];
