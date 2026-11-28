@@ -1,0 +1,299 @@
+{
+ "file": "admin building.png",
+ "sha256": "70a0ce88d16affae606fde6eb0c38a075cce821d53b0539dc9e919f6051e61bd",
+ "width": 1600,
+ "height": 2000,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "ADMIN OFFICE",
+  "mapName": "Administration",
+  "featureIds": [
+   31
+  ],
+  "buildingId": null,
+  "proposedId": "bldg-administration",
+  "match": "confirmed",
+  "matchNote": "Printed title ADMIN OFFICE; map name Administration (place_id 31); filename 'admin building'."
+ },
+ "sections": [
+  {
+   "key": "f2",
+   "floor": 2,
+   "floorPrinted": "SECOND FLOOR",
+   "crop": [
+    165,
+    505,
+    1270,
+    695
+   ]
+  },
+  {
+   "key": "f1",
+   "floor": 1,
+   "floorPrinted": "GROUND FLOOR",
+   "crop": [
+    165,
+    1233,
+    1270,
+    640
+   ],
+   "note": "Printed GROUND FLOOR, recorded as floor 1."
+  }
+ ],
+ "rooms": [
+  {
+   "section": "f2",
+   "label": "Security Office",
+   "kind": "office",
+   "rect": [
+    175,
+    515,
+    176,
+    56
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Management Information System (MIS)",
+   "kind": "office",
+   "rect": [
+    445,
+    515,
+    754,
+    77
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "WVSU Board Room",
+   "kind": "room",
+   "rect": [
+    1237,
+    515,
+    181,
+    121
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Office of the Vice President for Academics",
+   "kind": "office",
+   "rect": [
+    175,
+    615,
+    121,
+    107
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "University Legal Office",
+   "kind": "office",
+   "rect": [
+    175,
+    725,
+    121,
+    112
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Internal Audit Service",
+   "kind": "office",
+   "rect": [
+    175,
+    840,
+    121,
+    125
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Office of the BOARD SECRETARY",
+   "kind": "office",
+   "rect": [
+    351,
+    847,
+    213,
+    88
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Public Affairs and Marketing Communications Office",
+   "kind": "office",
+   "rect": [
+    566,
+    847,
+    389,
+    88
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Internal and Local Linkage Office (ILLO)",
+   "kind": "office",
+   "rect": [
+    958,
+    847,
+    277,
+    88
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "University Planning and Development Office",
+   "kind": "office",
+   "rect": [
+    358,
+    1033,
+    277,
+    92
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Office of the President",
+   "kind": "office",
+   "rect": [
+    938,
+    1032,
+    299,
+    93
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "Admin Division",
+   "kind": "office",
+   "rect": [
+    175,
+    1243,
+    177,
+    293
+   ],
+   "flags": [
+    "L-shaped room: highlight box also covers the corridor notch"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "Finance Division",
+   "kind": "office",
+   "rect": [
+    355,
+    1243,
+    865,
+    94
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "Office of the VP of Administration & Finance",
+   "kind": "office",
+   "rect": [
+    1221,
+    1243,
+    207,
+    169
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "CR",
+   "kind": "facility",
+   "rect": [
+    1330,
+    1415,
+    98,
+    62
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "CR",
+   "kind": "facility",
+   "rect": [
+    1330,
+    1480,
+    98,
+    56
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "CR",
+   "kind": "facility",
+   "rect": [
+    1282,
+    1505,
+    45,
+    31
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "Registrar",
+   "kind": "office",
+   "rect": [
+    361,
+    1719,
+    370,
+    85
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "Record's Office",
+   "kind": "office",
+   "rect": [
+    844,
+    1719,
+    128,
+    85
+   ],
+   "flags": [
+    "confirm spelling: printed Record's Office (not Records Office)"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "Payments",
+   "kind": "office",
+   "rect": [
+    973,
+    1719,
+    119,
+    85
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "Disbursement",
+   "kind": "office",
+   "rect": [
+    1092,
+    1719,
+    133,
+    85
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "Admission Office",
+   "kind": "office",
+   "rect": [
+    175,
+    1722,
+    182,
+    142
+   ]
+  }
+ ],
+ "review": [
+  "Building name: printed ADMIN OFFICE, map says Administration, filename says admin building — confirm they are the same building.",
+  "Second floor: unlabelled grey room on the right (below WVSU Board Room) — name?",
+  "Second floor: unlabelled grey room between University Planning and Development Office and Office of the President — name?",
+  "Ground floor: unlabelled grey room at the bottom right (beside Disbursement) — name?"
+ ]
+}

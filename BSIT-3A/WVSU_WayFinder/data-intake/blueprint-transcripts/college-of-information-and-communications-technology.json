@@ -1,0 +1,464 @@
+{
+ "file": "college of information and communications technology.png",
+ "sha256": "d52c85fff7ad171bf511b5fe0c32ba95d3658551ae16d988baa72c43457deb4e",
+ "width": 1231,
+ "height": 2000,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "COLLEGE OF ICT",
+  "mapName": "CICT Building",
+  "featureIds": [
+   19
+  ],
+  "buildingId": null,
+  "proposedId": "bldg-cict-building",
+  "match": "confirmed",
+  "matchNote": "Title COLLEGE OF ICT matches map polygon CICT Building (place_id 19)."
+ },
+ "sections": [
+  {
+   "key": "f3",
+   "floor": 3,
+   "floorPrinted": "THIRD FLOOR",
+   "crop": [
+    50,
+    305,
+    1135,
+    447
+   ]
+  },
+  {
+   "key": "f2",
+   "floor": 2,
+   "floorPrinted": "SECOND FLOOR",
+   "crop": [
+    50,
+    815,
+    1135,
+    445
+   ]
+  },
+  {
+   "key": "f1",
+   "floor": 1,
+   "floorPrinted": "FIRST FLOOR",
+   "crop": [
+    50,
+    1372,
+    1135,
+    448
+   ]
+  }
+ ],
+ "rooms": [
+  {
+   "section": "f3",
+   "label": "ICT 302",
+   "kind": "lab",
+   "rect": [
+    62,
+    323,
+    160,
+    189
+   ],
+   "code": "ICT 302",
+   "name": "LABORATORY ROOM 302"
+  },
+  {
+   "section": "f3",
+   "label": "ICT 301",
+   "kind": "lab",
+   "rect": [
+    62,
+    519,
+    160,
+    187
+   ],
+   "code": "ICT 301",
+   "name": "LABORATORY ROOM 301"
+  },
+  {
+   "section": "f3",
+   "label": "FEMALE COMFORT ROOM",
+   "kind": "facility",
+   "rect": [
+    269,
+    474,
+    91,
+    61
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "ICT 303",
+   "kind": "lab",
+   "rect": [
+    366,
+    474,
+    163,
+    188
+   ],
+   "code": "ICT 303",
+   "name": "MULTIMEDIA LABORATORY ROOM 303"
+  },
+  {
+   "section": "f3",
+   "label": "LABORATORY ASSISTANT WORKING AREA",
+   "kind": "office",
+   "rect": [
+    535,
+    474,
+    166,
+    188
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "ICT 305",
+   "kind": "room",
+   "rect": [
+    707,
+    474,
+    162,
+    188
+   ],
+   "code": "ICT 305",
+   "name": "ROOM 305"
+  },
+  {
+   "section": "f3",
+   "label": "MALE COMFORT ROOM",
+   "kind": "facility",
+   "rect": [
+    875,
+    474,
+    86,
+    57
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "ICT 307",
+   "kind": "lab",
+   "rect": [
+    1009,
+    317,
+    161,
+    190
+   ],
+   "code": "ICT 307",
+   "name": "LABORATORY ROOM 307"
+  },
+  {
+   "section": "f3",
+   "label": "ICT 306",
+   "kind": "lab",
+   "rect": [
+    1008,
+    513,
+    162,
+    189
+   ],
+   "code": "ICT 306",
+   "name": "LABORATORY ROOM 306"
+  },
+  {
+   "section": "f3",
+   "label": "FRONT LOBBY",
+   "kind": "facility",
+   "rect": null,
+   "flags": [
+    "lobby area with no closed boundary: highlight pending"
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "ICT 202",
+   "kind": "lab",
+   "rect": [
+    62,
+    831,
+    160,
+    189
+   ],
+   "code": "ICT 202",
+   "name": "LABORATORY ROOM 202"
+  },
+  {
+   "section": "f2",
+   "label": "ICT 201",
+   "kind": "lab",
+   "rect": [
+    62,
+    1027,
+    160,
+    187
+   ],
+   "code": "ICT 201",
+   "name": "LABORATORY ROOM 201"
+  },
+  {
+   "section": "f2",
+   "label": "FEMALE COMFORT ROOM",
+   "kind": "facility",
+   "rect": [
+    269,
+    982,
+    91,
+    61
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "STOCK ROOM",
+   "kind": "room",
+   "rect": [
+    366,
+    982,
+    71,
+    188
+   ],
+   "flags": [
+    "drawn by hand: the wall to CONFERENCE ROOM is only partly drawn"
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "CONFERENCE ROOM",
+   "kind": "room",
+   "rect": [
+    440,
+    982,
+    89,
+    188
+   ],
+   "flags": [
+    "drawn by hand: partial walls"
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "DEPARTHEAD OFFICE",
+   "kind": "office",
+   "rect": [
+    535,
+    982,
+    79,
+    84
+   ],
+   "flags": [
+    "printed DEPARTHEAD (one word) - kept as printed"
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "DEAN OFFICE",
+   "kind": "office",
+   "rect": [
+    618,
+    982,
+    84,
+    84
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "RECEIVING AREA",
+   "kind": "office",
+   "rect": [
+    535,
+    1068,
+    99,
+    102
+   ],
+   "flags": [
+    "drawn by hand: partial walls"
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "COLLEGE SECREATRY",
+   "kind": "office",
+   "rect": [
+    639,
+    1117,
+    62,
+    51
+   ],
+   "flags": [
+    "printed SECREATRY (typo for SECRETARY) - kept as printed"
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "FACULTY OFFICE",
+   "kind": "office",
+   "rect": [
+    707,
+    982,
+    162,
+    188
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "MALE COMFORT ROOM",
+   "kind": "facility",
+   "rect": [
+    875,
+    982,
+    86,
+    57
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "ICT 207",
+   "kind": "lab",
+   "rect": [
+    1009,
+    825,
+    161,
+    189
+   ],
+   "code": "ICT 207",
+   "name": "LABORATORY ROOM 207"
+  },
+  {
+   "section": "f2",
+   "label": "ICT 206",
+   "kind": "lab",
+   "rect": [
+    1008,
+    1021,
+    162,
+    189
+   ],
+   "code": "ICT 206",
+   "name": "LABORATORY ROOM 206"
+  },
+  {
+   "section": "f2",
+   "label": "FRONT LOBBY",
+   "kind": "facility",
+   "rect": null,
+   "flags": [
+    "lobby area with no closed boundary: highlight pending"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "ICT 101",
+   "kind": "lab",
+   "rect": [
+    61,
+    1388,
+    162,
+    190
+   ],
+   "code": "ICT 101",
+   "name": "LABORATORY ROOM 101"
+  },
+  {
+   "section": "f1",
+   "label": "ICT 102",
+   "kind": "lab",
+   "rect": [
+    62,
+    1585,
+    161,
+    187
+   ],
+   "code": "ICT 102",
+   "name": "LABORATORY ROOM 102"
+  },
+  {
+   "section": "f1",
+   "label": "FEMALE COMFORT ROOM",
+   "kind": "facility",
+   "rect": [
+    270,
+    1539,
+    91,
+    62
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "CICT SC, LINK & ICON OFFICE",
+   "kind": "office",
+   "rect": [
+    368,
+    1540,
+    163,
+    189
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "ICT 104",
+   "kind": "room",
+   "rect": [
+    539,
+    1539,
+    165,
+    188
+   ],
+   "code": "ICT 104",
+   "name": "ROOM 104"
+  },
+  {
+   "section": "f1",
+   "label": "ICT 105",
+   "kind": "lab",
+   "rect": [
+    710,
+    1539,
+    162,
+    190
+   ],
+   "code": "ICT 105",
+   "name": "MULTIMEDIA LABORATORY ROOM 105"
+  },
+  {
+   "section": "f1",
+   "label": "MALE COMFORT ROOM",
+   "kind": "facility",
+   "rect": [
+    878,
+    1539,
+    87,
+    58
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "ICT 107",
+   "kind": "lab",
+   "rect": [
+    1013,
+    1382,
+    162,
+    191
+   ],
+   "code": "ICT 107",
+   "name": "LABORATORY ROOM 107"
+  },
+  {
+   "section": "f1",
+   "label": "ICT 106",
+   "kind": "lab",
+   "rect": [
+    1013,
+    1579,
+    162,
+    189
+   ],
+   "code": "ICT 106",
+   "name": "LABORATORY ROOM 106"
+  }
+ ],
+ "review": [
+  "Room numbers not on the plan: 103 (1st floor), 203, 204, 205 (2nd floor), 304 (3rd floor). Do they exist?"
+ ]
+}

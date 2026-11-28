@@ -38,3 +38,19 @@ flutter:
     - assets/demo/campus.json
     - assets/demo/faculty.json
     - assets/demo/floorplan-cb-2.png
+    # Redesign (WayFinder-SVGs): data, logos, building photos, blueprints and checked floor plans.
+    - assets/wf/
+    - assets/wf/buildings/
+    - assets/wf/blueprints/
+    - assets/wf/floors/
+  fonts:
+    - family: Signika
+      fonts:
+        - asset: assets/wf/fonts/Signika.ttf
+    - family: Fira Sans
+      fonts:
+        - asset: assets/wf/fonts/FiraSans-Regular.ttf
+        - asset: assets/wf/fonts/FiraSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/wf/fonts/FiraSans-Bold.ttf
+          weight: 700

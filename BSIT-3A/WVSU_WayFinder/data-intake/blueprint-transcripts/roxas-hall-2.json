@@ -1,0 +1,148 @@
+{
+ "file": "roxas hall 2.png",
+ "sha256": "9e0b900460826dc8ff81f0143afd97c0300b31ae89857806d3eeff8f96ba802b",
+ "width": 1600,
+ "height": 2000,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "COLLEGE OF MEDICINE — ROXAS HALL",
+  "mapName": "College of Medicine (Roxas Hall)",
+  "featureIds": [
+   38
+  ],
+  "buildingId": null,
+  "proposedId": "bldg-college-of-medicine-roxas-hall",
+  "match": "confirmed",
+  "matchNote": "Plan says ROXAS HALL under the College of Medicine title; map polygon College of Medicine (Roxas Hall), place_id 38."
+ },
+ "sections": [
+  {
+   "key": "f2",
+   "floor": 2,
+   "floorPrinted": "ROXAS HALL 2nd Floor",
+   "crop": [
+    160,
+    652,
+    1268,
+    1024
+   ]
+  }
+ ],
+ "rooms": [
+  {
+   "section": "f2",
+   "label": "MEDICINE LIBRARY",
+   "kind": "facility",
+   "rect": [
+    178,
+    669,
+    923,
+    140
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "MEDICINE LIBRARY COMPUTER SECTION",
+   "kind": "lab",
+   "rect": [
+    177,
+    818,
+    298,
+    292
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "RM 201",
+   "kind": "room",
+   "rect": [
+    1111,
+    914,
+    298,
+    196
+   ],
+   "code": "RM 201",
+   "flags": [
+    "plan prints RM; your prefix list says RH = Roxas Hall. Which is on the door?"
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "MEN’S CR",
+   "kind": "facility",
+   "rect": [
+    178,
+    1122,
+    297,
+    105
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "WOMEN’S CR",
+   "kind": "facility",
+   "rect": [
+    1111,
+    1122,
+    298,
+    121
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "FCM 1",
+   "kind": "room",
+   "rect": [
+    177,
+    1477,
+    214,
+    178
+   ],
+   "code": "FCM 1",
+   "flags": [
+    "what does FCM stand for? kept FCM 1 as its search code"
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "FCM 2",
+   "kind": "room",
+   "rect": [
+    402,
+    1477,
+    214,
+    178
+   ],
+   "code": "FCM 2"
+  },
+  {
+   "section": "f2",
+   "label": "RM 202",
+   "kind": "room",
+   "rect": [
+    627,
+    1477,
+    416,
+    178
+   ],
+   "code": "RM 202",
+   "flags": [
+    "plan prints RM; your prefix list says RH = Roxas Hall. Which is on the door?"
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "RESEARCH OFFICE",
+   "kind": "office",
+   "rect": [
+    1052,
+    1477,
+    357,
+    178
+   ]
+  }
+ ],
+ "review": [
+  "2nd floor: unlabelled grey room at the top right (beside MEDICINE LIBRARY) — name?"
+ ]
+}

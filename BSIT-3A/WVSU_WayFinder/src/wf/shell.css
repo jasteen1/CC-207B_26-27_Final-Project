@@ -1,0 +1,10 @@
+/* Web shell around the phone-sized app (the prototype's preview controls are not part of the app).
+   Phones: the app fills the screen. Larger screens: the same 390-wide app, centred, at most 844 tall. */
+#root { min-height: 100svh; }
+.stage { gap: 0; }
+@media (min-width: 701px) {
+  .phone { height: min(844px, calc(100svh - 48px)); }
+}
+
+/* Pills and chips used as links stay undecorated, as in the design. */
+a.pill, a.chip, a.tag { text-decoration: none; }

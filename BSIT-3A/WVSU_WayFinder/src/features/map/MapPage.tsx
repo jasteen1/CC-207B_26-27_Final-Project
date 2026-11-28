@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import "maplibre-gl/dist/maplibre-gl.css";
 import LoadError from "../../components/LoadError";
@@ -43,9 +43,16 @@ export default function MapPage() {
     navigate(`/map?${next.toString()}`, { replace: true });
   };
 
+  // Each GPS request gets an id. Picking a start by hand, or leaving the screen, bumps the id so a
+  // late GPS result is ignored and never replaces the student's manual choice.
+  const locRequest = useRef(0);
+  useEffect(() => () => { locRequest.current++; }, []);
+
   async function useMyLocation() {
+    const id = ++locRequest.current;
     setLocating(true);
     const out = await getLocation();
+    if (id !== locRequest.current) return;
     setLocating(false);
     if (out.ok) { setFix(out.fix); setLocFail(null); setFrom("gps"); }
     else { setFix(null); setLocFail(out.reason); }
@@ -97,8 +104,11 @@ export default function MapPage() {
     }
     if (campus && destBuilding) for (const e of entrancesOf(campus, destBuilding.id)) out.push({ id: e.id, lng: e.lng, lat: e.lat, kind: "entrance", title: e.name });
     if (destPoint?.lng !== undefined && destPoint.lat !== undefined) out.push({ id: "dest", lng: destPoint.lng, lat: destPoint.lat, kind: "dest", title: `Destination: ${destBuilding?.name ?? destView?.place.name}` });
-    const sp = from === "gps" && fix ? fix : startView ? pointOf(startView) : undefined;
-    if (sp?.lng !== undefined && sp.lat !== undefined) out.push({ id: "start", lng: sp.lng, lat: sp.lat, kind: "start", title: "Start" });
+    if (from === "gps" && fix) out.push({ id: "start", lng: fix.lng, lat: fix.lat, kind: "here", title: "You are here" });
+    else {
+      const sp = startView ? pointOf(startView) : undefined;
+      if (sp?.lng !== undefined && sp.lat !== undefined) out.push({ id: "start", lng: sp.lng, lat: sp.lat, kind: "start", title: "Start" });
+    }
     return out;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [places, campus, destBuilding?.id, destPoint?.lng, destPoint?.lat, from, fix, startView]);
@@ -123,7 +133,17 @@ export default function MapPage() {
           {dest.state === "error" && <LoadError what="this destination" onRetry={dest.reload} />}
           {paths.state === "error" && <LoadError what="walking paths" onRetry={paths.reload} />}
           {to && dest.state === "done" && !destView && <div className="card empty"><h2>Place not found</h2><p className="muted">No place has the ID “{to}”.</p></div>}
-          {!to && <div className="card"><p className="muted">Search for a room or building, or tap a building on the map, to get directions.</p></div>}
+          {!to && (
+            <article className="card" aria-label="My location">
+              <p className="muted">Search for a room or building, or tap a building on the map, to get directions.</p>
+              {from === "gps" && fix && <p className="start-line">You are here · accuracy ±{Math.round(fix.accuracy)} m <span className={`badge acc-${accuracyLabel(fix.accuracy).toLowerCase()}`}>{accuracyLabel(fix.accuracy)}</span></p>}
+              {locFail && <Notice>{failureText[locFail]}</Notice>}
+              {fix && offCampus && !gpsPoor && <Notice>You appear to be outside the campus.</Notice>}
+              <div className="actions">
+                <button className="btn primary" onClick={useMyLocation} disabled={locating}>{locating ? "Locating…" : "Use my location"}</button>
+              </div>
+            </article>
+          )}
 
           {destView && (
             <article className="card dest-card" aria-label="Destination">
@@ -162,7 +182,7 @@ export default function MapPage() {
 
               <h3 className="sub-label">Starting from</h3>
               <p className="start-line">
-                {from === "gps" && fix ? <>My location · accuracy ±{Math.round(fix.accuracy)} m <span className={`badge acc-${accuracyLabel(fix.accuracy).toLowerCase()}`}>{accuracyLabel(fix.accuracy)}</span></>
+                {from === "gps" && fix ? <>You are here · accuracy ±{Math.round(fix.accuracy)} m <span className={`badge acc-${accuracyLabel(fix.accuracy).toLowerCase()}`}>{accuracyLabel(fix.accuracy)}</span></>
                   : startView ? <><strong>{startView.place.roomCode ?? startView.place.name}</strong>{startView.parent ? ` · ${startView.parent.name}` : ""}</>
                   : <span className="muted">Not set</span>}
               </p>
@@ -180,7 +200,7 @@ export default function MapPage() {
         </div>
       </div>
 
-      {picker && <StartPicker places={places} onClose={() => setPicker(false)} onPick={(id) => { setPicker(false); setFix(null); setLocFail(null); setFrom(id); }} />}
+      {picker && <StartPicker places={places} onClose={() => setPicker(false)} onPick={(id) => { locRequest.current++; setPicker(false); setLocating(false); setFix(null); setLocFail(null); setFrom(id); }} />}
     </section>
   );
 }

@@ -1,0 +1,206 @@
+{
+ "file": "college of law.png",
+ "sha256": "8769085a9ee14b5e65a0b97265f75b8c32c73be691a790b59a1366d0632e9906",
+ "width": 1600,
+ "height": 2000,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "COLLEGE OF LAW (floors printed as 3rd/4th Floor Research Bldg.)",
+  "mapName": null,
+  "featureIds": [],
+  "buildingId": null,
+  "proposedId": null,
+  "match": "uncertain",
+  "matchNote": "Floors are printed as '3rd Floor Research Bldg.' and '4th Floor Research Bldg.'. Which map polygon is the Research Bldg.: Research and Development Center (28) or WVSU COL (Old Building) (29)? Not added to SQL until confirmed."
+ },
+ "sections": [
+  {
+   "key": "f4",
+   "floor": 4,
+   "floorPrinted": "4th Floor Research Bldg.",
+   "crop": [
+    30,
+    415,
+    1540,
+    715
+   ]
+  },
+  {
+   "key": "f3",
+   "floor": 3,
+   "floorPrinted": "3rd Floor Research Bldg.",
+   "crop": [
+    30,
+    1175,
+    1540,
+    715
+   ]
+  }
+ ],
+ "rooms": [
+  {
+   "section": "f4",
+   "label": "Discussion Room",
+   "kind": "room",
+   "rect": null,
+   "flags": [
+    "shares one drawn box with another label: boundary unclear, highlight pending"
+   ]
+  },
+  {
+   "section": "f4",
+   "label": "Resting Area",
+   "kind": "facility",
+   "rect": null,
+   "flags": [
+    "shares one drawn box with another label: boundary unclear, highlight pending"
+   ]
+  },
+  {
+   "section": "f4",
+   "label": "Rest Rooms",
+   "kind": "facility",
+   "rect": [
+    1219,
+    428,
+    176,
+    292
+   ]
+  },
+  {
+   "section": "f4",
+   "label": "Rest Rooms",
+   "kind": "facility",
+   "rect": [
+    1398,
+    428,
+    162,
+    293
+   ]
+  },
+  {
+   "section": "f4",
+   "label": "Library",
+   "kind": "facility",
+   "rect": [
+    45,
+    801,
+    617,
+    326
+   ],
+   "flags": [
+    "label 'Library' printed outside the box, above it; box also holds 'Printing Area'"
+   ]
+  },
+  {
+   "section": "f4",
+   "label": "Printing Area",
+   "kind": "facility",
+   "rect": null,
+   "flags": [
+    "inside the Library box: boundary unclear, highlight pending"
+   ]
+  },
+  {
+   "section": "f4",
+   "label": "Moot Court",
+   "kind": "room",
+   "rect": [
+    975,
+    801,
+    585,
+    326
+   ]
+  },
+  {
+   "section": "f4",
+   "label": "Prayer area",
+   "kind": "facility",
+   "rect": [
+    1443,
+    892,
+    72,
+    100
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "Faculty Lounge",
+   "kind": "facility",
+   "rect": null,
+   "flags": [
+    "shares one drawn box with another label: boundary unclear, highlight pending"
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "Printing Area",
+   "kind": "facility",
+   "rect": null,
+   "flags": [
+    "shares one drawn box with another label: boundary unclear, highlight pending"
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "Rest Rooms",
+   "kind": "facility",
+   "rect": [
+    1219,
+    1187,
+    165,
+    293
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "Rest Rooms",
+   "kind": "facility",
+   "rect": [
+    1398,
+    1187,
+    162,
+    294
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "Dean’s Office",
+   "kind": "office",
+   "rect": [
+    42,
+    1561,
+    563,
+    313
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "Center for Law Advocacy",
+   "kind": "office",
+   "rect": [
+    610,
+    1561,
+    567,
+    314
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "Resting Area",
+   "kind": "facility",
+   "rect": [
+    1182,
+    1561,
+    378,
+    313
+   ]
+  }
+ ],
+ "review": [
+  "Building: which map polygon is the 'Research Bldg.' that holds the College of Law (3rd/4th floor)?",
+  "Not recorded as rooms (furniture or signs inside rooms): Supplies, Food, Barrister’s canisters, Place books here, Marketing & Rev’s Table, Projector. Tell me if any should be searchable.",
+  "4th floor: two unlabelled grey boxes between Discussion Room and Rest Rooms; one unlabelled box in the Library — names?",
+  "Compare with research building 1.png / 2.png, which also show a 3rd and 4th floor."
+ ]
+}

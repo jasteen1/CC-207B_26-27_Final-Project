@@ -1,0 +1,368 @@
+{
+ "file": "hometel.png",
+ "sha256": "3493f86fc52922a88862d337ac5f6938e00d047207163b25b53956bb825865b0",
+ "width": 889,
+ "height": 2000,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "HOMETEL BUILDING",
+  "mapName": "Hometel",
+  "featureIds": [
+   11
+  ],
+  "buildingId": null,
+  "proposedId": "bldg-hometel",
+  "match": "confirmed",
+  "matchNote": "Title HOMETEL BUILDING matches map polygon Hometel (place_id 11)."
+ },
+ "sections": [
+  {
+   "key": "f1",
+   "floor": 1,
+   "floorPrinted": "1st floor",
+   "crop": [
+    0,
+    170,
+    889,
+    460
+   ]
+  },
+  {
+   "key": "f2",
+   "floor": 2,
+   "floorPrinted": "2nd floor",
+   "crop": [
+    0,
+    680,
+    889,
+    420
+   ],
+   "note": "Solid black block between WVSU Faculty Association Office and Staffs Office is off limits (not a destination, not searchable)."
+  },
+  {
+   "key": "f3",
+   "floor": 3,
+   "crop": [
+    0,
+    1155,
+    889,
+    420
+   ],
+   "note": "Floor label not printed on the plan; confirmed as 3rd floor by the team.",
+   "floorPrinted": "3rd floor"
+  }
+ ],
+ "rooms": [
+  {
+   "section": "f1",
+   "label": "University Clinic",
+   "kind": "facility",
+   "rect": [
+    18,
+    193,
+    160,
+    395
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "University Guidance Center",
+   "kind": "office",
+   "rect": [
+    188,
+    193,
+    70,
+    396
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "Cafeteria Kitchen",
+   "kind": "facility",
+   "rect": [
+    372,
+    196,
+    212,
+    173
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "Stock Room",
+   "kind": "room",
+   "rect": [
+    590,
+    196,
+    73,
+    66
+   ],
+   "note": "Unlabelled on the plan; named by the team."
+  },
+  {
+   "section": "f1",
+   "label": "Hospitality Management Laboratory",
+   "kind": "lab",
+   "rect": [
+    727,
+    197,
+    116,
+    197
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "Hot Kitchen Laboratory",
+   "kind": "lab",
+   "rect": [
+    727,
+    402,
+    116,
+    187
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "WVSU Cafeteria",
+   "kind": "facility",
+   "rect": [
+    372,
+    416,
+    212,
+    173
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Forum Dimensions",
+   "kind": "office",
+   "rect": [
+    20,
+    696,
+    130,
+    113
+   ],
+   "name": "Office of Forum Dimensions"
+  },
+  {
+   "section": "f2",
+   "label": "CR",
+   "kind": "facility",
+   "rect": [
+    159,
+    696,
+    77,
+    89
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "University Student Council",
+   "kind": "office",
+   "rect": [
+    302,
+    693,
+    77,
+    211
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Room 1",
+   "kind": "room",
+   "rect": [
+    385,
+    693,
+    66,
+    48
+   ],
+   "flags": [
+    "boundary has a slanted wall"
+   ],
+   "note": "Number given by the team (not printed on the plan)."
+  },
+  {
+   "section": "f2",
+   "label": "Suite Room",
+   "kind": "room",
+   "rect": [
+    448,
+    693,
+    88,
+    48
+   ],
+   "flags": [
+    "boundary has a slanted wall"
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Room 2",
+   "kind": "room",
+   "rect": [
+    541,
+    693,
+    82,
+    48
+   ],
+   "note": "Number given by the team (not printed on the plan)."
+  },
+  {
+   "section": "f2",
+   "label": "Wine Room",
+   "kind": "room",
+   "rect": [
+    385,
+    775,
+    159,
+    129
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Stock Room",
+   "kind": "room",
+   "rect": [
+    549,
+    775,
+    74,
+    129
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "CAS-SC Office",
+   "kind": "office",
+   "rect": [
+    751,
+    692,
+    117,
+    274
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "University Testing Center",
+   "kind": "office",
+   "rect": [
+    19,
+    815,
+    214,
+    79
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Office of the Student Affairs",
+   "kind": "office",
+   "rect": [
+    19,
+    933,
+    217,
+    156
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "WVSU Faculty Association Office",
+   "kind": "office",
+   "rect": [
+    300,
+    933,
+    79,
+    155
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Staffs Office",
+   "kind": "office",
+   "rect": [
+    549,
+    972,
+    54,
+    116
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Hometel Office",
+   "kind": "office",
+   "rect": [
+    650,
+    972,
+    59,
+    116
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Director - University Resource Generation Program & Auxiliary Service",
+   "kind": "office",
+   "rect": [
+    716,
+    972,
+    152,
+    116
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "Dance Studio",
+   "kind": "facility",
+   "rect": [
+    20,
+    1169,
+    217,
+    396
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "CR",
+   "kind": "facility",
+   "rect": [
+    303,
+    1169,
+    239,
+    91
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "Fitness & Wellness Center",
+   "kind": "facility",
+   "rect": [
+    673,
+    1169,
+    196,
+    395
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "PESCAR Sports & Wellness CLub",
+   "kind": "office",
+   "rect": [
+    302,
+    1424,
+    79,
+    140
+   ],
+   "flags": [
+    "printed 'CLub' (capital L) - kept as printed"
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "University Sports Office",
+   "kind": "office",
+   "rect": [
+    387,
+    1424,
+    158,
+    140
+   ]
+  }
+ ],
+ "review": []
+}

@@ -1,0 +1,160 @@
+{
+ "file": "annex 3 part 2.png",
+ "sha256": "e549aba085dbdbf30495cc799bf88bb7f263ed9a6a0f2274f766fcf68dfc021a",
+ "width": 1600,
+ "height": 2000,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "COLLEGE OF MEDICINE — COM SKILLS BUILDING ANNEX 3",
+  "mapName": "College of Medicine - Annex 3",
+  "featureIds": [],
+  "buildingId": null,
+  "proposedId": "bldg-college-of-medicine-annex-3",
+  "match": "pending",
+  "matchNote": "Building identity is on the map (Annex 1 = place_id 39, Annex 3 = place_id 0, both tappable), but this sheet's interior is pixel-identical to the other annex's sheet. Pending the team's confirmation of the interiors. Annex 3 also needs a positive place_id."
+ },
+ "sections": [
+  {
+   "key": "f3",
+   "floor": 3,
+   "floorPrinted": "3rd Floor",
+   "crop": [
+    45,
+    555,
+    742,
+    1282
+   ]
+  },
+  {
+   "key": "f4",
+   "floor": 4,
+   "floorPrinted": "4th Floor",
+   "crop": [
+    815,
+    555,
+    742,
+    1282
+   ],
+   "note": "9 of 9 rooms unlabelled"
+  }
+ ],
+ "rooms": [
+  {
+   "section": "f3",
+   "label": "WOMEN’S CR",
+   "kind": "facility",
+   "rect": [
+    266,
+    576,
+    249,
+    54
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "MEN’S CR",
+   "kind": "facility",
+   "rect": [
+    523,
+    576,
+    246,
+    54
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "PWD CR",
+   "kind": "facility",
+   "rect": [
+    668,
+    637,
+    101,
+    83
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "VIEWING ROOM 2",
+   "kind": "room",
+   "rect": [
+    463,
+    748,
+    307,
+    178
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "VIEWING ROOM 1",
+   "kind": "room",
+   "rect": [
+    463,
+    940,
+    306,
+    178
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "SIMULATION ROOM 1",
+   "kind": "room",
+   "rect": [
+    463,
+    1131,
+    306,
+    251
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "OFFICE",
+   "kind": "office",
+   "rect": [
+    463,
+    1395,
+    306,
+    146
+   ],
+   "flags": [
+    "generic label OFFICE: which office?"
+   ]
+  },
+  {
+   "section": "f4",
+   "label": "WOMEN’S CR",
+   "kind": "facility",
+   "rect": [
+    1036,
+    576,
+    249,
+    54
+   ]
+  },
+  {
+   "section": "f4",
+   "label": "MEN’S CR",
+   "kind": "facility",
+   "rect": [
+    1293,
+    576,
+    246,
+    54
+   ]
+  },
+  {
+   "section": "f4",
+   "label": "PWD CR",
+   "kind": "facility",
+   "rect": [
+    1438,
+    637,
+    101,
+    83
+   ]
+  }
+ ],
+ "review": [
+  "4th floor: 9 grey rooms have no label (two columns of 4, plus 1 at the bottom right) — names needed.",
+  "Floor plan is identical, pixel for pixel, to the COM ANNEX BUILDING 1 image; only the caption differs. Confirm this layout really is COM SKILLS BUILDING ANNEX 3."
+ ]
+}

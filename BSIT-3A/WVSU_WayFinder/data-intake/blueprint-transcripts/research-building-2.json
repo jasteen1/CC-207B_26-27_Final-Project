@@ -1,0 +1,281 @@
+{
+ "file": "research building 2.png",
+ "sha256": "76312f6a7ef23b67a920a3953bf9f09d9084d6e2b9159b40d97829d4d1aac1fd",
+ "width": 768,
+ "height": 2592,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "RESEARCH BUILDING 2",
+  "mapName": null,
+  "featureIds": [],
+  "buildingId": null,
+  "proposedId": null,
+  "match": "uncertain",
+  "matchNote": "Two research buildings were uploaded but the map has one likely polygon, Research and Development Center (place_id 28). Which one is it, and where is the other on the map?"
+ },
+ "sections": [
+  {
+   "key": "f1",
+   "floor": 1,
+   "floorPrinted": "First Floor",
+   "crop": [
+    10,
+    268,
+    725,
+    537
+   ]
+  },
+  {
+   "key": "f2",
+   "floor": 2,
+   "floorPrinted": "Second Floor",
+   "crop": [
+    10,
+    850,
+    725,
+    510
+   ]
+  },
+  {
+   "key": "f3",
+   "floor": 3,
+   "floorPrinted": "Third Floor",
+   "crop": [
+    10,
+    1390,
+    725,
+    510
+   ]
+  },
+  {
+   "key": "f4",
+   "floor": 4,
+   "floorPrinted": "Fourth Floor",
+   "crop": [
+    10,
+    1958,
+    725,
+    512
+   ]
+  }
+ ],
+ "rooms": [
+  {
+   "section": "f1",
+   "label": "Unified Research Review Committee Conference Room",
+   "kind": "room",
+   "rect": [
+    258,
+    278,
+    220,
+    236
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "Conference Room",
+   "kind": "room",
+   "rect": [
+    535,
+    278,
+    189,
+    236
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "Unified Research Review Committee Conference Room",
+   "kind": "room",
+   "rect": [
+    535,
+    517,
+    189,
+    245
+   ],
+   "flags": [
+    "same name as the room on the left: two rooms, or one name repeated?"
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "CR",
+   "kind": "facility",
+   "rect": [
+    258,
+    859,
+    220,
+    89
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Research Cafe",
+   "kind": "facility",
+   "rect": [
+    258,
+    951,
+    220,
+    144
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "VPRIE Conference Room 2",
+   "kind": "room",
+   "rect": [
+    535,
+    859,
+    189,
+    165
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "URDC Conference Room",
+   "kind": "room",
+   "rect": [
+    535,
+    1027,
+    189,
+    149
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "VPRIE Conference Room 1",
+   "kind": "room",
+   "rect": [
+    535,
+    1179,
+    189,
+    163
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "CR",
+   "kind": "facility",
+   "rect": [
+    254,
+    1398,
+    220,
+    89
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "Room",
+   "kind": "room",
+   "rect": [
+    254,
+    1490,
+    220,
+    144
+   ],
+   "flags": [
+    "generic label 'Room' (no number): which room?"
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "Room",
+   "kind": "room",
+   "rect": [
+    531,
+    1398,
+    189,
+    166
+   ],
+   "flags": [
+    "generic label 'Room' (no number): which room?"
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "Room",
+   "kind": "room",
+   "rect": [
+    531,
+    1567,
+    189,
+    149
+   ],
+   "flags": [
+    "generic label 'Room' (no number): which room?"
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "Room",
+   "kind": "room",
+   "rect": [
+    531,
+    1718,
+    189,
+    164
+   ],
+   "flags": [
+    "generic label 'Room' (no number): which room?"
+   ]
+  },
+  {
+   "section": "f4",
+   "label": "CR",
+   "kind": "facility",
+   "rect": [
+    245,
+    1966,
+    220,
+    89
+   ]
+  },
+  {
+   "section": "f4",
+   "label": "Room",
+   "kind": "room",
+   "rect": [
+    245,
+    2058,
+    220,
+    144
+   ],
+   "flags": [
+    "generic label 'Room' (no number): which room?"
+   ]
+  },
+  {
+   "section": "f4",
+   "label": "Conference Room",
+   "kind": "room",
+   "rect": [
+    522,
+    1966,
+    189,
+    165
+   ]
+  },
+  {
+   "section": "f4",
+   "label": "Conference Room",
+   "kind": "room",
+   "rect": [
+    522,
+    2134,
+    189,
+    149
+   ]
+  },
+  {
+   "section": "f4",
+   "label": "Evacuation Accreditation Committee",
+   "kind": "office",
+   "rect": [
+    522,
+    2286,
+    189,
+    163
+   ]
+  }
+ ],
+ "review": []
+}

@@ -1,0 +1,369 @@
+{
+ "file": "college of dentistry.png",
+ "sha256": "592c9ca2698a34d87cf42ab2b1935289ccdd859cdbe7bee8df4f534e0bf719b5",
+ "width": 1067,
+ "height": 2000,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "COLLEGE OF DENTISTRY",
+  "mapName": "College of Dentistry",
+  "featureIds": [
+   14
+  ],
+  "buildingId": null,
+  "proposedId": "bldg-college-of-dentistry",
+  "match": "confirmed",
+  "matchNote": "Title matches map polygon College of Dentistry (place_id 14). AB codes match the AB prefix."
+ },
+ "sections": [
+  {
+   "key": "f2",
+   "floor": 2,
+   "floorPrinted": "2nd Floor",
+   "crop": [
+    35,
+    265,
+    997,
+    800
+   ]
+  },
+  {
+   "key": "f1",
+   "floor": 1,
+   "floorPrinted": "1st Floor",
+   "crop": [
+    35,
+    1124,
+    997,
+    802
+   ]
+  }
+ ],
+ "rooms": [
+  {
+   "section": "f2",
+   "label": "COMFORT ROOM",
+   "kind": "facility",
+   "rect": [
+    44,
+    279,
+    132,
+    131
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "SIMULATION AREA",
+   "kind": "lab",
+   "rect": [
+    397,
+    276,
+    267,
+    88
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "CLINICAL INFIRMARY",
+   "kind": "facility",
+   "rect": [
+    889,
+    279,
+    131,
+    545
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "PROSTO LAB",
+   "kind": "lab",
+   "rect": [
+    44,
+    415,
+    131,
+    161
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "PROSTO CLINIC",
+   "kind": "facility",
+   "rect": [
+    44,
+    582,
+    132,
+    250
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "OFFICE AREA",
+   "kind": "office",
+   "rect": [
+    203,
+    911,
+    93,
+    147
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "COMPRESSION EQUIPMENT ROOM/STOCK",
+   "kind": "room",
+   "rect": [
+    300,
+    911,
+    127,
+    147
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "CONFERENCE ROOM",
+   "kind": "room",
+   "rect": [
+    431,
+    862,
+    194,
+    196
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "COMPRESSION EQUIPMENT ROOM/STOCK",
+   "kind": "room",
+   "rect": [
+    629,
+    911,
+    127,
+    147
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "LOCKER ROOM/ STUDENTS LOUNGE",
+   "kind": "facility",
+   "rect": [
+    761,
+    911,
+    92,
+    147
+   ],
+   "flags": [
+    "small print: confirm LOCKER ROOM/ STUDENTS LOUNGE"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "COMFORT ROOM",
+   "kind": "facility",
+   "rect": [
+    44,
+    1137,
+    132,
+    131
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "AB 103",
+   "kind": "room",
+   "rect": [
+    44,
+    1279,
+    132,
+    130
+   ],
+   "code": "AB 103"
+  },
+  {
+   "section": "f1",
+   "label": "AB 102",
+   "kind": "room",
+   "rect": [
+    44,
+    1419,
+    132,
+    131
+   ],
+   "code": "AB 102"
+  },
+  {
+   "section": "f1",
+   "label": "AB 101",
+   "kind": "room",
+   "rect": [
+    44,
+    1560,
+    132,
+    131
+   ],
+   "code": "AB 101"
+  },
+  {
+   "section": "f1",
+   "label": "AB 105",
+   "kind": "room",
+   "rect": [
+    281,
+    1277,
+    131,
+    131
+   ],
+   "code": "AB 105"
+  },
+  {
+   "section": "f1",
+   "label": "AB 104",
+   "kind": "room",
+   "rect": [
+    281,
+    1418,
+    131,
+    130
+   ],
+   "code": "AB 104"
+  },
+  {
+   "section": "f1",
+   "label": "DEAN’S OFFICE",
+   "kind": "office",
+   "rect": [
+    281,
+    1558,
+    131,
+    131
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "AB 108",
+   "kind": "room",
+   "rect": [
+    654,
+    1279,
+    131,
+    130
+   ],
+   "code": "AB 108"
+  },
+  {
+   "section": "f1",
+   "label": "AB 107",
+   "kind": "room",
+   "rect": [
+    654,
+    1419,
+    131,
+    131
+   ],
+   "code": "AB 107"
+  },
+  {
+   "section": "f1",
+   "label": "AB 106",
+   "kind": "room",
+   "rect": [
+    654,
+    1560,
+    131,
+    131
+   ],
+   "code": "AB 106"
+  },
+  {
+   "section": "f1",
+   "label": "COMFORT ROOM",
+   "kind": "facility",
+   "rect": [
+    893,
+    1137,
+    132,
+    131
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "AB 110",
+   "kind": "room",
+   "rect": [
+    893,
+    1279,
+    132,
+    130
+   ],
+   "code": "AB 110"
+  },
+  {
+   "section": "f1",
+   "label": "AB 109",
+   "kind": "room",
+   "rect": [
+    893,
+    1419,
+    132,
+    131
+   ],
+   "code": "AB 109"
+  },
+  {
+   "section": "f1",
+   "label": "X-RAY ROOM",
+   "kind": "room",
+   "rect": [
+    893,
+    1560,
+    132,
+    131
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "PANTRY",
+   "kind": "facility",
+   "rect": [
+    281,
+    1769,
+    50,
+    148
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "FACULTY OFFICE",
+   "kind": "office",
+   "rect": [
+    335,
+    1769,
+    121,
+    148
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "CONFERENCE ROOM",
+   "kind": "room",
+   "rect": [
+    608,
+    1769,
+    131,
+    148
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "PANTRY",
+   "kind": "facility",
+   "rect": [
+    743,
+    1769,
+    50,
+    148
+   ]
+  }
+ ],
+ "review": [
+  "2nd floor: two tall unlabelled grey rooms (left of centre, and right of centre beside CLINICAL INFIRMARY) — names?",
+  "2nd floor: white box in the centre (no fill) — open area or a room?"
+ ]
+}

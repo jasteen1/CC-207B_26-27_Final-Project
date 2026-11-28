@@ -1,0 +1,133 @@
+{
+ "file": "sdg rooms.png",
+ "sha256": "7e10fee05140adec5e4332e98deda681a173c43ff4df696110b7a3e0579abe07",
+ "width": 1600,
+ "height": 2000,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "COLLEGE OF MEDICINE — COM SDG ROOMS",
+  "mapName": null,
+  "featureIds": [],
+  "buildingId": null,
+  "proposedId": null,
+  "match": "uncertain",
+  "matchNote": "Caption COM SDG ROOMS names no building and no floor. Which building (Roxas Hall, Annex 1, Annex 3, or another) and which floor?"
+ },
+ "sections": [
+  {
+   "key": "section-1",
+   "floor": null,
+   "crop": [
+    155,
+    720,
+    1278,
+    742
+   ],
+   "status": "floor unconfirmed",
+   "note": "No floor printed."
+  }
+ ],
+ "rooms": [
+  {
+   "section": "section-1",
+   "label": "MEN’S CR",
+   "kind": "facility",
+   "rect": [
+    174,
+    737,
+    53,
+    246
+   ],
+   "flags": [
+    "printed vertically"
+   ]
+  },
+  {
+   "section": "section-1",
+   "label": "PWD CR",
+   "kind": "facility",
+   "rect": [
+    234,
+    737,
+    83,
+    100
+   ],
+   "flags": [
+    "printed vertically"
+   ]
+  },
+  {
+   "section": "section-1",
+   "label": "WOMEN’S CR",
+   "kind": "facility",
+   "rect": [
+    174,
+    991,
+    53,
+    249
+   ],
+   "flags": [
+    "printed vertically"
+   ]
+  },
+  {
+   "section": "section-1",
+   "label": "VIEWING ROOM 2",
+   "kind": "room",
+   "rect": [
+    346,
+    736,
+    178,
+    306
+   ],
+   "flags": [
+    "printed vertically"
+   ]
+  },
+  {
+   "section": "section-1",
+   "label": "VIEWING ROOM 1",
+   "kind": "room",
+   "rect": [
+    537,
+    737,
+    178,
+    305
+   ],
+   "flags": [
+    "printed vertically"
+   ]
+  },
+  {
+   "section": "section-1",
+   "label": "SIMULATION ROOM 1",
+   "kind": "room",
+   "rect": [
+    728,
+    737,
+    251,
+    305
+   ],
+   "flags": [
+    "printed vertically"
+   ]
+  },
+  {
+   "section": "section-1",
+   "label": "OFFICE",
+   "kind": "office",
+   "rect": [
+    992,
+    737,
+    147,
+    305
+   ],
+   "flags": [
+    "generic label OFFICE: which office?"
+   ]
+  }
+ ],
+ "review": [
+  "Same room names (VIEWING ROOM 1/2, SIMULATION ROOM 1, OFFICE) as the COM annex 3rd floor, in a different layout. Are these different rooms, or the same rooms drawn twice?"
+ ]
+}

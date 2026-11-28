@@ -1,0 +1,95 @@
+{
+ "file": "cfl.png",
+ "sha256": "8ef1861bb988fe3ccc660b3c9d801b1da80840757f31386f8b5a4b234eb36df7",
+ "width": 1600,
+ "height": 2000,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "CENTER FOR FOREIGN LANGUAGES",
+  "mapName": "Center for Foreign Languages",
+  "featureIds": [
+   36
+  ],
+  "buildingId": null,
+  "proposedId": "bldg-center-for-foreign-languages",
+  "match": "confirmed",
+  "matchNote": "Title matches map polygon Center for Foreign Languages (place_id 36); filename cfl."
+ },
+ "sections": [
+  {
+   "key": "section-1",
+   "floor": null,
+   "crop": [
+    235,
+    605,
+    1118,
+    968
+   ],
+   "status": "floor unconfirmed",
+   "note": "No floor printed on the plan."
+  }
+ ],
+ "rooms": [
+  {
+   "section": "section-1",
+   "label": "REHEARSAL ROOM",
+   "kind": "room",
+   "rect": [
+    254,
+    622,
+    670,
+    719
+   ]
+  },
+  {
+   "section": "section-1",
+   "label": "DROP IN CENTER",
+   "kind": "facility",
+   "rect": [
+    934,
+    622,
+    166,
+    196
+   ]
+  },
+  {
+   "section": "section-1",
+   "label": "ROOM 1",
+   "kind": "room",
+   "rect": [
+    1109,
+    622,
+    228,
+    429
+   ],
+   "flags": [
+    "generic 'ROOM 1': no building prefix, so not searchable as a code"
+   ]
+  },
+  {
+   "section": "section-1",
+   "label": "CFL OFFICE",
+   "kind": "office",
+   "rect": [
+    1109,
+    1058,
+    228,
+    172
+   ]
+  },
+  {
+   "section": "section-1",
+   "label": "COMFORT ROOM",
+   "kind": "facility",
+   "rect": [
+    1109,
+    1358,
+    228,
+    197
+   ]
+  }
+ ],
+ "review": [
+  "No floor is printed. Which floor is this (ground floor only)?"
+ ]
+}

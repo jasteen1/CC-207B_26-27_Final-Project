@@ -1,0 +1,130 @@
+{
+ "file": "annex 1.png",
+ "sha256": "85810dfd8d4729eb9c3254cf7e54013092032c0fc833ad1b64d6d8bbcf4d0f51",
+ "width": 1600,
+ "height": 2000,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "COLLEGE OF MEDICINE — COM ANNEX BUILDING 1",
+  "mapName": "PSFW Building / College of Medicine (Annex 1)",
+  "featureIds": [
+   39
+  ],
+  "buildingId": null,
+  "proposedId": "bldg-psfw-building-college-of-medicine-annex-1",
+  "match": "pending",
+  "matchNote": "Building identity is on the map (Annex 1 = place_id 39, Annex 3 = place_id 0, both tappable), but this sheet's interior is pixel-identical to the other annex's sheet. Pending the team's confirmation of the interiors. Annex 3 also needs a positive place_id."
+ },
+ "sections": [
+  {
+   "key": "f1",
+   "floor": 1,
+   "floorPrinted": "1st Floor",
+   "crop": [
+    45,
+    555,
+    742,
+    1282
+   ]
+  },
+  {
+   "key": "f2",
+   "floor": 2,
+   "floorPrinted": "2nd Floor",
+   "crop": [
+    815,
+    555,
+    742,
+    1282
+   ]
+  }
+ ],
+ "rooms": [
+  {
+   "section": "f1",
+   "label": "FACULTY ROOM",
+   "kind": "office",
+   "rect": [
+    266,
+    574,
+    503,
+    720
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "CONFERENCE ROOM",
+   "kind": "room",
+   "rect": [
+    266,
+    1307,
+    503,
+    234
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "WOMEN’S CR",
+   "kind": "facility",
+   "rect": [
+    1036,
+    576,
+    249,
+    54
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "MEN’S CR",
+   "kind": "facility",
+   "rect": [
+    1293,
+    576,
+    246,
+    54
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "PWD CR",
+   "kind": "facility",
+   "rect": [
+    1438,
+    637,
+    101,
+    83
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "OSCE ROOMS",
+   "kind": "room",
+   "rect": [
+    1036,
+    728,
+    503,
+    654
+   ],
+   "flags": [
+    "one box labelled OSCE ROOMS (plural): separate rooms inside are not drawn"
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "OFFICE",
+   "kind": "office",
+   "rect": [
+    1233,
+    1395,
+    306,
+    146
+   ],
+   "flags": [
+    "generic label OFFICE: which office?"
+   ]
+  }
+ ],
+ "review": [
+  "Floor plan is identical, pixel for pixel, to the COM SKILLS BUILDING ANNEX 3 image; only the caption differs. Confirm this layout really is COM ANNEX BUILDING 1."
+ ]
+}

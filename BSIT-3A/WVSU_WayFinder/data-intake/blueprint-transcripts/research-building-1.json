@@ -1,0 +1,201 @@
+{
+ "file": "research building 1.png",
+ "sha256": "af235d5fce1a595b57c016352e59859ea6d47c51a2906678e8db3456659422b6",
+ "width": 768,
+ "height": 2112,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "RESEARCH BUILDING 1",
+  "mapName": null,
+  "featureIds": [],
+  "buildingId": null,
+  "proposedId": null,
+  "match": "uncertain",
+  "matchNote": "Two research buildings were uploaded but the map has one likely polygon, Research and Development Center (place_id 28). Which one is it, and where is the other on the map?"
+ },
+ "sections": [
+  {
+   "key": "f1",
+   "floor": 1,
+   "floorPrinted": "First Floor",
+   "crop": [
+    25,
+    245,
+    743,
+    405
+   ]
+  },
+  {
+   "key": "f2",
+   "floor": 2,
+   "floorPrinted": "Second Floor",
+   "crop": [
+    25,
+    660,
+    743,
+    455
+   ]
+  },
+  {
+   "key": "f3",
+   "floor": 3,
+   "floorPrinted": "Third Floor",
+   "crop": [
+    25,
+    1155,
+    743,
+    375
+   ]
+  },
+  {
+   "key": "f4",
+   "floor": 4,
+   "floorPrinted": "Fourth Floor",
+   "crop": [
+    25,
+    1575,
+    743,
+    380
+   ]
+  }
+ ],
+ "rooms": [
+  {
+   "section": "f1",
+   "label": "University Extension & Development Center",
+   "kind": "office",
+   "rect": [
+    43,
+    258,
+    292,
+    198
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "Training Room 1",
+   "kind": "room",
+   "rect": [
+    451,
+    258,
+    292,
+    198
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "Lobby",
+   "kind": "facility",
+   "rect": null,
+   "flags": [
+    "open area, no drawn boundary: highlight pending"
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "CR",
+   "kind": "facility",
+   "rect": [
+    449,
+    672,
+    292,
+    65
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Vice President of Research, Innovation & Extension",
+   "kind": "office",
+   "rect": [
+    449,
+    740,
+    292,
+    130
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Office of the Director for University of Research & Deveopment Center",
+   "kind": "office",
+   "rect": [
+    42,
+    888,
+    332,
+    134
+   ],
+   "flags": [
+    "printed 'Deveopment' (typo) - kept as printed"
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "WVSU Center for Research & Innovations in Science, Math, & Education Center",
+   "kind": "office",
+   "rect": [
+    41,
+    1163,
+    331,
+    106
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "CR",
+   "kind": "facility",
+   "rect": [
+    448,
+    1163,
+    292,
+    66
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "Socio - Behavioral Science Research Committee",
+   "kind": "office",
+   "rect": [
+    448,
+    1231,
+    292,
+    130
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "WVSU Research Journal Center",
+   "kind": "office",
+   "rect": [
+    41,
+    1272,
+    331,
+    105
+   ]
+  },
+  {
+   "section": "f3",
+   "label": "WESVAARDEC",
+   "kind": "office",
+   "rect": [
+    42,
+    1380,
+    331,
+    134
+   ]
+  },
+  {
+   "section": "f4",
+   "label": "Function Hall",
+   "kind": "facility",
+   "rect": [
+    36,
+    1585,
+    464,
+    350
+   ]
+  }
+ ],
+ "review": [
+  "Second floor: two unlabelled grey rooms above the Office of the Director — names?",
+  "College of Law's plan says it is on the 3rd/4th floor of the 'Research Bldg.', but this building's 3rd/4th floors show other rooms. Is the College of Law in a different building?"
+ ]
+}

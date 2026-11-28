@@ -203,6 +203,9 @@ a { color: inherit; text-decoration: none; }
 .pin { border: 0; padding: 0; cursor: pointer; }
 .pin-dest { width: 30px; height: 40px; background: var(--navy); clip-path: path("M15 0C6.7 0 0 6.7 0 15c0 11 15 25 15 25s15-14 15-25C30 6.7 23.3 0 15 0z"); }
 .pin-start { width: 18px; height: 18px; border-radius: 50%; background: var(--blue); border: 3px solid #fff; box-shadow: 0 0 0 4px rgba(74,127,193,.35); }
+.pin-here { display: flex; overflow: visible; flex-direction: column; align-items: center; gap: 4px; background: none; }
+.pin-here-dot { display: block; flex: none; box-sizing: border-box; width: 22px; height: 22px; border-radius: 50%; background: var(--blue); border: 3px solid #fff; box-shadow: 0 0 0 4px rgba(74,127,193,.35); }
+.pin-here-label { background: var(--navy); color: #fff; font: 700 12px/1 system-ui, sans-serif; padding: 5px 8px; border-radius: 999px; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
 .pin-building { width: 14px; height: 14px; border-radius: 4px; background: #fff; border: 3px solid var(--blue); }
 .pin-entrance { width: 12px; height: 12px; border-radius: 50%; background: var(--gold); border: 2px solid #fff; }
 .sheet-backdrop { position: fixed; inset: 0; background: rgba(15, 24, 41, .35); z-index: 40; display: flex; align-items: flex-end; justify-content: center; }

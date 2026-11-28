@@ -1,0 +1,281 @@
+{
+ "file": "college of pescar.png",
+ "sha256": "8c2f5fb7b354f4ef502024c5bc969141984a7538f509a3f0192c62dcdc7738c8",
+ "width": 1600,
+ "height": 2000,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "COLLEGE OF PESCAR",
+  "mapName": null,
+  "featureIds": [],
+  "buildingId": null,
+  "proposedId": null,
+  "match": "uncertain",
+  "matchNote": "Likely the map's 'COP Building' (place_id 12): the plan has a 'COP SC' room and EB codes. Confirm COP Building = College of PESCAR, and I'll link it and update the EB prefix."
+ },
+ "sections": [
+  {
+   "key": "f2",
+   "floor": 2,
+   "floorPrinted": "2nd Floor",
+   "crop": [
+    28,
+    552,
+    1544,
+    545
+   ]
+  },
+  {
+   "key": "f1",
+   "floor": 1,
+   "floorPrinted": "1st Floor",
+   "crop": [
+    0,
+    1113,
+    1600,
+    605
+   ]
+  }
+ ],
+ "rooms": [
+  {
+   "section": "f2",
+   "label": "COP SC",
+   "kind": "office",
+   "rect": [
+    42,
+    567,
+    99,
+    150
+   ],
+   "flags": [
+    "printed vertically; presumably COP Student Council - confirm"
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "STUDENT LOUNGE",
+   "kind": "facility",
+   "rect": [
+    43,
+    725,
+    99,
+    150
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "EB 201",
+   "kind": "room",
+   "rect": [
+    255,
+    562,
+    142,
+    341
+   ],
+   "code": "EB 201"
+  },
+  {
+   "section": "f2",
+   "label": "EB 202",
+   "kind": "room",
+   "rect": [
+    405,
+    562,
+    141,
+    341
+   ],
+   "code": "EB 202"
+  },
+  {
+   "section": "f2",
+   "label": "EB 203",
+   "kind": "room",
+   "rect": [
+    555,
+    562,
+    142,
+    341
+   ],
+   "code": "EB 203"
+  },
+  {
+   "section": "f2",
+   "label": "EB 204",
+   "kind": "room",
+   "rect": [
+    706,
+    562,
+    141,
+    341
+   ],
+   "code": "EB 204"
+  },
+  {
+   "section": "f2",
+   "label": "EB 205",
+   "kind": "room",
+   "rect": [
+    856,
+    562,
+    142,
+    341
+   ],
+   "code": "EB 205"
+  },
+  {
+   "section": "f2",
+   "label": "EB 206",
+   "kind": "room",
+   "rect": [
+    1007,
+    562,
+    142,
+    341
+   ],
+   "code": "EB 206"
+  },
+  {
+   "section": "f2",
+   "label": "EB 207",
+   "kind": "room",
+   "rect": [
+    1157,
+    562,
+    141,
+    341
+   ],
+   "code": "EB 207"
+  },
+  {
+   "section": "f2",
+   "label": "EB 208",
+   "kind": "room",
+   "rect": [
+    1307,
+    562,
+    142,
+    341
+   ],
+   "code": "EB 208"
+  },
+  {
+   "section": "f1",
+   "label": "BOYS CR",
+   "kind": "facility",
+   "rect": [
+    40,
+    1320,
+    99,
+    150
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "EB 101",
+   "kind": "room",
+   "rect": [
+    250,
+    1129,
+    132,
+    341
+   ],
+   "code": "EB 101"
+  },
+  {
+   "section": "f1",
+   "label": "EB 102",
+   "kind": "room",
+   "rect": [
+    390,
+    1129,
+    132,
+    341
+   ],
+   "code": "EB 102"
+  },
+  {
+   "section": "f1",
+   "label": "EB 103",
+   "kind": "room",
+   "rect": [
+    531,
+    1129,
+    132,
+    341
+   ],
+   "code": "EB 103"
+  },
+  {
+   "section": "f1",
+   "label": "Dean’s Office",
+   "kind": "office",
+   "rect": [
+    671,
+    1129,
+    133,
+    341
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "Faculty Office",
+   "kind": "office",
+   "rect": [
+    812,
+    1129,
+    132,
+    341
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "Dance and Cultural Office",
+   "kind": "office",
+   "rect": [
+    953,
+    1129,
+    132,
+    341
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "EB 107",
+   "kind": "room",
+   "rect": [
+    1093,
+    1129,
+    132,
+    341
+   ],
+   "code": "EB 107"
+  },
+  {
+   "section": "f1",
+   "label": "EB 108",
+   "kind": "room",
+   "rect": [
+    1234,
+    1129,
+    132,
+    341
+   ],
+   "code": "EB 108"
+  },
+  {
+   "section": "f1",
+   "label": "GIRLS CR",
+   "kind": "facility",
+   "rect": [
+    1461,
+    1311,
+    99,
+    150
+   ]
+  }
+ ],
+ "review": [
+  "EB 104, EB 105 and EB 106 are not printed (Dean’s Office, Faculty Office and Dance and Cultural Office are in that run). Do those codes exist?"
+ ]
+}

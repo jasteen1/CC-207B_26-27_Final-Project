@@ -17,6 +17,15 @@ Two clients share one Supabase project and the same place IDs:
 | 5 | **My Location**: *Use my location* (accuracy shown) or *Choose starting point*; the destination is kept when the start changes | `src/lib/location.ts`, `src/features/map` |
 | 6 | **Directory**: category filters, faculty search and details from `public.faculty_directory` (published + verified only) | `src/features/directory` |
 
+## Design (2026-11-28 redesign)
+
+Both apps follow the WayFinder design in `~/Downloads/WayFinder-SVGs` (exported from the clickable prototype in `~/Downloads/WayFinder-Prototype/site`).
+
+- **Web:** `src/App.tsx` routes to the redesigned screens in `src/wf/`. The prototype stylesheet is `src/wf/app.css`, and its data is in `src/wf/data/`. Logos, building photos, blueprints and floor plans are in `public/wf/`.
+- **Mobile:** `lib/main.dart` runs `lib/wf/` (`WFApp`). It uses the same routes, `assets/wf/wayfinder.json` (generated from the prototype data), and the Signika and Fira Sans fonts.
+- **Content:** screens use the prototype's sample student, schedule and campus records. Sign-in, the timetable scan and Ask WayFinder answers are simulated.
+- **Previous UI:** the old screens (`src/LegacyApp.tsx` and `src/features/`, `mobile/lib/app.dart` and `mobile/lib/screens/`) and the live Supabase/AI Guide data layer are kept and still tested, but no longer routed.
+
 ## Data rules
 
 - **Live mode:** live data is used when Supabase is configured. Students only see published, verified rows. A failed request shows an error with **Retry**; it never substitutes demo data.

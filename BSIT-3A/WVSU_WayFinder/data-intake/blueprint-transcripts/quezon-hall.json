@@ -1,0 +1,344 @@
+{
+ "file": "quezon hall.png",
+ "sha256": "e187fe745d0a6b9377f11e24d310868130564a981492b7d6d7126ba0ca1930f2",
+ "width": 1600,
+ "height": 2000,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "QUEZON HALL",
+  "mapName": "Quezon Hall",
+  "featureIds": [
+   10
+  ],
+  "buildingId": null,
+  "proposedId": "bldg-quezon-hall",
+  "match": "confirmed",
+  "matchNote": "Title matches map polygon Quezon Hall (place_id 10). QH codes match the QH prefix."
+ },
+ "sections": [
+  {
+   "key": "f2",
+   "floor": 2,
+   "floorPrinted": "2nd Floor",
+   "crop": [
+    28,
+    522,
+    1544,
+    480
+   ]
+  },
+  {
+   "key": "f1",
+   "floor": 1,
+   "floorPrinted": "1st Floor",
+   "crop": [
+    28,
+    1025,
+    1544,
+    580
+   ]
+  }
+ ],
+ "rooms": [
+  {
+   "section": "f2",
+   "label": "CR",
+   "kind": "facility",
+   "rect": [
+    210,
+    534,
+    90,
+    74
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "QH 10",
+   "kind": "room",
+   "rect": [
+    41,
+    613,
+    109,
+    89
+   ],
+   "code": "QH 10"
+  },
+  {
+   "section": "f2",
+   "label": "QH 9",
+   "kind": "room",
+   "rect": [
+    41,
+    709,
+    109,
+    89
+   ],
+   "code": "QH 9"
+  },
+  {
+   "section": "f2",
+   "label": "QH 8",
+   "kind": "room",
+   "rect": [
+    41,
+    806,
+    109,
+    89
+   ],
+   "code": "QH 8"
+  },
+  {
+   "section": "f2",
+   "label": "QH 7",
+   "kind": "room",
+   "rect": [
+    41,
+    903,
+    109,
+    89
+   ],
+   "code": "QH 7"
+  },
+  {
+   "section": "f2",
+   "label": "QH 11",
+   "kind": "room",
+   "rect": [
+    361,
+    659,
+    101,
+    168
+   ],
+   "code": "QH 11"
+  },
+  {
+   "section": "f2",
+   "label": "QH 12",
+   "kind": "room",
+   "rect": [
+    469,
+    659,
+    101,
+    168
+   ],
+   "code": "QH 12"
+  },
+  {
+   "section": "f2",
+   "label": "QH 13",
+   "kind": "room",
+   "rect": [
+    578,
+    659,
+    101,
+    168
+   ],
+   "code": "QH 13"
+  },
+  {
+   "section": "f2",
+   "label": "QH 14",
+   "kind": "room",
+   "rect": [
+    687,
+    659,
+    101,
+    168
+   ],
+   "code": "QH 14"
+  },
+  {
+   "section": "f2",
+   "label": "QH 15",
+   "kind": "room",
+   "rect": [
+    796,
+    659,
+    101,
+    168
+   ],
+   "code": "QH 15"
+  },
+  {
+   "section": "f2",
+   "label": "QH 16",
+   "kind": "room",
+   "rect": [
+    905,
+    659,
+    101,
+    168
+   ],
+   "code": "QH 16"
+  },
+  {
+   "section": "f2",
+   "label": "QH 17",
+   "kind": "room",
+   "rect": [
+    1013,
+    659,
+    101,
+    168
+   ],
+   "code": "QH 17"
+  },
+  {
+   "section": "f2",
+   "label": "QH 18",
+   "kind": "room",
+   "rect": [
+    1122,
+    659,
+    101,
+    168
+   ],
+   "code": "QH 18"
+  },
+  {
+   "section": "f2",
+   "label": "QH 19",
+   "kind": "room",
+   "rect": [
+    1231,
+    659,
+    101,
+    168
+   ],
+   "code": "QH 19"
+  },
+  {
+   "section": "f2",
+   "label": "MERGED ROOM",
+   "kind": "room",
+   "rect": [
+    1435,
+    589,
+    109,
+    378
+   ],
+   "flags": [
+    "printed vertically; which rooms were merged / does it have a code?"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "FACULTY OFFICE",
+   "kind": "office",
+   "rect": [
+    37,
+    1037,
+    110,
+    416
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "BOYS CR",
+   "kind": "facility",
+   "rect": [
+    237,
+    1037,
+    50,
+    298
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "GIRLS CR",
+   "kind": "facility",
+   "rect": [
+    296,
+    1037,
+    56,
+    298
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "QH 1",
+   "kind": "room",
+   "rect": [
+    361,
+    1037,
+    154,
+    298
+   ],
+   "code": "QH 1"
+  },
+  {
+   "section": "f1",
+   "label": "QH 2",
+   "kind": "room",
+   "rect": [
+    525,
+    1037,
+    154,
+    298
+   ],
+   "code": "QH 2"
+  },
+  {
+   "section": "f1",
+   "label": "QH 3",
+   "kind": "room",
+   "rect": [
+    688,
+    1037,
+    154,
+    298
+   ],
+   "code": "QH 3"
+  },
+  {
+   "section": "f1",
+   "label": "QH 4",
+   "kind": "room",
+   "rect": [
+    852,
+    1037,
+    154,
+    298
+   ],
+   "code": "QH 4"
+  },
+  {
+   "section": "f1",
+   "label": "QH 5",
+   "kind": "room",
+   "rect": [
+    1015,
+    1037,
+    154,
+    298
+   ],
+   "code": "QH 5"
+  },
+  {
+   "section": "f1",
+   "label": "QH 6",
+   "kind": "room",
+   "rect": [
+    1177,
+    1037,
+    155,
+    298
+   ],
+   "code": "QH 6"
+  },
+  {
+   "section": "f1",
+   "label": "FACULTY OFFICE",
+   "kind": "office",
+   "rect": [
+    1456,
+    1037,
+    109,
+    417
+   ]
+  }
+ ],
+ "review": [
+  "2nd floor: small unlabelled grey box left of the CR — name?"
+ ]
+}

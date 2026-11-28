@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -20,8 +21,20 @@ final _places = fixture('places.json'), _processes = fixture('processes.json'), 
 class FakeLocation implements LocationService {
   FakeLocation(this.outcome);
   LocationOutcome outcome;
+  int calls = 0;
   @override
-  Future<LocationOutcome> current() async => outcome;
+  Future<LocationOutcome> current() async {
+    calls++;
+    return outcome;
+  }
+}
+
+/// A GPS request that stays pending until the test calls [complete] (late-result cases).
+class PendingLocation implements LocationService {
+  final _c = Completer<LocationOutcome>();
+  void complete(LocationOutcome o) => _c.complete(o);
+  @override
+  Future<LocationOutcome> current() => _c.future;
 }
 
 Future<ScheduleStore> pumpApp(

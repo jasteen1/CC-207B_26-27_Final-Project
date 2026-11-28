@@ -6,13 +6,18 @@ import 'package:latlong2/latlong.dart';
 import '../core/app_scope.dart';
 import '../core/theme.dart';
 import '../data/campus.dart';
+import '../data/campus_outlines.dart';
 import '../data/location_service.dart';
 import '../data/models.dart';
 import '../widgets/common.dart';
 import 'home_screen.dart' show Unconfirmed;
 
-// Approximate WVSU Main Campus centre (Wikipedia: 10.7161 N, 122.5614 E). Not surveyed.
-const campusCenter = LatLng(10.7161, 122.5614);
+// WVSU Main Campus, La Paz, Iloilo City: the extent of the 39 building outlines in the team's
+// MapTiler "Wayfinder" dataset (same bounds as the web app). The centre is the middle of it.
+final campusBounds = LatLngBounds(const LatLng(10.71194, 122.55932), const LatLng(10.71531, 122.56441));
+const campusCenter = LatLng((10.71194 + 10.71531) / 2, (122.55932 + 122.56441) / 2);
+// Fill and outline colours of the custom style's "Wayfinder" layer: hsla(201, 70%, 43%, 0.8), black.
+const _outlineFill = Color(0xCC2185BA);
 const campusRadiusM = 900.0;
 
 /// A room or office is reached through its building; a building is its own destination.
@@ -32,6 +37,7 @@ class _MapScreenState extends State<MapScreen> {
   List<PlaceView> _all = const [];
   bool _loading = true, _destFailed = false, _pathsFailed = false, _tilesFailed = false, _locating = false;
   LocationFix? _fix;
+  List<CampusOutline> _outlines = const [];
   String? _locProblem;
   bool _init = false;
 
@@ -41,6 +47,8 @@ class _MapScreenState extends State<MapScreen> {
     if (!_init) {
       _init = true;
       _load();
+      final key = AppScope.of(context).config.mapTilerKey;
+      loadCampusOutlines(key).then((o) { if (mounted) setState(() => _outlines = o); });
     }
   }
 
@@ -67,10 +75,21 @@ class _MapScreenState extends State<MapScreen> {
   /// Destination stays in the URL; switching the start only changes `from`.
   void _setFrom(String from) => context.go(Uri(path: '/map', queryParameters: {if (widget.to.isNotEmpty) 'to': widget.to, if (from.isNotEmpty) 'from': from}).toString());
 
+  /// Each GPS request gets an id. A manual pick or leaving the screen bumps it, so a late GPS
+  /// result is ignored and never replaces the student's manual choice.
+  int _locRequest = 0;
+
+  @override
+  void dispose() {
+    _locRequest++;
+    super.dispose();
+  }
+
   Future<void> _useMyLocation() async {
+    final id = ++_locRequest;
     setState(() => _locating = true);
     final out = await AppScope.of(context).location.current();
-    if (!mounted) return;
+    if (!mounted || id != _locRequest) return;
     setState(() {
       _locating = false;
       _fix = out.fix;
@@ -102,7 +121,8 @@ class _MapScreenState extends State<MapScreen> {
       ),
     );
     if (picked != null && mounted) {
-      setState(() { _fix = null; _locProblem = null; });
+      _locRequest++;
+      setState(() { _fix = null; _locProblem = null; _locating = false; });
       _setFrom(picked.place.id);
     }
   }
@@ -164,8 +184,12 @@ class _MapScreenState extends State<MapScreen> {
           child: FlutterMap(
             key: ValueKey('${destPoint ?? ''}|${routePts?.length}|$startPoint'),
             options: MapOptions(
-              initialCenter: routePts?.isNotEmpty == true ? routePts![routePts.length ~/ 2] : (destPoint ?? campusCenter),
-              initialZoom: destPoint == null ? 16.5 : 18,
+              initialCenter: routePts?.isNotEmpty == true ? routePts![routePts.length ~/ 2] : (destPoint ?? startPoint ?? campusCenter),
+              initialZoom: destPoint == null && startPoint == null ? 16.5 : 18,
+              // Nothing selected yet: open straight onto the campus, framed by the building outlines.
+              initialCameraFit: routePts == null && destPoint == null && startPoint == null
+                  ? CameraFit.bounds(bounds: campusBounds, padding: const EdgeInsets.all(16))
+                  : null,
               backgroundColor: const Color(0xFFE6EDF7),
             ),
             children: [
@@ -175,6 +199,10 @@ class _MapScreenState extends State<MapScreen> {
                   userAgentPackageName: 'ph.edu.wvsu.wayfinder',
                   errorTileCallback: (tile, error, stack) { if (!_tilesFailed && mounted) setState(() => _tilesFailed = true); },
                 ),
+              if (_outlines.isNotEmpty)
+                PolygonLayer(polygons: [
+                  for (final o in _outlines) Polygon(points: o.points, color: _outlineFill, borderColor: Colors.black, borderStrokeWidth: 1),
+                ]),
               if (routePts != null) PolylineLayer(polylines: [Polyline(points: routePts, strokeWidth: 6, color: navy)]),
               MarkerLayer(markers: [
                 for (final v in _all)
@@ -184,14 +212,32 @@ class _MapScreenState extends State<MapScreen> {
                   for (final e in entrancesOf(paths, destB.id))
                     Marker(point: LatLng(e.lat, e.lng), width: 14, height: 14, child: Container(decoration: BoxDecoration(color: gold, shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 2)))),
                 if (destPoint != null) Marker(point: destPoint, width: 44, height: 44, alignment: Alignment.topCenter, child: const Icon(Icons.location_on, color: navy, size: 44, semanticLabel: 'Destination')),
-                if (startPoint != null) Marker(point: startPoint, width: 26, height: 26, child: const Icon(Icons.my_location, color: wayBlue, semanticLabel: 'Start')),
+                if (startPoint != null && widget.from == 'gps')
+                  Marker(point: startPoint, width: 120, height: 70, alignment: const Alignment(0, 0.71), child: const _YouAreHere())
+                else if (startPoint != null)
+                  Marker(point: startPoint, width: 26, height: 26, child: const Icon(Icons.my_location, color: wayBlue, semanticLabel: 'Start')),
               ]),
             ],
           ),
         ),
       ),
       if (_loading) const Padding(padding: EdgeInsets.all(12), child: Center(child: CircularProgressIndicator())),
-      if (widget.to.isEmpty) const Card(child: Padding(padding: EdgeInsets.all(16), child: Text('Search for a room or building to get directions.', style: TextStyle(color: muted)))),
+      if (widget.to.isEmpty)
+        Card(
+          key: const Key('my-location-card'),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Text('Search for a room or building to get directions.', style: TextStyle(color: muted)),
+              if (widget.from == 'gps' && fix != null)
+                Padding(padding: const EdgeInsets.only(top: 8), child: Text('You are here · accuracy ±${fix.accuracyMeters.round()} m (${fix.accuracyLabel})', style: const TextStyle(fontWeight: FontWeight.w700))),
+              if (_locProblem != null) Notice(_locProblem!),
+              if (offCampus && !gpsPoor) const Notice('You appear to be outside the campus.'),
+              const SizedBox(height: 8),
+              FilledButton.icon(onPressed: _locating ? null : _useMyLocation, icon: const Icon(Icons.my_location, size: 18), label: Text(_locating ? 'Locating…' : 'Use my location')),
+            ]),
+          ),
+        ),
       if (!_loading && widget.to.isNotEmpty && dest == null && !_destFailed)
         Card(child: Padding(padding: const EdgeInsets.all(16), child: Text('No place has the ID “${widget.to}”.'))),
       if (dest != null) ...[
@@ -260,7 +306,7 @@ class _MapScreenState extends State<MapScreen> {
               const Text('STARTING FROM', style: TextStyle(fontSize: 11, letterSpacing: .8, color: muted, fontWeight: FontWeight.w700)),
               Text(
                 widget.from == 'gps' && fix != null
-                    ? 'My location · accuracy ±${fix.accuracyMeters.round()} m (${fix.accuracyLabel})'
+                    ? 'You are here · accuracy ±${fix.accuracyMeters.round()} m (${fix.accuracyLabel})'
                     : _start != null ? '${_start!.place.roomCode ?? _start!.place.name}${_start!.parent != null ? ' · ${_start!.parent!.name}' : ''}' : 'Not set',
                 key: const Key('start-line'),
               ),
@@ -278,4 +324,26 @@ class _MapScreenState extends State<MapScreen> {
       ],
     ]);
   }
+}
+
+/// GPS position marker: a blue dot with a "You are here" label under it.
+class _YouAreHere extends StatelessWidget {
+  const _YouAreHere();
+  @override
+  Widget build(BuildContext context) => Semantics(
+        label: 'You are here',
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Container(
+            width: 20,
+            height: 20,
+            decoration: BoxDecoration(color: wayBlue, shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 3), boxShadow: const [BoxShadow(color: Color(0x594A7FC1), spreadRadius: 4)]),
+          ),
+          const SizedBox(height: 4),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(color: navy, borderRadius: BorderRadius.circular(999)),
+            child: const Text('You are here', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700)),
+          ),
+        ]),
+      );
 }

@@ -1,0 +1,272 @@
+{
+ "file": "college of business and management.png",
+ "sha256": "4c747f74cca222ae9c0d9186fd75232882ef636e8ef9160f82d26a54afaf768e",
+ "width": 1600,
+ "height": 2000,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "COLLEGE OF BUSINESS AND MANAGEMENT",
+  "mapName": "College of Business and Management",
+  "featureIds": [
+   15
+  ],
+  "buildingId": null,
+  "proposedId": "bldg-college-of-business-and-management",
+  "match": "confirmed",
+  "matchNote": "Title matches map polygon College of Business and Management (place_id 15). RB room codes match the RB prefix."
+ },
+ "sections": [
+  {
+   "key": "f2",
+   "floor": 2,
+   "floorPrinted": "2nd Floor",
+   "crop": [
+    20,
+    540,
+    1550,
+    640
+   ]
+  },
+  {
+   "key": "f1",
+   "floor": 1,
+   "floorPrinted": "1st Floor",
+   "crop": [
+    20,
+    1212,
+    1550,
+    630
+   ]
+  }
+ ],
+ "rooms": [
+  {
+   "section": "f2",
+   "label": "THE INNOVATOR",
+   "kind": "facility",
+   "rect": [
+    43,
+    665,
+    106,
+    267
+   ],
+   "flags": [
+    "what is The Innovator (office, publication, lounge)?"
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "RB 6",
+   "kind": "room",
+   "rect": [
+    274,
+    658,
+    138,
+    328
+   ],
+   "code": "RB 6"
+  },
+  {
+   "section": "f2",
+   "label": "RB 7",
+   "kind": "room",
+   "rect": [
+    421,
+    658,
+    138,
+    328
+   ],
+   "code": "RB 7"
+  },
+  {
+   "section": "f2",
+   "label": "RB 8",
+   "kind": "room",
+   "rect": [
+    568,
+    658,
+    139,
+    328
+   ],
+   "code": "RB 8"
+  },
+  {
+   "section": "f2",
+   "label": "RB 9",
+   "kind": "room",
+   "rect": [
+    715,
+    658,
+    139,
+    328
+   ],
+   "code": "RB 9"
+  },
+  {
+   "section": "f2",
+   "label": "RB 10",
+   "kind": "room",
+   "rect": [
+    863,
+    659,
+    138,
+    328
+   ],
+   "code": "RB 10"
+  },
+  {
+   "section": "f2",
+   "label": "CBM SC",
+   "kind": "office",
+   "rect": [
+    1035,
+    558,
+    123,
+    167
+   ],
+   "flags": [
+    "CBM SC is presumably the CBM Student Council - confirm"
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "RB 11",
+   "kind": "room",
+   "rect": [
+    1178,
+    652,
+    129,
+    328
+   ],
+   "code": "RB 11"
+  },
+  {
+   "section": "f2",
+   "label": "CONFERENCE ROOM 2",
+   "kind": "room",
+   "rect": [
+    1316,
+    652,
+    129,
+    328
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "AHMS OFFICE",
+   "kind": "office",
+   "rect": [
+    1450,
+    991,
+    113,
+    155
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "RESEARCH & EXTENSION OFFICE",
+   "kind": "office",
+   "rect": [
+    36,
+    1333,
+    119,
+    397
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "RB 1",
+   "kind": "room",
+   "rect": [
+    274,
+    1332,
+    148,
+    398
+   ],
+   "code": "RB 1"
+  },
+  {
+   "section": "f1",
+   "label": "RB 2",
+   "kind": "room",
+   "rect": [
+    431,
+    1332,
+    148,
+    398
+   ],
+   "code": "RB 2"
+  },
+  {
+   "section": "f1",
+   "label": "RB 3",
+   "kind": "room",
+   "rect": [
+    588,
+    1332,
+    148,
+    398
+   ],
+   "code": "RB 3"
+  },
+  {
+   "section": "f1",
+   "label": "RB 4",
+   "kind": "room",
+   "rect": [
+    746,
+    1332,
+    148,
+    398
+   ],
+   "code": "RB 4"
+  },
+  {
+   "section": "f1",
+   "label": "DEAN’S OFFICE",
+   "kind": "office",
+   "rect": [
+    903,
+    1332,
+    152,
+    398
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "CR",
+   "kind": "facility",
+   "rect": [
+    1072,
+    1230,
+    133,
+    166
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "FACULTY OFFICE",
+   "kind": "office",
+   "rect": [
+    1226,
+    1332,
+    142,
+    413
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "CONFERENCE ROOM 1",
+   "kind": "room",
+   "rect": [
+    1377,
+    1332,
+    142,
+    413
+   ]
+  }
+ ],
+ "review": [
+  "RB 5 is not on either floor (1st: RB 1-4, 2nd: RB 6-11). Does RB 5 exist, and where?"
+ ]
+}

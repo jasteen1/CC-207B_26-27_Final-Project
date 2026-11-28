@@ -1,0 +1,65 @@
+/* Web layout for wide browser windows (≥ 960px). Phones and narrow windows keep the app layout untouched.
+   The phone frame goes away: the bottom tab bar becomes a left sidebar, reading screens sit in a centred
+   column, sheets become centred dialogs, and the map fills the window with its card as a side panel. */
+.tabs-brand { display: none; }
+
+@media (min-width: 960px) {
+  :root { --side-w: 248px; --col: 760px; --panel-w: 400px; --gap: 24px; }
+
+  /* the window is the app */
+  .stage { display: block; padding: 0; min-height: 100svh; }
+  .phone { width: 100%; height: 100svh; border-radius: 0; box-shadow: none; }
+  .tools { display: none; }
+
+  /* ---------- sidebar navigation ---------- */
+  .view.has-tabs { left: var(--side-w); }
+  .has-tabs .scroll { bottom: 0; }
+  .tabs { top: 0; bottom: 0; right: auto; left: calc(-1 * var(--side-w)); width: var(--side-w); height: auto; display: flex; flex-direction: column; gap: 4px;
+    padding: 22px 14px; background: var(--paper); border-top: 0; border-right: 1px solid var(--line); }
+  .tabs-brand { display: block; padding: 2px 10px 26px; border-radius: 12px; }
+  .tabs-brand img { width: 172px; height: auto; }
+  .tab-ind { display: none; }
+  .tab { flex: none; flex-direction: row; justify-content: flex-start; align-items: center; gap: 12px; min-height: 50px; padding: 0 14px 0 6px; border-radius: 14px;
+    font-size: 15.5px; font-weight: 700; color: var(--body); transition: background-color .15s ease, color .15s ease; }
+  .tab:hover { background: var(--sand); color: var(--navy); }
+  .tab-ic { width: 38px; height: 38px; border-radius: 50%; transition: background-color .2s ease; }
+  .tab.on { background: var(--gold-soft); color: var(--navy); }
+  .tab.on .tab-ic { background: var(--gold); box-shadow: 0 6px 14px -6px rgba(184, 121, 0, .6); }
+  .ask-fab { right: 32px; bottom: 32px; }
+  .view:has(.ask-fab) .scroll > div { padding-bottom: 120px !important; }
+
+  /* ---------- reading screens: one centred column ---------- */
+  .scroll > .pad, .scroll > div:not([class]) { max-width: var(--col); margin-inline: auto; }
+  .bar { padding-inline: max(8px, calc((100% - var(--col)) / 2 - 4px)); }
+  .has-tabs .brandbar .logo-wrap { visibility: hidden; } /* the sidebar already carries the lockup */
+  .home-wrap { max-width: 880px; margin-inline: auto; }
+  .has-tabs .hx-logo { visibility: hidden; height: 0; }
+
+  /* ---------- sheets become centred dialogs; notices move to the corner ---------- */
+  .sheet { left: calc(50% - min(280px, 50% - 24px)); right: auto; width: min(560px, 100% - 48px); bottom: var(--gap); border-radius: 26px; }
+  .ask-sheet { max-height: min(86%, 760px); }
+  .toast { left: auto; right: var(--gap); top: var(--gap); width: 420px; }
+  .push-wrap { left: auto; right: var(--gap); top: var(--gap); width: 400px; }
+
+  .sheet .grab, .ask-sheet::before { display: none; }
+
+  /* ---------- first run: intro and profile read as a centred column; sign-in keeps its full-bleed hero with the card centred ---------- */
+  .view.intro, .view.pfview { left: max(0px, calc(50% - 300px)); right: max(0px, calc(50% - 300px)); }
+  .phone:has(.view.intro), .phone:has(.view.pfview) { background: var(--sand); }
+  .view.intro, .view.pfview { box-shadow: 0 0 0 1px var(--line), 0 30px 80px -30px rgba(60, 40, 0, .25); }
+  .lg-sheet { width: 540px; margin: -120px auto 48px; padding-bottom: 24px; border-radius: 28px; box-shadow: 0 30px 70px -20px rgba(5, 12, 40, .55); }
+
+  /* ---------- map: full window, card as a left side panel ---------- */
+  .map-top { left: var(--gap); right: auto; top: var(--gap); width: var(--panel-w); }
+  .map-sheet, .has-tabs .map-sheet { left: var(--gap); right: auto; width: var(--panel-w); bottom: var(--gap); border-radius: 24px;
+    box-shadow: 0 18px 44px -12px rgba(60, 40, 0, .28), 0 0 0 1px var(--line); }
+  .map-sheet .grab, .map-sheet .grab-btn { display: none; }
+  .map-sheet.open { animation: panel-in .36s cubic-bezier(.22, 1, .36, 1) both; }
+  @keyframes panel-in { from { opacity: 0; transform: translateX(-16px); } }
+  /* campus home: search on top, the explore panel fills the column under it */
+  .map-sheet.explore, .map-sheet.explore.peek, .map-sheet.explore.expanded { top: var(--panel-top, 96px); max-height: none; overflow-y: auto; padding-top: 20px; }
+  .ex-head .btn { display: none; }
+  /* building / room card: under the back button, as tall as it needs */
+  .map-sheet.compact, .map-sheet:not(.explore) { top: 92px; bottom: auto; max-height: calc(100% - 92px - var(--gap)); padding-top: 18px; }
+  .map-ctrl, .home-map .map-ctrl { top: var(--gap); right: var(--gap); }
+}

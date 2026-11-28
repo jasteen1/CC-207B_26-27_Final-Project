@@ -1,0 +1,407 @@
+{
+ "file": "coop.png",
+ "sha256": "6930d80604d8f89e7028766ba05c045824da69e92c6dfb9e0307e84c7e27cb18",
+ "width": 1126,
+ "height": 1192,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "SCHOOL CANTEEN (COOP)",
+  "mapName": "Coop Building",
+  "featureIds": [
+   37
+  ],
+  "buildingId": null,
+  "proposedId": "bldg-coop-building",
+  "match": "confirmed",
+  "matchNote": "Title SCHOOL CANTEEN (COOP) matches map polygon Coop Building (place_id 37)."
+ },
+ "sections": [
+  {
+   "key": "f1",
+   "floor": 1,
+   "floorPrinted": "1st Floor",
+   "crop": [
+    20,
+    255,
+    1065,
+    455
+   ]
+  },
+  {
+   "key": "f2",
+   "floor": 2,
+   "floorPrinted": "2nd Floor",
+   "crop": [
+    26,
+    758,
+    1066,
+    382
+   ]
+  }
+ ],
+ "rooms": [
+  {
+   "section": "f1",
+   "label": "STALL",
+   "kind": "facility",
+   "rect": [
+    29,
+    278,
+    65,
+    53
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "STALL",
+   "kind": "facility",
+   "rect": [
+    29,
+    346,
+    73,
+    131
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "STALL",
+   "kind": "facility",
+   "rect": [
+    29,
+    483,
+    73,
+    141
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "K1",
+   "kind": "facility",
+   "rect": [
+    168,
+    262,
+    72,
+    121
+   ],
+   "code": "K1",
+   "flags": [
+    "code K# has no building prefix: another building could use the same code"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "K2",
+   "kind": "facility",
+   "rect": [
+    244,
+    262,
+    73,
+    121
+   ],
+   "code": "K2",
+   "flags": [
+    "code K# has no building prefix: another building could use the same code"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "K3",
+   "kind": "facility",
+   "rect": [
+    320,
+    262,
+    73,
+    121
+   ],
+   "code": "K3",
+   "flags": [
+    "code K# has no building prefix: another building could use the same code"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "K4",
+   "kind": "facility",
+   "rect": [
+    397,
+    262,
+    72,
+    121
+   ],
+   "code": "K4",
+   "flags": [
+    "code K# has no building prefix: another building could use the same code"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "K5",
+   "kind": "facility",
+   "rect": [
+    473,
+    262,
+    73,
+    121
+   ],
+   "code": "K5",
+   "flags": [
+    "code K# has no building prefix: another building could use the same code"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "K6",
+   "kind": "facility",
+   "rect": [
+    550,
+    262,
+    72,
+    121
+   ],
+   "code": "K6",
+   "flags": [
+    "code K# has no building prefix: another building could use the same code"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "K7",
+   "kind": "facility",
+   "rect": [
+    624,
+    262,
+    69,
+    121
+   ],
+   "code": "K7",
+   "flags": [
+    "code K# has no building prefix: another building could use the same code"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "K8",
+   "kind": "facility",
+   "rect": [
+    697,
+    262,
+    73,
+    121
+   ],
+   "code": "K8",
+   "flags": [
+    "code K# has no building prefix: another building could use the same code"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "K9",
+   "kind": "facility",
+   "rect": [
+    773,
+    262,
+    73,
+    121
+   ],
+   "code": "K9",
+   "flags": [
+    "code K# has no building prefix: another building could use the same code"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "K10",
+   "kind": "facility",
+   "rect": [
+    850,
+    262,
+    72,
+    121
+   ],
+   "code": "K10",
+   "flags": [
+    "code K# has no building prefix: another building could use the same code"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "K11",
+   "kind": "facility",
+   "rect": [
+    925,
+    262,
+    70,
+    121
+   ],
+   "code": "K11",
+   "flags": [
+    "code K# has no building prefix: another building could use the same code"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "K12",
+   "kind": "facility",
+   "rect": [
+    999,
+    262,
+    72,
+    121
+   ],
+   "code": "K12",
+   "flags": [
+    "code K# has no building prefix: another building could use the same code"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "CR",
+   "kind": "facility",
+   "rect": [
+    1007,
+    454,
+    64,
+    53
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "COOP",
+   "kind": "office",
+   "rect": [
+    850,
+    555,
+    225,
+    73
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Kiosk",
+   "kind": "facility",
+   "rect": [
+    38,
+    768,
+    72,
+    369
+   ],
+   "flags": [
+    "printed vertically"
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Kiosk",
+   "kind": "facility",
+   "rect": [
+    201,
+    768,
+    142,
+    73
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Kiosk",
+   "kind": "facility",
+   "rect": [
+    347,
+    768,
+    136,
+    73
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Kiosk",
+   "kind": "facility",
+   "rect": [
+    485,
+    768,
+    141,
+    73
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Kiosk",
+   "kind": "facility",
+   "rect": [
+    630,
+    768,
+    141,
+    73
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Kiosk",
+   "kind": "facility",
+   "rect": [
+    773,
+    768,
+    142,
+    73
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "CR",
+   "kind": "facility",
+   "rect": [
+    985,
+    768,
+    97,
+    78
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Kiosk",
+   "kind": "facility",
+   "rect": [
+    114,
+    1060,
+    142,
+    72
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Kiosk",
+   "kind": "facility",
+   "rect": [
+    260,
+    1060,
+    141,
+    72
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "Kiosk",
+   "kind": "facility",
+   "rect": [
+    404,
+    1060,
+    325,
+    72
+   ]
+  },
+  {
+   "section": "f2",
+   "label": "WVSU MPC OFFICE",
+   "kind": "office",
+   "rect": [
+    850,
+    1008,
+    232,
+    124
+   ]
+  }
+ ],
+ "review": [
+  "2nd floor: nine stalls are all labelled just 'Kiosk'. Do they have numbers or tenant names students would search for?",
+  "1st floor: three boxes labelled STALL with no number."
+ ]
+}

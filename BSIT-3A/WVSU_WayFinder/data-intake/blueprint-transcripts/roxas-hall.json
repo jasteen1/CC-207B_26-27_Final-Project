@@ -1,0 +1,206 @@
+{
+ "file": "roxas hall.png",
+ "sha256": "eddc951400662eceb0559cdb5c0f263676d6a4117c515dd20d4b3823c5a288b5",
+ "width": 1600,
+ "height": 2000,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "COLLEGE OF MEDICINE — ROXAS HALL",
+  "mapName": "College of Medicine (Roxas Hall)",
+  "featureIds": [
+   38
+  ],
+  "buildingId": null,
+  "proposedId": "bldg-college-of-medicine-roxas-hall",
+  "match": "confirmed",
+  "matchNote": "Plan says ROXAS HALL under the College of Medicine title; map polygon College of Medicine (Roxas Hall), place_id 38."
+ },
+ "sections": [
+  {
+   "key": "f1",
+   "floor": 1,
+   "floorPrinted": "ROXAS HALL 1st Floor",
+   "crop": [
+    160,
+    652,
+    1268,
+    1024
+   ]
+  }
+ ],
+ "rooms": [
+  {
+   "section": "f1",
+   "label": "RM 103",
+   "kind": "room",
+   "rect": [
+    177,
+    669,
+    298,
+    237
+   ],
+   "code": "RM 103",
+   "flags": [
+    "plan prints RM; your prefix list says RH = Roxas Hall. Which is on the door?"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "COM MAIN LAB",
+   "kind": "lab",
+   "rect": [
+    485,
+    669,
+    198,
+    237
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "FACULTY ROOM",
+   "kind": "office",
+   "rect": [
+    693,
+    669,
+    198,
+    237
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "RM 102",
+   "kind": "room",
+   "rect": [
+    900,
+    669,
+    198,
+    237
+   ],
+   "code": "RM 102",
+   "flags": [
+    "plan prints RM; your prefix list says RH = Roxas Hall. Which is on the door?"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "RM 101",
+   "kind": "room",
+   "rect": [
+    1111,
+    669,
+    298,
+    237
+   ],
+   "code": "RM 101",
+   "flags": [
+    "plan prints RM; your prefix list says RH = Roxas Hall. Which is on the door?"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "DEPARTMENT OF CLINICAL LABORTAORY",
+   "kind": "office",
+   "rect": [
+    177,
+    914,
+    298,
+    196
+   ],
+   "flags": [
+    "printed LABORTAORY (typo for LABORATORY) - kept as printed"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "DEPARTMENT OF HUMAN BIOLOGY",
+   "kind": "office",
+   "rect": [
+    1111,
+    914,
+    298,
+    196
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "MEN’S CR",
+   "kind": "facility",
+   "rect": [
+    178,
+    1122,
+    297,
+    105
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "FACULTY CR",
+   "kind": "facility",
+   "rect": [
+    1111,
+    1122,
+    117,
+    121
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "WOMEN’S CR",
+   "kind": "facility",
+   "rect": [
+    1238,
+    1122,
+    171,
+    121
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "COM OSA",
+   "kind": "office",
+   "rect": [
+    177,
+    1477,
+    214,
+    178
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "OFFICE OF THE REGISTRAR",
+   "kind": "office",
+   "rect": [
+    402,
+    1477,
+    214,
+    178
+   ],
+   "flags": [
+    "a College of Medicine registrar, separate from the university Registrar in the Admin building"
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "OFFICE OF THE DEAN",
+   "kind": "office",
+   "rect": [
+    970,
+    1477,
+    214,
+    178
+   ]
+  },
+  {
+   "section": "f1",
+   "label": "CONFERENCE ROOM",
+   "kind": "room",
+   "rect": [
+    1195,
+    1477,
+    214,
+    178
+   ]
+  }
+ ],
+ "review": []
+}

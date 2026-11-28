@@ -1,0 +1,151 @@
+{
+ "file": "college of communications.png",
+ "sha256": "452385967e54177c6c189eeec3f430d5fd713c2c15f45bdcc50a2152e977701f",
+ "width": 1600,
+ "height": 2000,
+ "processedOn": "2026-11-24",
+ "building": {
+  "printed": "COLLEGE OF COMMUNICATIONS",
+  "mapName": "College of Communication",
+  "featureIds": [
+   34
+  ],
+  "buildingId": null,
+  "proposedId": "bldg-college-of-communication",
+  "match": "confirmed",
+  "matchNote": "Title COLLEGE OF COMMUNICATIONS vs map College of Communication (place_id 34): plural differs only. MC codes match the MC prefix."
+ },
+ "sections": [
+  {
+   "key": "section-1",
+   "floor": null,
+   "crop": [
+    178,
+    708,
+    1292,
+    900
+   ],
+   "status": "floor unconfirmed",
+   "note": "No floor printed on the plan."
+  }
+ ],
+ "rooms": [
+  {
+   "section": "section-1",
+   "label": "MC 2",
+   "kind": "room",
+   "rect": [
+    195,
+    726,
+    222,
+    327
+   ],
+   "code": "MC 2"
+  },
+  {
+   "section": "section-1",
+   "label": "MEN’S CR",
+   "kind": "facility",
+   "rect": [
+    426,
+    726,
+    166,
+    168
+   ]
+  },
+  {
+   "section": "section-1",
+   "label": "WOMEN’S CR",
+   "kind": "facility",
+   "rect": [
+    601,
+    726,
+    166,
+    168
+   ]
+  },
+  {
+   "section": "section-1",
+   "label": "RADIO TV",
+   "kind": "room",
+   "rect": [
+    538,
+    903,
+    121,
+    59
+   ],
+   "flags": [
+    "very small box labelled RADIO TV: a booth, or a sign for a room elsewhere?"
+   ]
+  },
+  {
+   "section": "section-1",
+   "label": "OFFICE OF THE DEAN",
+   "kind": "office",
+   "rect": [
+    777,
+    726,
+    170,
+    217
+   ]
+  },
+  {
+   "section": "section-1",
+   "label": "TV LABORATORY",
+   "kind": "lab",
+   "rect": [
+    956,
+    726,
+    301,
+    217
+   ]
+  },
+  {
+   "section": "section-1",
+   "label": "DYWV OFFICE",
+   "kind": "office",
+   "rect": [
+    1266,
+    726,
+    189,
+    299
+   ]
+  },
+  {
+   "section": "section-1",
+   "label": "MC 1",
+   "kind": "room",
+   "rect": [
+    195,
+    1062,
+    222,
+    327
+   ],
+   "code": "MC 1"
+  },
+  {
+   "section": "section-1",
+   "label": "MC LOBBY",
+   "kind": "facility",
+   "rect": null,
+   "flags": [
+    "open lobby area with no drawn boundary: highlight pending"
+   ]
+  },
+  {
+   "section": "section-1",
+   "label": "COC SC OFFICE",
+   "kind": "office",
+   "rect": [
+    189,
+    1416,
+    226,
+    180
+   ]
+  }
+ ],
+ "review": [
+  "No floor is printed. Which floor is this?",
+  "Title says COMMUNICATIONS; map polygon is College of Communication (and Audio Visual Hall, polygon 33, was once part of it). Confirm these rooms are all in polygon 34."
+ ]
+}
