@@ -40,14 +40,39 @@ const toView = (r: Row): PlaceView => ({ place: toPlace(r), parent: r.parent ? t
 const SELECT = "select=*,parent:places!parent_id(*)";
 const places = (query: string) => get<Row[]>(`places?${SELECT}&status=eq.verified&${query}`);
 
+
 export async function liveSearch(q: string): Promise<PlaceView[]> {
   const trimmed = q.trim();
   if (!trimmed) return [];
+
+  // First: exact canonical room-code search.
   if (looksLikeRoomCode(trimmed)) {
-    return (await places(`room_code=eq.${encodeURIComponent(normalizeRoomCode(trimmed))}`)).map(toView);
+    const code = normalizeRoomCode(trimmed);
+
+    const exactMatches = await places(
+      `room_code=eq.${encodeURIComponent(code)}`
+    );
+
+    if (exactMatches.length > 0) {
+      return exactMatches.map(toView);
+    }
   }
+
+  // Second: general directory search.
   const n = encodeURIComponent(clean(trimmed));
-  return (await places(`or=(name.ilike.*${n}*,short_name.ilike.${n})&limit=25`)).map(toView);
+
+  return (
+    await places(
+      `or=(` +
+        `name.ilike.*${n}*,` +
+        `short_name.ilike.*${n}*,` +
+        `room_code.ilike.*${n}*,` +
+        `room_label.ilike.*${n}*,` +
+        `description.ilike.*${n}*,` +
+        `phone_extension.ilike.*${n}*` +
+      `)&limit=25`
+    )
+  ).map(toView);
 }
 
 export async function liveGetPlace(id: string): Promise<PlaceView | null> {
@@ -56,35 +81,107 @@ export async function liveGetPlace(id: string): Promise<PlaceView | null> {
 }
 
 export async function liveList(): Promise<PlaceView[]> {
-  return (await places("order=name.asc&limit=500")).map(toView);
+  const pageSize = 500;
+  const allRows: Row[] = [];
+
+  for (let offset = 0; ; offset += pageSize) {
+    const page = await places(
+      `order=name.asc,id.asc&limit=${pageSize}&offset=${offset}`
+    );
+
+    allRows.push(...page);
+
+    if (page.length < pageSize) break;
+  }
+
+  return allRows.map(toView);
 }
 
 // ---- Faculty (public.faculty_directory) --------------------------------------------------
 // Columns confirmed against the live table: record_id, full_name, college_unit, college_code,
 // department, position_title, is_published, review_status. There is no office-link column, so live
 // teachers never get "Show on map": the UI says "Office location unconfirmed".
-export const FACULTY_COLUMNS = "record_id,full_name,college_unit,college_code,department,position_title";
-const PUBLISHED = "is_published=eq.true&review_status=eq.verified";
 
-interface FacultyRow {
-  record_id: string | number; full_name: string; college_unit: string | null; college_code: string | null;
-  department: string | null; position_title: string | null;
+const PLACE_FIELDS =
+  "id,kind,name,short_name,room_code,floor,parent_id,lng,lat,status,source";
+
+export const FACULTY_COLUMNS =
+  `id,full_name,position_title,official_email,office_hours,` +
+  `college:places!faculty_college_id_fkey(id,name,short_name),` +
+  `office:places!faculty_office_id_fkey(${PLACE_FIELDS},parent:places!parent_id(${PLACE_FIELDS}))`;
+
+interface FacultyCollegeRow {
+  id: string;
+  name: string;
+  short_name: string | null;
 }
 
-const toFaculty = (r: FacultyRow): Faculty => ({
-  id: String(r.record_id), fullName: r.full_name, collegeUnit: r.college_unit ?? undefined,
-  collegeCode: r.college_code ?? undefined, department: r.department ?? undefined,
-  positionTitle: r.position_title ?? undefined, isDemo: false,
-});
+interface FacultyRow {
+  id: string;
+  full_name: string;
+  position_title: string | null;
+  official_email: string | null;
+  office_hours: string | null;
+  college: FacultyCollegeRow | null;
+  office: Row | null;
+}
+
+const VERIFIED_FACULTY = "status=eq.verified";
+
+function toFaculty(r: FacultyRow): Faculty {
+  return {
+    id: String(r.id),
+    fullName: r.full_name,
+    positionTitle: r.position_title ?? undefined,
+    collegeUnit: r.college?.name ?? undefined,
+    collegeCode: r.college?.short_name ?? undefined,
+    officialEmail: r.official_email ?? undefined,
+    officeHours: r.office_hours ?? undefined,
+
+    office: r.office
+      ? {
+          id: r.office.id,
+          name: r.office.name,
+          floor: r.office.floor ?? undefined,
+          status: r.office.status,
+          lng: r.office.lng ?? undefined,
+          lat: r.office.lat ?? undefined,
+          parent: r.office.parent
+            ? {
+                id: r.office.parent.id,
+                name: r.office.parent.name,
+                lng: r.office.parent.lng ?? undefined,
+                lat: r.office.parent.lat ?? undefined,
+                status: r.office.parent.status,
+              }
+            : undefined,
+        }
+      : undefined,
+
+    isDemo: false,
+  };
+}
 
 export async function liveSearchFaculty(q: string): Promise<Faculty[]> {
   const name = clean(q);
-  const filter = name ? `&full_name=ilike.*${encodeURIComponent(name)}*` : "";
-  return (await get<FacultyRow[]>(`faculty_directory?select=${FACULTY_COLUMNS}&${PUBLISHED}${filter}&order=full_name.asc&limit=100`)).map(toFaculty);
+  const encoded = encodeURIComponent(name);
+
+  const filter = name
+    ? `&or=(full_name.ilike.*${encoded}*,official_email.ilike.*${encoded}*,position_title.ilike.*${encoded}*)`
+    : "";
+
+  return (
+    await get<FacultyRow[]>(
+      `faculty_directory?select=${FACULTY_COLUMNS}&${VERIFIED_FACULTY}${filter}&order=full_name.asc&limit=500`
+    )
+  ).map(toFaculty);
 }
 
 export async function liveGetFaculty(id: string): Promise<Faculty | null> {
-  const rows = await get<FacultyRow[]>(`faculty_directory?select=${FACULTY_COLUMNS}&${PUBLISHED}&record_id=eq.${encodeURIComponent(id)}&limit=1`);
+  const rows = await get<FacultyRow[]>(
+    `faculty_directory?select=${FACULTY_COLUMNS}&${VERIFIED_FACULTY}&id=eq.${encodeURIComponent(id)}&limit=1`
+  );
+
   return rows[0] ? toFaculty(rows[0]) : null;
 }
 

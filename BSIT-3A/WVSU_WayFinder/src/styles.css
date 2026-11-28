@@ -106,7 +106,6 @@ a { color: inherit; text-decoration: none; }
 .btn.gold { background: var(--gold); color: var(--text); }
 .btn.danger { background: #fff; color: var(--danger); border-color: #f1c4bf; }
 .btn:disabled { opacity: .6; cursor: default; }
-.btn svg { width: 18px; height: 18px; }
 .pill { display: inline-block; background: var(--gold-soft); border: 1px solid var(--gold); border-radius: 999px; padding: 2px 10px; font-size: .78rem; font-weight: 700; margin-left: 6px; }
 .chips, .lang-chips { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 8px; scrollbar-width: none; }
 .chip { flex: none; border: 1px solid var(--line); background: var(--card); color: var(--text); border-radius: 999px; padding: 8px 14px; font: inherit; font-size: .85rem; font-weight: 600; cursor: pointer; }
@@ -211,10 +210,6 @@ a { color: inherit; text-decoration: none; }
 .pick-list { list-style: none; margin: 0; padding: 0; overflow: auto; }
 .pick-list button { width: 100%; text-align: left; display: flex; flex-direction: column; gap: 2px; padding: 12px 6px; border: 0; border-bottom: 1px solid var(--line); background: none; font: inherit; color: var(--text); cursor: pointer; }
 
-/* ---------- Directory ---------- */
-.dir-row.active { border-color: var(--blue); box-shadow: 0 0 0 2px var(--blue-soft); }
-.directory.detail-open .dir-list { display: none; }
-
 @media (min-width: 1024px) {
   .desktop-only { display: block; }
   .mobile-only { display: none; }
@@ -230,9 +225,360 @@ a { color: inherit; text-decoration: none; }
   .map-layout { grid-template-columns: minmax(0, 1.6fr) minmax(320px, 1fr); align-items: start; }
   .map-wrap { position: sticky; top: 16px; margin: 0; }
   .map { height: calc(100dvh - 220px); min-height: 420px; }
-  .directory { display: grid; grid-template-columns: minmax(300px, 1fr) minmax(0, 1.2fr); gap: 24px; align-items: start; }
-  .directory.detail-open .dir-list { display: block; }
-  .dir-detail { position: sticky; top: 16px; }
   .content:has(.directory), .content:has(.map-page), .content:has(.home), .content:has(.process-detail) { max-width: 1180px; }
   .sheet-backdrop { align-items: center; } .sheet { border-radius: 18px; }
+}
+
+/* ---------- Faculty Profile ---------- */
+
+/* Faculty email and copy action */
+.faculty-email-value {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.faculty-email-value .inline-link {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.copy-email-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-height: 30px;
+  padding: 5px 9px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font: inherit;
+  font-size: .72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.copy-email-btn:hover {
+  border-color: var(--blue);
+}
+
+.copy-email-btn:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.copy-email-status {
+  flex-basis: 100%;
+  color: var(--muted);
+  font-size: .72rem;
+  line-height: 1.4;
+}
+
+/* Service hours: keep the schedule prominent and its explanation secondary. */
+.faculty-service-hours {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.faculty-service-schedule {
+  color: var(--text);
+  font-size: .88rem;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+.faculty-service-note {
+  color: var(--muted);
+  font-size: .75rem;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+@media (max-width: 480px) {
+  .faculty-service-schedule {
+    font-size: .84rem;
+  }
+
+  .faculty-service-note {
+    font-size: .72rem;
+  }
+}
+
+/* ---------- Directory ---------- */
+
+.directory,
+.dir-list,
+.dir-detail {
+  min-width: 0;
+}
+
+.directory.detail-open .dir-list {
+  display: none;
+}
+
+.dir-detail {
+  width: 100%;
+}
+
+/* Directory overview sections */
+.directory-group {
+  margin-top: 24px;
+}
+
+.directory-group + .directory-group {
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.directory-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.directory-section-heading .section-label {
+  margin: 0;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .09em;
+}
+
+.directory-view-all {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0 4px;
+  color: var(--blue);
+  font-size: .82rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.directory-view-all:hover {
+  text-decoration: underline;
+}
+
+.directory-view-all:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.directory-group > .muted.small {
+  margin: 0 0 10px;
+}
+
+.directory-group .dir-row {
+  margin: 10px 0;
+}
+
+/* Faculty filters */
+.directory-filter-panel {
+  margin: 16px 0 20px;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 3px 12px rgba(29, 63, 140, .05);
+}
+
+.directory-filter-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.directory-filter-heading h3 {
+  margin: 0 0 4px;
+  font-size: .95rem;
+}
+
+.directory-filter-heading p {
+  margin: 0;
+}
+
+.directory-filter-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+.directory-filter-field {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.directory-filter-field > span {
+  color: var(--muted);
+  font-size: .76rem;
+  font-weight: 700;
+}
+
+.directory-filter {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: .84rem;
+  cursor: pointer;
+}
+
+.directory-filter:hover {
+  border-color: var(--blue);
+}
+
+.directory-filter:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.directory-clear {
+  flex: none;
+  border: 0;
+  padding: 6px 0;
+  background: transparent;
+  color: var(--blue);
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.directory-clear:hover {
+  text-decoration: underline;
+}
+
+.directory-clear:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.directory-result-count {
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .78rem;
+}
+
+.directory-result-count strong {
+  color: var(--navy);
+}
+
+/* Directory cards */
+.dir-row {
+  cursor: pointer;
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.dir-row:hover {
+  border-color: var(--blue);
+  box-shadow: 0 4px 14px rgba(29, 63, 140, .10);
+}
+
+.dir-row:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.dir-row:active {
+  transform: scale(.99);
+}
+
+.dir-row.active {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 2px var(--blue-soft);
+}
+
+@media (min-width: 600px) {
+  .directory-filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .directory {
+    display: grid;
+    grid-template-columns: minmax(300px, 1fr) minmax(0, 1.2fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .directory.detail-open .dir-list {
+    display: block;
+  }
+
+  .dir-detail {
+    position: sticky;
+    top: 16px;
+  }
+
+  /* Show all category chips on desktop instead of clipping the last one. */
+  .chips {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+}
+
+@media (min-width: 1280px) {
+  .directory-filter-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1023px) {
+  .directory.detail-open .dir-list {
+    display: none;
+  }
+
+  .directory.detail-open .dir-detail {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .directory-group {
+    margin-top: 20px;
+  }
+
+  .directory-group + .directory-group {
+    padding-top: 12px;
+  }
+
+  .directory-section-heading {
+    gap: 8px;
+  }
+
+  .directory-filter-panel {
+    padding: 13px;
+  }
+
+  .directory-filter-heading {
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dir-row {
+    transition: none;
+  }
 }

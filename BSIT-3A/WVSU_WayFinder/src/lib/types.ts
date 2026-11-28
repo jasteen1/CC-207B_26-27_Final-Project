@@ -9,6 +9,9 @@ export interface Place {
   roomCode?: string; // normalized, e.g. CB203
   floor?: number;
   parentId?: string;
+  description?: string;
+  photoUrl?: string;
+  phoneExtension?: string;
   lng?: number;
   lat?: number;
   status: DataStatus;
@@ -47,6 +50,8 @@ export interface Faculty {
   collegeCode?: string;
   department?: string;
   positionTitle?: string;
+  officialEmail?: string;
+  officeHours?: string;
   /** Only set when a VERIFIED office link exists. The live table has no office link yet. */
   office?: FacultyOffice;
   isDemo: boolean;

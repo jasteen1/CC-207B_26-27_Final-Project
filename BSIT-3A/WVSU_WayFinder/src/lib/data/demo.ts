@@ -16,13 +16,37 @@ function view(place: Place): PlaceView {
 export async function demoSearch(q: string): Promise<PlaceView[]> {
   const trimmed = q.trim();
   if (!trimmed) return [];
+
+  // Prioritize exact normalized room-code matches.
   if (looksLikeRoomCode(trimmed)) {
     const code = normalizeRoomCode(trimmed);
-    return places.filter((p) => p.roomCode === code).map(view);
+
+    const exactMatches = places.filter(
+      (p) => p.roomCode && normalizeRoomCode(p.roomCode) === code
+    );
+
+    if (exactMatches.length > 0) {
+      return exactMatches.map(view);
+    }
   }
+
+  // Search all available directory information.
   const needle = trimmed.toLowerCase();
+
   return places
-    .filter((p) => p.name.toLowerCase().includes(needle) || p.shortName?.toLowerCase() === needle)
+    .filter((p) => {
+      const searchableFields = [
+        p.name,
+        p.shortName,
+        p.roomCode,
+        p.description,
+        p.phoneExtension,
+      ];
+
+      return searchableFields.some((field) =>
+        field?.toLowerCase().includes(needle)
+      );
+    })
     .map(view);
 }
 
